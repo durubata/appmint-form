@@ -1,7 +1,7 @@
 import { Icon } from '../common/icons/list';
 import React, { useState } from 'react';
 
-export const RatingInput = (props: { path, update, schema: { scale, update, total } }) => {
+export const RatingInput = (props: { path, update, schema: { scale, update, total, title } }) => {
   const [rating, setRating] = useState<number>(0);
   const [hover, setHover] = useState<number>(0);
 
@@ -12,7 +12,7 @@ export const RatingInput = (props: { path, update, schema: { scale, update, tota
     }
   };
 
-  const { scale = 5, total } = props.schema;
+  const { scale = 5, total, title } = props.schema;
   return (
     <div className='flex justify-start'>
       <div className='flex justify-start items-center gap-2 text-xs'>
@@ -21,9 +21,9 @@ export const RatingInput = (props: { path, update, schema: { scale, update, tota
           return (
             <span key={ratingValue} onMouseEnter={() => setHover(ratingValue)} onMouseLeave={() => setHover(0)}>
               {ratingValue <= (hover || rating) ? (
-                <button onClick={() => handleRating(ratingValue)} > <Icon name='FaStar' className=' fill-yellow-400 stroke-yellow-500 ' /></button>
+                <button title={title} onClick={() => handleRating(ratingValue)} > <Icon name='FaStar' className=' fill-yellow-400 stroke-yellow-500 ' /></button>
               ) : (
-                <button onClick={() => handleRating(ratingValue)}> <Icon name='FaRegStar' className=' fill-yellow-400 stroke-yellow-500 ' /></button>
+                <button title={title} onClick={() => handleRating(ratingValue)}> <Icon name='FaRegStar' className=' fill-yellow-400 stroke-yellow-500 ' /></button>
               )}
             </span>
           );

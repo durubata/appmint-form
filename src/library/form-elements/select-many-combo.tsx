@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox } from '@headlessui/react'
 import { classNames, isEmpty } from '../utils'
 import { ElementIcon } from './element-icon'
@@ -70,7 +69,7 @@ export const SelectManyCombo = (props: { blur, change, focus, mode, schema, path
             <Icon name='FaPlus' className="h-4 w-4 text-gray-400" aria-hidden="true" />
           </Combobox.Button>
           <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none">
-            <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+            <Icon name='RiExpandUpDownLine' className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </Combobox.Button>
         </div>
         {filterOptions.length > 0 && (
@@ -98,7 +97,7 @@ export const SelectManyCombo = (props: { blur, change, focus, mode, schema, path
                       </div>
                       {isSelected && (
                         <span className={classNames('absolute inset-y-0 right-0 flex items-center pr-4', active ? 'text-white' : 'text-indigo-600')}   >
-                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                          <Icon name='FaCheck' className="h-5 w-5" aria-hidden="true" />
                         </span>
                       )}
                     </>

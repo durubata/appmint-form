@@ -16,7 +16,7 @@ export const FormCollapsible = (props: { icon, title, children }) => {
   return (
     <div className={`text-sm mb-4 mt-2 shadow w-full rounded`}>
       <div onClick={toggle} className="p-3 flex justify-between items-center cursor-pointer  border-b-1 border-gray-300 gap-2 bg-gray-50 ">
-        {typeof props.icon === 'string' ? <Icon name={props.icon} /> : props.icon}
+        {typeof props.icon === 'string' ? <Icon name={props.icon as any} /> : props.icon}
         {props.title && <span>{props.title}</span>}
         <div className='flex items-center gap-2 '>
           {isOpen ?
@@ -43,7 +43,7 @@ export const FormCollapsible = (props: { icon, title, children }) => {
           leave="transition-opacity duration-150"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
-          className={`${classes} `}
+        // className={`${classes} `}
         >
           <div className="mt-4">{props.children}</div>
         </Transition>

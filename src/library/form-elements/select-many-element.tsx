@@ -4,10 +4,10 @@ import { SelectManyCombo } from './select-many-combo';
 import { SelectManyRadio } from './select-many-radio';
 import { SelectManyCheckbox } from './select-many-checkbox';
 import { SelectManySwitch } from './select-many-switch';
-import { getDataOptions, getWatchedPaths } from '../converters/data-store';
 import { SelectManyImage } from './select-many-image';
 import { isEmpty, isNotEmpty } from '../utils';
 import { useFormStore } from '../form-view/form-store';
+import { getSelectOptions, getWatchedPaths } from '../form-view/form-utils';
 
 const selectList = {
   'select': SelectManyList,
@@ -27,7 +27,7 @@ export const SelectManyElement = (props: { blur, change, focus, mode, schema, pa
       setOptions(checkAndFixOptions(props.schema?.options))
     } else if (props.schema?.dataSource) {
       (async () => {
-        const dataOptions = await getDataOptions(props.schema.dataSource, props.data)
+        const dataOptions = await getSelectOptions(props.schema.dataSource, props.data)
         setOptions(checkAndFixOptions(dataOptions))
       })()
     }

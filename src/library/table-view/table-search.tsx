@@ -1,13 +1,7 @@
 
 
-import React, { useState } from 'react';
+import React from 'react';
 import { DebouncedInput } from '..//common/debounced-input';
-import {
-    RankingInfo,
-    rankItem,
-    compareItems,
-} from '@tanstack/match-sorter-utils'
-import { SortingFn } from '@tanstack/react-table';
 
 export const TableSearch: React.FC<any> = ({ globalSearch, setGlobalSearch }) => {
     return (

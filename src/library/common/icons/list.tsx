@@ -81,7 +81,7 @@ export const Icon = (props: {
     ref?: React.Ref<SVGSVGElement>;
     onClick?: () => void;
 }) => {
-    const Icon = icons[props.name];
+    const Icon = icons[props.name] as any;
     if (!Icon) return null;
     return (
         <Icon

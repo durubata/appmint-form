@@ -19,14 +19,14 @@ export const CodeEditorAppBar = props => {
       <button title='Menu' className="drag-zone text-white p-2">
         <Icon name='MdMenu' size={12} />
       </button>
-      <input type='text' value={name} onChange={e => setName(e.target.value)} onBlur={onBlur} onClick={e => setEditName(false)} disabled={editName} className=' text-sm bg-transparent border-spacing-0 text-white px-3 py-1 rounded w-full' />
+      <input type='text' value={name} onChange={e => setName(e.target.value)} onBlur={onBlur} onClick={e => setEditName(false)} disabled={editName} className=' text-sm bg-transparent border-spacing-0 text-white px-3 py-1 rounded w-full' title='Name' />
       <span>Theme</span>
-      <select value={props.theme} onChange={e => props.setTheme(e.target.value)} className='bg-transparent border-spacing-0 text-white px-3 py-1 rounded w-full text-sm' >
+      <select value={props.theme} onChange={e => props.setTheme(e.target.value)} className='bg-transparent border-spacing-0 text-white px-3 py-1 rounded w-full text-sm' placeholder='Theme' title='Theme'>
         <option value="vs-dark">VS Dark</option>
         <option value="light">Light</option>
       </select>
       <span>Mode</span>
-      <select value={props.mode} onChange={e => props.setMode(e.target.value)} className='bg-transparent border-spacing-0 text-white px-3 py-1 rounded w-full text-sm' >
+      <select value={props.mode} onChange={e => props.setMode(e.target.value)} className='bg-transparent border-spacing-0 text-white px-3 py-1 rounded w-full text-sm' placeholder='Mode' title='Mode'>
         <option aria-label="None" value="" />
         <option value="typescript">TypeScript</option>
         <option value="javascript">JavaScript</option>

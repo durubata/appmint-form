@@ -7,7 +7,7 @@ import { FormRender } from './form-render';
 import { FormRenderArray } from './form-render-array';
 import { ElementCommonView } from '../form-elements/element-common-view';
 
-export const FormLayoutRender = ({ path, dataPath, layoutPath, className = '', arrayIndex }) => {
+export const FormLayoutRender = ({ path, dataPath, layoutPath, className = '', arrayIndex = null }) => {
   const shouldReload = (ov, nv) => {
     return true;
   }

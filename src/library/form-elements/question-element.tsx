@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { classNames } from '../utils';
-import { SliderRangeElement } from './slider-range';
 
 
 export const QuestionElement = (props: { update, mode, schema, path, name, data }) => {

@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react';
 import { ButtonElement, elementToNameMap } from './all-elements';
-import { cleanControlType, getControlType } from '../collection-helpers';
 import { ElementWrapperControl } from './element-wrapper-control';
 import { useFormStore } from '../form-view/form-store';
-import { ControlType, deepCopy, isNotEmpty } from '../utils';
+import { deepCopy, isNotEmpty } from '../utils';
 import { validateFormValue } from '../form-view/form-validator';
 import { runFormRules } from '../form-view/form-rules';
 import { FormCollapsible } from '../form-view/form-collapsible';
 import { FormPopup } from '../form-view/form-popup';
-import { genericService } from 'services';
-import { notificationStore } from 'components/site-notification';
-import { SiteNotificationType } from 'components/site-notification/types';
 import { applyFormTransform, applyFunction } from '../form-view/form-transforms';
-import { useEdges } from 'react-flow-renderer';
+import { ControlType } from '../utils/control-type';
+import { cleanControlType, getControlType } from '../utils/collection-helpers';
 
 export const FormElementRender = (props: { theme?: any, mode: string, name: string; path: string, dataPath: string, schema?, arrayIndex?}) => {
     const { name, path, arrayIndex } = props;
@@ -87,7 +84,7 @@ export const FormElementRender = (props: { theme?: any, mode: string, name: stri
 
             if (schema.unique && newValue) {
                 try {
-                    const isUnique = await genericService.uniqueInCollection(datatype, id, name, newValue, '');
+                    const isUnique = true;//await genericService.uniqueInCollection(datatype, id, name, newValue, '');
                     if (isUnique) {
                         updateError(dataPath, null)
                     } else {
@@ -95,7 +92,7 @@ export const FormElementRender = (props: { theme?: any, mode: string, name: stri
                     }
                 } catch (error) {
                     const errorMessage = error?.response?.data?.message || error?.response?.data?.error || error.message;
-                    notificationStore.showNotification('DataFormError', errorMessage, SiteNotificationType.Error);
+                    // notificationStore.showNotification('DataFormError', errorMessage, SiteNotificationType.Error);
                     updateError(dataPath, ' must be unique, error: ' + errorMessage);
                 }
             }

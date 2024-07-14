@@ -39,6 +39,7 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
       case 'checkbox':
         return (
           <input
+            title={option.label}
             type="checkbox"
             value={rankings[option.value]}
             onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
@@ -49,6 +50,7 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
         return (
           <input
             type="radio"
+            title={option.label}
             value={rankings[option.value]}
             onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
             className="border border-gray-300 rounded px-2 py-1 text-gray-700 h-4 w-4"
@@ -58,6 +60,7 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
         return (
           <input
             type="range"
+            title={option.label}
             value={rankings[option.value]}
             onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
             className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full"
@@ -67,6 +70,7 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
         return (
           <input
             type="number"
+            title={option.label}
             value={rankings[option.value]}
             onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
             className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full"
@@ -75,6 +79,7 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
       default:
         return (
           <select
+            title={option.label}
             value={rankings[option.value]}
             onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
             className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full"

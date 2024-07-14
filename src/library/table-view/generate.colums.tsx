@@ -1,6 +1,5 @@
 import React, { HTMLProps } from 'react';
 import { toSentenceCase } from '../utils';
-
 interface Column {
   header: string;
   accessorKey?: string;

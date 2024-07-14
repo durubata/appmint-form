@@ -29,7 +29,7 @@ export const SelectManyCheckbox = (props: { blur, focus, mode, schema, path, nam
             <div className="relative flex items-start group">
               {iconOrImage}
               <div className="flex h-6 items-center">
-                <input id={item.value} aria-describedby="comments-description" onChange={e => updateSelections(item)} checked={isSelected} name={item.label} type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                <input id={item.value} aria-describedby="comments-description" onChange={e => updateSelections(item)} checked={isSelected} name={item.label} type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" title={item.label} placeholder={item.label} />
               </div>
               <div className="ml-3 text-sm leading-6">
                 <label htmlFor="comments" className="font-medium text-gray-900">

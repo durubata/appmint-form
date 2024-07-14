@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { classNames } from '../utils'
-import { getDataOptions } from '../converters/data-store'
 import { ElementIcon } from './element-icon'
+import { getSelectOptions } from '../form-view/form-utils'
 
 export const PreSelectElement = (props: { update, mode, schema, path, name, data, options }) => {
   const [selections, setSelections] = useState<any[]>([])
@@ -15,7 +15,7 @@ export const PreSelectElement = (props: { update, mode, schema, path, name, data
       setOptions(props.schema.options)
     } else if (props.schema?.dataSource) {
       (async () => {
-        const dataOptions = await getDataOptions(props.schema.dataSource, props.data)
+        const dataOptions = await getSelectOptions(props.schema.dataSource, props.data)
         setOptions(dataOptions)
       })()
     }

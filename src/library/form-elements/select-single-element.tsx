@@ -15,6 +15,7 @@ export const SelectSingleElement = (props: { change, blur, focus, mode, schema, 
   if (variant === 'checkbox' || variant === 'radio') {
     return (
       <input
+        title="Input Field"
         name={props.name}
         id={props.path}
         aria-describedby="candidates-description"

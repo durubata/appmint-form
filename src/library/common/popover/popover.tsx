@@ -18,7 +18,7 @@ const { PopoverWrapper } = usePopover(<div>This is the popover content</div>, 'c
 </div>
 */
 
-export const Popover = ({ children, content, position = 'bottom-10', offsetY = 0, offsetX = 0, className }) => {
+export const Popover = ({ children, content, position = 'bottom-10', offsetY = 0, offsetX = 0, className = '' }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [popoverStyle, setPopoverStyle] = useState({});
     const triggerRef = useRef(null);

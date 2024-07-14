@@ -59,6 +59,7 @@ export const SliderElement: React.FC<SliderProps> = ({
           background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((_value - min) / (max - min)) * 100
             }%, #e5e7eb ${((_value - min) / (max - min)) * 100}%, #e5e7eb 100%)`,
         }}
+        title="Slider"
       />
       <div className="text-xs font-semibold text-gray-600 mt-1">{isNaN(_value) ? 0 : _value?.toFixed(1)}</div>
     </>

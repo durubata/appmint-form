@@ -47,6 +47,7 @@ export const FormLayoutSliderAnimation = ({ direction = 'horizontal', slideIndex
   //   updatePosition(currentIndex + 1);
   // };
 
+  const slideContainer = useRef(null);
   return (
     <div id='slide-container' ref={slideContainer} className='relative flex w-full h-full overflow-hidden items-center justify-center min-h-96'>
       {/* <div ref={scrollContainerRef} className={classNames(direction === 'horizontal' && 'flex', 'w-full h-full  items-center')}>

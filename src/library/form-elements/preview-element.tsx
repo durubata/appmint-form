@@ -7,7 +7,7 @@ export const PreviewElement = (props: { path, name }) => {
 
   return (
     <div >
-      <img src={prop.value} className='max-h-32 w-full max-w-48' />
+      <img src={prop.value} alt="Image" className='max-h-32 w-full max-w-48' />
     </div>
   );
 };

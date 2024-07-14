@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import data_icon from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { Icon } from '../common/icons/list';
-import { emojiMartCustom } from 'components/common/icons/emoji-mart-custom';
-import { Popover } from 'components/common/popover';
 import { classNames } from '../utils';
+import { emojiMartCustom } from '../common/icons/emoji-mart-custom';
+import { Popover } from '../common/popover';
 
 export const IconPickerElement = (props: { blur, focus, change, path, label, name, data, schema }) => {
   const { path, name, schema, label } = props;
@@ -41,7 +41,7 @@ export const IconPickerElement = (props: { blur, focus, change, path, label, nam
         <div className={classNames('text-sm pl-2 group pr-3 py-1 rounded-full flex items-center gap-2 shadow bg-white border border-gray-100 hover:bg-cyan-100')}>
           {getIcon()}
         </div>
-        <button onClick={unselect} ><Icon name='FaXmark' color='red' /></button>
+        <button onClick={unselect} title="Unselect"><Icon name='FaXmark' color='red' /></button>
       </div>}
       <Picker
         data={data_icon}
@@ -63,7 +63,7 @@ export const IconPickerElement = (props: { blur, focus, change, path, label, nam
           {getIcon() || 'Select Icon'}
         </button>
       </Popover>
-      {value && <button onClick={unselect} ><Icon name='FaXmark' color='red' /></button>}
+      {value && <button onClick={unselect} title="Unselect"><Icon name='FaXmark' color='red' /></button>}
     </div>
   );
 };

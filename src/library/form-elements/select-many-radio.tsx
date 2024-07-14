@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
-import { CheckCircleIcon } from '@heroicons/react/20/solid'
 import { Switch } from '@headlessui/react'
+import { Icon } from '../common/icons/list'
 
 const memoryOptions = [
   { name: '4 GB', inStock: true },
@@ -107,7 +107,7 @@ export const SelectManuRadio2 = () => {
                     </RadioGroup.Description>
                   </span>
                 </span>
-                <CheckCircleIcon
+                <Icon name='FaRegCheckCircle'
                   className={classNames(!checked ? 'invisible' : '', 'h-5 w-5 text-indigo-600')}
                   aria-hidden="true"
                 />

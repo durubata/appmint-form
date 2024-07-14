@@ -43,7 +43,8 @@ export const SliderRangeElement: React.FC<SliderProps> = ({
         step={step}
         value={minValue}
         onChange={handleMinChange}
-        className="w-full h-2 bg-gray-300 rounded-full outline-none appearance-none cursor-pointer transition duration-200 ease-in hover:bg-blue-400 focus:bg-blue-500"
+        className="slider-input"
+        title="Min Value"
         style={{
           background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((minValue - min) / (max - min)) * 100
             }%, #e5e7eb ${((minValue - min) / (max - min)) * 100
@@ -57,7 +58,8 @@ export const SliderRangeElement: React.FC<SliderProps> = ({
         step={step}
         value={maxValue}
         onChange={handleMaxChange}
-        className="w-full h-2 bg-gray-300 rounded-full outline-none appearance-none cursor-pointer transition duration-200 ease-in hover:bg-blue-400 focus:bg-blue-500"
+        className="slider-input"
+        title="Max Value"
         style={{
           background: `linear-gradient(to right, #e5e7eb 0%, #e5e7eb ${((maxValue - min) / (max - min)) * 100
             }%, #3b82f6 ${((maxValue - min) / (max - min)) * 100

@@ -1,5 +1,4 @@
-import { getRandomString, niceURI, toTitleCase } from "@jaclight/dbsdk";
-import { t } from "i18next";
+import { getRandomString, niceURI, toTitleCase } from "../utils";
 
 export const applyFunction = (fn, value, rowData, data) => {
     fn = fn.startsWith('return') ? fn : `return ${fn}`;
