@@ -6,17 +6,17 @@ export const LegalConsentElement = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [consentGiven, setConsentGiven] = useState(false);
 
-  const validateFullName = (name) => {
+  const validateFullName = name => {
     return name.trim().split(' ').length > 1;
   };
 
-  const handleNameChange = (e) => {
+  const handleNameChange = e => {
     const name = e.target.value;
     setFullName(name);
     setIsFullNameValid(validateFullName(name));
   };
 
-  const handleSubmit = (accept) => {
+  const handleSubmit = accept => {
     if (!validateFullName(fullName)) {
       setIsFullNameValid(false);
       return;
@@ -68,9 +68,7 @@ export const LegalConsentElement = () => {
         </>
       ) : (
         <div className="text-center">
-          <p className="text-center">
-            You have {consentGiven ? "accepted" : "not accepted"} the terms.
-          </p>
+          <p className="text-center">You have {consentGiven ? 'accepted' : 'not accepted'} the terms.</p>
           <button
             onClick={resetForm}
             className="mt-4 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-xs font-medium rounded text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -82,4 +80,3 @@ export const LegalConsentElement = () => {
     </div>
   );
 };
-

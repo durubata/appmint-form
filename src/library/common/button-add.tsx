@@ -1,6 +1,6 @@
 import React from 'react';
-import { Icon } from './icons/list';
 import { getRandomString } from '../utils';
+import { Icon } from '../form-elements/common-imports';
 
 export const ButtonAdd = (props: { handler; controlRef?, className?}) => {
 

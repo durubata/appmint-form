@@ -69,7 +69,6 @@ import tiktok from './social/rsq-icon-original-tiktok.svg';
 import telegram from './social/rsq-icon-original-telegram.svg';
 import onlyfans from './social/rsq-icon-original-onlyfans.svg';
 
-
 export const socialIcons = [
   { id: 1, src: amazon, title: 'Amazon' },
   { id: 2, src: android, title: 'Android' },
@@ -142,7 +141,6 @@ export const socialIcons = [
   { id: 69, src: telegram, title: 'Telegram' },
   { id: 70, src: onlyfans, title: 'Onlyfans' },
 ];
-
 
 export const popularSocialIcons = [
   { id: 19, src: facebook, title: 'Facebook' },

@@ -1,6 +1,6 @@
 import { getRandomString } from '../utils';
 import React, { useEffect } from 'react';
-import { Icon } from './icons/list';
+import { Icon } from '../form-elements/common-imports';
 
 export const ButtonCancel = (props: { handler; controlRef?, className?}) => {
   useEffect(() => { });

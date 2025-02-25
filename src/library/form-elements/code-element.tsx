@@ -1,15 +1,22 @@
+import { MonacoCodeEditor } from './common-imports';
 import React from 'react';
-import { MonacoCodeEditor } from '../common/code-editor';
 
-export const CodeElement = (props: { path, name }) => {
-  const prop: any = {}
+export const CodeElement = (props: { readOnly?; change; focus; blur; mode; value; width?; height?; schema; path; name; data }) => {
 
-  const handleUpdate = () => {
+  const saveChanges = (name, data) => {
+    if (props.blur) {
+      props.blur(data);
+    }
   };
 
+  const onChange = (update) => {
+    if (props.change) {
+      props.change(update);
+    }
+  };
+
+  let variant = props.schema['x-control-variant'];
   return (
-    <div>
-      <MonacoCodeEditor save={handleUpdate} mode={prop['x-control-variant']} width={prop?.width || '100%'} height={prop?.height || 300} value={prop.value} showAppBar={false} name={props.name} />
-    </div>
+    <MonacoCodeEditor save={undefined} onChange={onChange} mode={variant} width={props?.width || '100%'} height={props?.height || 400} value={props.value} showAppBar={false} name={props.name} />
   );
 };
