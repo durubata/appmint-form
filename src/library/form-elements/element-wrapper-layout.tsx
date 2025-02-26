@@ -1,5 +1,10 @@
 import React from 'react';
-import { classNames, isEmpty, toSentenceCase, toTitleCase, ElementCommonView, getElementTheme, twMerge } from './common-imports';
+import { classNames } from '../utils';
+import { isEmpty } from '../utils';
+import { toSentenceCase, toTitleCase } from '../utils';
+import { ElementCommonView } from './element-common-view';
+import { getElementTheme } from '../context/store';
+import { twMerge } from 'tailwind-merge';
 import { FormCollapsible } from '../form-view/form-collapsible';
 import { FormPopup } from '../form-view/form-popup';
 import { ElementIcon } from './element-icon';

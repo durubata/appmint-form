@@ -5,7 +5,13 @@ import { getElementTheme, getFormStore, showNotice } from '../context/store';
 import { ControlType, deepCopy, isNotEmpty, toSentenceCase, toTitleCase } from '../utils';
 import { FormCollapsible } from '../form-view/form-collapsible';
 import { FormPopup } from '../form-view/form-popup';
-import { cleanControlType, getControlType, getWatchedPaths, applyFormTransform, applyFunction, runElementRules, runFormRules, validateFormValue, twMerge, objectPath } from './common-imports';
+import { cleanControlType, getControlType } from '../utils/collection-helpers';
+import { getWatchedPaths } from '../form-view/form-utils';
+import { applyFormTransform, applyFunction } from '../form-view/form-transforms';
+import { runElementRules, runFormRules } from '../form-view/form-rules';
+import { validateFormValue } from '../form-view/form-validator';
+import { twMerge } from 'tailwind-merge';
+import * as objectPath from 'object-path';
 import shallow, { useShallow } from 'zustand/shallow';
 
 // Stubs for missing dependencies

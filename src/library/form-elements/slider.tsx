@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getElementTheme, twMerge } from './common-imports';
+import { getElementTheme } from '../context/store';
+import { twMerge } from 'tailwind-merge';
 
 interface SliderProps {
   storeId?: string;
@@ -66,6 +67,8 @@ export const SliderElement: React.FC<SliderProps> = ({ schema, name, storeId, va
         onChange={handleChange}
         onBlur={handleBlur}
         onFocus={handleFocus}
+        title={schema?.title || name || "Slider"}
+        aria-label={schema?.title || name || "Slider"}
         className={twMerge("w-full h-2 bg-sky-200 rounded-full outline-none appearance-none cursor-pointer transition duration-200 ease-in hover:bg-blue-400 focus:bg-blue-500", className, controlTheme.className, classes?.join(' '))}
         style={{
           background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((_value - min) / (max - min)) * 100}%, #e5e7eb ${((_value - min) / (max - min)) * 100}%, #e5e7eb 100%)`,
@@ -81,6 +84,8 @@ export const SliderElement: React.FC<SliderProps> = ({ schema, name, storeId, va
           onChange={handleChange}
           onBlur={handleBlur}
           onFocus={handleFocus}
+          title={schema?.title || name || "Value input"}
+          aria-label={schema?.title || name || "Value input"}
           className={twMerge("w-full max-w-16 bg-sky-50 rounded outline-none text-sm border-sky-500 p-1 transition duration-200 ease-in text-right", className, controlTheme.className, classes?.join(' '))}
         />) : (
         showValue && <div className="text-xs font-semibold text-gray-600">{isNaN(_value) ? 0 : _value?.toFixed(1)}</div>

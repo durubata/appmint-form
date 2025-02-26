@@ -1,4 +1,4 @@
-import { isEmpty } from './common-imports';
+import { isEmpty } from '../utils';
 import React, { useEffect, useState } from 'react';
 import * as objectPath from 'object-path';
 import { IconButtonDelete } from '../common/icon-button-delete';

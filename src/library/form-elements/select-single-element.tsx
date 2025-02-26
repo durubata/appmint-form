@@ -1,4 +1,4 @@
-import { classNames } from './common-imports';
+import { classNames } from '../utils';
 import React from 'react';
 import { SwitchElement } from './switch-element';
 
@@ -18,6 +18,8 @@ export const SelectSingleElement = (props: { change; blur; focus; value; mode; s
         type={variant}
         value={props.value}
         onChange={handleUpdate}
+        title={props.schema.title || props.name}
+        aria-label={props.schema.title || props.name}
         className={classNames(variant === 'radio' ? 'rounded-full' : 'rounded', 'h-4 w-4  border-gray-300 text-indigo-600 focus:ring-indigo-600')}
       />
     );

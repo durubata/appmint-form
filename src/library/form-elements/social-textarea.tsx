@@ -1,4 +1,4 @@
-import { classNames } from './common-imports';
+import { classNames } from '../utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { SelectManyList } from './select-many-list';
 import { IconPickerElement } from './icon-picker-element';

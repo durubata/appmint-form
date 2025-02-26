@@ -1,5 +1,8 @@
 import { twMerge } from 'tailwind-merge';
-import { Transition, getElementTheme, classNames, localStorageUtils } from './common-imports';
+import { Transition } from '@headlessui/react';
+import { getElementTheme } from '../context/store';
+import { classNames } from '../utils';
+import { localStorageUtils } from '../utils/localstorage';
 import React, { useEffect, useState } from 'react';
 import { IconRenderer } from '../common/icons/icon-renderer';
 

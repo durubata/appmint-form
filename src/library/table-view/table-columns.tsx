@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconRenderer } from '../common/icons/icon-renderer';
-import { Popover } from '../form-view/common-imports';
+import { Popover } from '../common/popover';
 
 export const TableColumns: React.FC<any> = ({ table }) => {
     const content = (

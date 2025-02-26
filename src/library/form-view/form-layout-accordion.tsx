@@ -1,6 +1,8 @@
 import { shallow } from 'zustand/shallow';
-import { classNames, FormLayoutRender, getFormStore, ElementCommonView } from './common-imports';
-
+import { classNames } from '../utils';
+import { FormLayoutRender } from './form-layout-render';
+import { getFormStore } from '../context/store';
+import { ElementCommonView } from '../form-elements/element-common-view';
 import React from 'react';
 export const FormLayoutAccordion = ({ storeId, layoutPath, path, dataPath }) => {
   const { getSchemaItem } = getFormStore(storeId)(state => ({ getSchemaItem: state.getSchemaItem }));

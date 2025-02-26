@@ -1,4 +1,6 @@
-import { Popover, classNames, getElementTheme } from './common-imports';
+import { Popover } from '../common/popover';
+import { classNames } from '../utils';
+import { getElementTheme } from '../context/store';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { IconRenderer } from '../common/icons/icon-renderer';

@@ -1,4 +1,6 @@
-import { classNames, getElementTheme, twMerge } from './common-imports';
+import { classNames } from '../utils';
+import { getElementTheme } from '../context/store';
+import { twMerge } from 'tailwind-merge';
 import React, { useState } from 'react';
 import { SliderElement } from './slider';
 

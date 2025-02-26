@@ -1,5 +1,9 @@
 import { useShallow } from 'zustand/shallow';
-import { classNames, FormLayoutRender, getFormStore, ElementCommonView, tabButtonActiveClass, tabButtonClass } from './common-imports';
+import { classNames } from '../utils';
+import { FormLayoutRender } from './form-layout-render';
+import { getFormStore } from '../context/store';
+import { ElementCommonView } from '../form-elements/element-common-view';
+import { tabButtonActiveClass, tabButtonClass } from '../common/constants';
 import React from 'react';
 
 export const FormLayoutTab = ({ storeId, layoutPath, path, dataPath, theme }) => {

@@ -1,5 +1,8 @@
 import { IconRenderer } from '../common/icons/icon-renderer';
-import { classNames, ElementCommonView, getElementTheme, twMerge } from './common-imports';
+import { ElementCommonView } from './element-common-view';
+import { getElementTheme } from '../context/store';
+import { classNames } from '../utils';
+import { twMerge } from 'tailwind-merge';
 import React from 'react';
 
 export const ElementIcon = (props: { icon; mode; image; className?; defaultIcon?; path?, theme?, ui?}) => {

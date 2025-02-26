@@ -1,4 +1,13 @@
-import { getElementTheme, getFormStore, ElementWrapperLayout, ButtonAdd, getRandomString, isNotEmpty, ButtonDelete, FormRender, FormPicker, classNames } from './common-imports';
+import { getElementTheme } from '../context/store';
+import { getFormStore } from '../context/store';
+import { ElementWrapperLayout } from '../form-elements/element-wrapper-layout';
+import { ButtonAdd } from '../common/button-add';
+import { getRandomString } from '../utils';
+import { isNotEmpty } from '../utils';
+import { ButtonDelete } from '../common/button-delete';
+import { FormRender } from './form-render';
+import { FormPicker } from './form-picker';
+import { classNames } from '../utils';
 import React, { useEffect, useState } from 'react';
 import { getWatchedPaths } from './form-utils';
 import { runElementRules } from './form-rules';

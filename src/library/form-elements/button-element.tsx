@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { isEmpty, getFormStore, elementStyleClassMap, classNames, toTitleCase, toSentenceCase, ElementCommonView, buttonsActions, getElementTheme } from './common-imports';
+import { isEmpty, toTitleCase, toSentenceCase } from '../utils';
+import { getFormStore, getElementTheme } from '../context/store';
+import { elementStyleClassMap } from './element-style-class';
+import { classNames } from '../utils';
+import { ElementCommonView } from './element-common-view';
+import { buttonsActions } from '../form-view/button-actions';
 import { ElementIcon } from './element-icon';
 
 export const ButtonElement = (props: {

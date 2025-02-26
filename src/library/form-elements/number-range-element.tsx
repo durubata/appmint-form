@@ -1,4 +1,4 @@
-import { classNames } from './common-imports';
+import { classNames } from '../utils';
 import React, { useState } from 'react';
 import { SliderRangeElement } from './slider-range';
 

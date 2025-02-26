@@ -1,4 +1,9 @@
-import { classNames, isEmpty, toSentenceCase, toTitleCase, ElementCommonView, elementStyleClassMap, getElementTheme } from './common-imports';
+import { classNames } from '../utils';
+import { isEmpty } from '../utils';
+import { toSentenceCase, toTitleCase } from '../utils';
+import { ElementCommonView } from './element-common-view';
+import { elementStyleClassMap } from './element-style-class';
+import { getElementTheme } from '../context/store';
 import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ElementIcon } from './element-icon';

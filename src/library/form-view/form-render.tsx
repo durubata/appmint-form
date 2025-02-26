@@ -1,9 +1,20 @@
-import { LoadingIndicator, formLayouts, getElementTheme, getFormStore, FormElementRender, ElementWrapperLayout, ElementCommonView, classNames, deepCopy, isEmpty, isNotEmpty, FormRenderArray, runFormRules } from './common-imports';
+import { LoadingIndicator } from '../common/loading-indicator';
+import { formLayouts } from '../context/store';
+import { getElementTheme } from '../context/store';
+import { getFormStore } from '../context/store';
+import { FormElementRender } from '../form-elements';
+import { ElementWrapperLayout } from '../form-elements/element-wrapper-layout';
+import { ElementCommonView } from '../form-elements/element-common-view';
+import { classNames } from '../utils';
+import { deepCopy } from '../utils';
+import { isEmpty } from '../utils';
+import { isNotEmpty } from '../utils';
+import { FormRenderArray } from './form-render-array';
+import { runFormRules } from './form-rules';
 import React, { useEffect, useState } from 'react';
 import { runElementRules } from './form-rules';
 import { getWatchedPaths } from './form-utils';
 import { getTemplateValue } from './form-validator';
-import { shallow } from 'zustand/shallow'
 
 export const FormRender = (props: { storeId; path; dataPath; name; className; arrayIndex?; parentDataPath?, layoutPath?, arrayControl?}) => {
   const { name, path, dataPath, className, arrayIndex, layoutPath } = props;

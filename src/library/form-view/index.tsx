@@ -1,5 +1,14 @@
-// Removed unused import
-import { getElementTheme, getFormStore, LoadingIndicator, ElementCommonView, FormRender, classNames, deepCopy, validateForm, FormCollapsible, isNotEmpty, tabButtonActiveClass, tabButtonClass } from './common-imports';
+import { getElementTheme } from '../context/store';
+import { getFormStore } from '../context/store';
+import { LoadingIndicator } from '../common/loading-indicator';
+import { ElementCommonView } from '../form-elements/element-common-view';
+import { FormRender } from './form-render';
+import { classNames } from '../utils';
+import { deepCopy } from '../utils';
+import { validateForm } from './form-validator';
+import { FormCollapsible } from './form-collapsible';
+import { isNotEmpty } from '../utils';
+import { tabButtonActiveClass, tabButtonClass } from '../common/constants';
 import React, { useEffect } from 'react';
 
 export const CollectionForm = (props: { demo?; data?; path?; title?; schema?; rules?; theme?; accessMode?; id?; datatype?; icon?; readOnly?; hash?; useAI?; collapsible?; onChange?: (path, value, data, files, error) => void }) => {

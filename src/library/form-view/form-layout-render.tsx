@@ -1,5 +1,11 @@
 import { shallow } from 'zustand/shallow';
-import { getFormStore, FormElementRender, ElementWrapperLayout, FormRender, FormRenderArray, ElementCommonView, deepCopy } from './common-imports';
+import { getFormStore } from '../context/store';
+import { FormElementRender } from '../form-elements';
+import { ElementWrapperLayout } from '../form-elements/element-wrapper-layout';
+import { FormRender } from './form-render';
+import { FormRenderArray } from './form-render-array';
+import { ElementCommonView } from '../form-elements/element-common-view';
+import { deepCopy } from '../utils';
 import React from 'react';
 
 export const FormLayoutRender = ({ storeId, path, dataPath, layoutPath, className = '', arrayIndex = undefined }) => {

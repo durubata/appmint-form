@@ -1,7 +1,7 @@
 import Ajv from 'ajv';
 import * as objectPath from 'object-path';
-import { ruleOperations } from './form-rules.js';
-import { deepCopy } from './common-imports.js';
+import { ruleOperations } from './form-rules';
+import { deepCopy } from '../utils';
 
 const MAjv: any = Ajv;
 const ajv = new MAjv({
