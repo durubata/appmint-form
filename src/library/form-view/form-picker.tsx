@@ -1,4 +1,4 @@
-import { getFormStore } from '../context/store';
+import { useFormStore } from '../context/store';
 import { validateFormValue } from './form-validator';
 import { classNames, isNotEmpty } from '../utils';
 import { DataPicker } from '../common/data-picker';
@@ -18,7 +18,7 @@ import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema }) => {
   const { dataPath, schema } = props;
-  const { setItemValue, updateError, getItemValue, getDefaultValue } = getFormStore(props.storeId)(useShallow(state => ({ setItemValue: state.setItemValue, updateError: state.updateError, getItemValue: state.getItemValue, getDefaultValue: state.getDefaultValue })));
+  const { setItemValue, updateError, getItemValue, getDefaultValue } = useFormStore(useShallow(state => ({ setItemValue: state.setItemValue, updateError: state.updateError, getItemValue: state.getItemValue, getDefaultValue: state.getDefaultValue })));
   const [selectedItems, setSelectedItems] = React.useState([]);
   const [pendingConfirm, setPendingConfirm] = React.useState(false);
   const [dataPickerProp, setDataPickerProps] = useState(null);

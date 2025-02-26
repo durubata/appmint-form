@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ButtonElement, elementToNameMap } from './all-elements';
 import { ElementWrapperControl } from './element-wrapper-control';
-import { getElementTheme, getFormStore, showNotice } from '../context/store';
+import { getElementTheme, useFormStore, showNotice } from '../context/store';
 import { ControlType, deepCopy, isNotEmpty, toSentenceCase, toTitleCase } from '../utils';
 import { FormCollapsible } from '../form-view/form-collapsible';
 import { FormPopup } from '../form-view/form-popup';
@@ -34,8 +34,8 @@ export const FormElementRender = (props: { storeId; theme?: any; mode: string; n
   const dataPath = props.dataPath ? props.dataPath : `${props.dataPath}.${name}`;
   const parentPath = dataPath.includes('.') ? dataPath.split('.').slice(0, -1).join('.') : '';
 
-  const { dataPathTimestamp, theme: formTheme, datatype, storeId, activeDataPath, readOnly, dataBindValue } = getFormStore(props.storeId)(useShallow(state => ({ dataPathTimestamp: state.timestamp?.[dataPath], theme: state.theme, datatype: state.datatype, storeId: state.storeId, activeDataPath: state.activeDataPath, readOnly: state.readOnly, dataBindValue: state.dataBindValue })));
-  const { rules, getItemValue, setStateItem, applyRuleResult, getDefaultValue, setItemValue, updateError, getError, getSchemaItem, updateRepository } = getFormStore(props.storeId).getState();
+  const { dataPathTimestamp, theme: formTheme, datatype, storeId, activeDataPath, readOnly, dataBindValue } = useFormStore(useShallow(state => ({ dataPathTimestamp: state.timestamp?.[dataPath], theme: state.theme, datatype: state.datatype, storeId: state.storeId, activeDataPath: state.activeDataPath, readOnly: state.readOnly, dataBindValue: state.dataBindValue })));
+  const { rules, getItemValue, setStateItem, applyRuleResult, getDefaultValue, setItemValue, updateError, getError, getSchemaItem, updateRepository } = useFormStore.getState();
   let schema = deepCopy(props.schema || getSchemaItem(path));
 
   const theme = props.theme || formTheme;
@@ -46,7 +46,7 @@ export const FormElementRender = (props: { storeId; theme?: any; mode: string; n
     let watchedPaths = getWatchedPaths(schema, props.parentDataPath, arrayIndex);
 
     if (isNotEmpty(watchedPaths)) {
-      getFormStore(props.storeId).getState().updateWatchedPath(props.dataPath, watchedPaths);
+      useFormStore.getState().updateWatchedPath(props.dataPath, watchedPaths);
     }
     if (schema?.rules) {
       const parentData = getItemValue(`${props.parentDataPath}`)

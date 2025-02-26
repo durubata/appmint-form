@@ -1,5 +1,5 @@
 import { getElementTheme } from '../context/store';
-import { getFormStore } from '../context/store';
+import { useFormStore } from '../context/store';
 import { ElementWrapperLayout } from '../form-elements/element-wrapper-layout';
 import { ButtonAdd } from '../common/button-add';
 import { getRandomString } from '../utils';
@@ -19,18 +19,18 @@ const defaultTypeValues = type => ({ string: '', number: 0, boolean: false, arra
 export const FormRenderArray = (props: { storeId; path; dataPath; parentDataPath, childPath; name; fieldName; schema; className; arrayIndex?; hasControl?}) => {
   const { path, dataPath, parentDataPath, name, className, fieldName, childPath, hasControl } = props;
 
-  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(useShallow(state => ({
+  const { dataPathTimestamp, theme } = useFormStore(useShallow(state => ({
     dataPathTimestamp: state.timestamp[dataPath],
     theme: state.theme
   })));
-  const { getItemValue, refreshPath, removeArrayValue, getSchemaItem, setItemValue } = getFormStore(props.storeId).getState();
+  const { getItemValue, refreshPath, removeArrayValue, getSchemaItem, setItemValue } = useFormStore.getState();
 
   const [ruleActions, setRuleActions] = useState<any>({});
   useEffect(() => {
     const schema = props.schema || getSchemaItem(path);
     let watchedPaths = getWatchedPaths(schema, parentDataPath, props.arrayIndex);
     if (isNotEmpty(watchedPaths)) {
-      getFormStore(props.storeId).getState().updateWatchedPath(props.dataPath, watchedPaths);
+      useFormStore.getState().updateWatchedPath(props.dataPath, watchedPaths);
     }
     if (schema?.rules) {
       const arrayData = typeof props.arrayIndex === 'number' ? getItemValue(`${props.parentDataPath}`) : null;

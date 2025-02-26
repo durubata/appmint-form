@@ -1,7 +1,7 @@
 import { LoadingIndicator } from '../common/loading-indicator';
 import { formLayouts } from '../context/store';
 import { getElementTheme } from '../context/store';
-import { getFormStore } from '../context/store';
+import { useFormStore } from '../context/store';
 import { FormElementRender } from '../form-elements';
 import { ElementWrapperLayout } from '../form-elements/element-wrapper-layout';
 import { ElementCommonView } from '../form-elements/element-common-view';
@@ -15,14 +15,15 @@ import React, { useEffect, useState } from 'react';
 import { runElementRules } from './form-rules';
 import { getWatchedPaths } from './form-utils';
 import { getTemplateValue } from './form-validator';
+import { useShallow } from 'zustand/shallow';
 
 export const FormRender = (props: { storeId; path; dataPath; name; className; arrayIndex?; parentDataPath?, layoutPath?, arrayControl?}) => {
   const { name, path, dataPath, className, arrayIndex, layoutPath } = props;
-  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(state => ({
+  const { dataPathTimestamp, theme } = useFormStore(useShallow(state => ({
     dataPathTimestamp: state.timestamp[dataPath],
     theme: state.theme
-  }));
-  const { getItemValue, setStateItem, applyRuleResult, getSchemaItem } = getFormStore(props.storeId).getState();
+  })));
+  const { getItemValue, setStateItem, applyRuleResult, getSchemaItem } = useFormStore.getState();
   const [ruleActions, setRuleActions] = useState<any>({});
 
 
@@ -30,7 +31,7 @@ export const FormRender = (props: { storeId; path; dataPath; name; className; ar
     let schema = getSchemaItem(path);
     let watchedPaths = getWatchedPaths(schema, props.parentDataPath, props.arrayIndex);
     if (isNotEmpty(watchedPaths)) {
-      getFormStore(props.storeId).getState().updateWatchedPath(props.dataPath, watchedPaths);
+      useFormStore.getState().updateWatchedPath(props.dataPath, watchedPaths);
     }
     if (schema?.rules) {
       const arrayData = typeof arrayIndex === 'number' ? getItemValue(`${props.parentDataPath}.${arrayIndex}`) : null;

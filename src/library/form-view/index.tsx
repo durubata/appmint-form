@@ -1,5 +1,5 @@
 import { getElementTheme } from '../context/store';
-import { getFormStore } from '../context/store';
+import { useFormStore } from '../context/store';
 import { LoadingIndicator } from '../common/loading-indicator';
 import { ElementCommonView } from '../form-elements/element-common-view';
 import { FormRender } from './form-render';
@@ -7,7 +7,6 @@ import { classNames } from '../utils';
 import { deepCopy } from '../utils';
 import { validateForm } from './form-validator';
 import { FormCollapsible } from './form-collapsible';
-import { isNotEmpty } from '../utils';
 import { tabButtonActiveClass, tabButtonClass } from '../common/constants';
 import React, { useEffect } from 'react';
 import { useShallow } from 'zustand/shallow';
@@ -15,8 +14,8 @@ import { useShallow } from 'zustand/shallow';
 export const CollectionForm = (props: { demo?; data?; path?; title?; schema?; rules?; theme?; accessMode?; id?; datatype?; icon?; readOnly?; hash?; useAI?; collapsible?; onChange?: (path, value, data, files, error) => void }) => {
   const storeId = props.id || props.hash;
 
-  const { formRef, activePage } = getFormStore(storeId)(useShallow(state => ({ formRef: state.storeId, activePage: state.activePage })));
-  const { schema, initForm, getItemValue, getSchemaItem, setStateItem, getError, updateError } = getFormStore(storeId).getState();
+  const { formRef, activePage } = useFormStore(useShallow(state => ({ formRef: state.storeId, activePage: state.activePage })));
+  const { schema, initForm, getItemValue, getSchemaItem, setStateItem, getError, updateError } = useFormStore.getState();
 
   useEffect(() => {
     const { data = {}, path, schema, rules, theme, accessMode, datatype, onChange, readOnly } = props;
@@ -70,9 +69,9 @@ export const CollectionForm = (props: { demo?; data?; path?; title?; schema?; ru
   };
 
   const aiUpdate = data => {
-    getFormStore(storeId)
+    useFormStore
       .getState()
-      .setStateItem({ data: data, timestamp: { ...getFormStore(storeId).getState().timestamp, ['root']: Date.now() } });
+      .setStateItem({ data: data, timestamp: { ...useFormStore.getState().timestamp, ['root']: Date.now() } });
   };
 
   const aiGetContent = () => {

@@ -6,7 +6,7 @@ import { SelectManyList } from './select-many-list';
 import { SelectManyCombo } from './select-many-combo';
 import { SelectManyRadio } from './select-many-radio';
 import { SelectManyCheckbox } from './select-many-checkbox';
-import { getElementTheme, getFormStore } from '../context/store';
+import { getElementTheme, useFormStore } from '../context/store';
 import { isEmpty, isNotEmpty, toSentenceCase, toTitleCase } from '../utils';
 
 const getSelectType = type => {
@@ -41,8 +41,8 @@ export const SelectManyElement = (props: { storeId?; blur; change; theme?, focus
       })();
     }
     // const pathsToWatch = getWatchedPaths(props.schema, props.parentDataPath, arrayIndex);
-    // if (isNotEmpty(pathsToWatch) && typeof getFormStore(props.storeId) === 'function') {
-    //   getFormStore(props.storeId).getState().updateWatchedPath(props.dataPath, pathsToWatch);
+    // if (isNotEmpty(pathsToWatch) && typeof useFormStore === 'function') {
+    //   useFormStore.getState().updateWatchedPath(props.dataPath, pathsToWatch);
     // }
   }, [dataString, props.schema]);
 
