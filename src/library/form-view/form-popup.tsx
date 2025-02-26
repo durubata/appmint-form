@@ -1,6 +1,7 @@
-import { Popover, classNames, Icon, getElementTheme } from './common-imports';
+import { Popover, classNames, getElementTheme } from './common-imports';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const FormPopup = (props: { icon; title; children, theme?, ui?, popupStyle?}) => {
 
@@ -12,7 +13,7 @@ export const FormPopup = (props: { icon; title; children, theme?, ui?, popupStyl
       <Popover position="context" className={twMerge("min-w-[600px] max-h-[800px] overflow-auto", controlTheme.className, classes?.join(' '))} offsetY={-20} content={<div>{props.children}</div>}>
         <div className='relative'>
           <button className={classNames('absolute z-10 right-1 top-1 text-sm group rounded flex items-center gap-2 bg-white border border-gray-100 hover:bg-cyan-100 p-1 hover:scale-125 duration-300 ease-in-out transition-all')}>
-            <Icon name={props.icon ? props.icon : 'MdOpenInNew'} className={''} />
+            <IconRenderer icon={props.icon ? props.icon : 'MdOpenInNew'} className={''} />
             {props.title && <span> {props.title}</span>}
           </button>
         </div>

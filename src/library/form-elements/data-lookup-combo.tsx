@@ -1,11 +1,12 @@
 import { BaseModelDTO, getResponseErrorMessage } from '../utils';
-import { Icon, objectPath, isNotEmpty, classNames } from './common-imports';
+import { objectPath, isNotEmpty, classNames } from './common-imports';
 import React, { useState, useRef, useEffect } from 'react';
 import { SelectManyList } from './select-many-list';
 import { ButtonCancel } from '../common/button-cancel';
 import { CollectionHelper, requestQueueInstance } from '../form-view/common-imports';
 import { slimButtonClass } from '../common/constants';
 import { BusyIcon } from '../common/icons/svg';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 const infoFields = ['name', 'email', 'username', 'title', 'phone'];
 
@@ -132,7 +133,7 @@ export const DataLookupCombo = (props: { schema; change }) => {
         <SelectManyList change={setDatatype} options={CollectionHelper.getInstance().getCollectionOptions()} schema={{ placeholder: 'Select Datatype' }} />
         <input type="text" placeholder="Enter name to search" value={keyword} onChange={onKeywordChange} className="flex-grow rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none" />
         <button onClick={handleSearch} className={classNames(slimButtonClass, 'flex items-center gap-2 shadow-none')}>
-          <BusyIcon isLoading={isLoading} notLoadingMessage={<Icon name='FaSearch' />} />
+          <BusyIcon isLoading={isLoading} notLoadingMessage={<IconRenderer icon='FaSearch' />} />
         </button>
       </div>
       {isNotEmpty(result) && (
@@ -166,7 +167,7 @@ const LookupItem = ({ item, remove = null }) => {
     <div className={classNames(remove && 'shadow px-2 py-1 rounded-lg w-full', ' text-gray-400 text-xs flex gap-4 items-center overflow-auto')}>
       {remove && (
         <button title="Remove Item" onClick={e => remove(item.sk)} className=" text-red-500">
-          <Icon name="FaXmark" />
+          <IconRenderer icon="FaXmark" />
         </button>
       )}
       <div className="">

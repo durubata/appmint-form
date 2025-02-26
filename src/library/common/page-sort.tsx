@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { classNames } from '../utils';
-import { Icon } from './icons/icon';
+import { IconRenderer } from './icons/icon-renderer';
 import { Popover } from './popover';
 
 const sortTypes = [
@@ -17,7 +17,7 @@ export const PageSort = ({ sortValue, onChange }) => {
       <div className="text-sm flex flex-col">
         {sortTypes.map((sort, index) => (
           <button className={classNames(sort.value === sortValue ? 'bg-cyan-100' : '', 'flex gap-2 items-center hover:scale-125 p-2 transition-all duration-200')} onClick={e => onChange(sort)} key={index}>
-            <Icon name={sort.icon as any} />
+            <IconRenderer icon={sort.icon as any} />
             <span>{sort.label}</span>
           </button>
         ))}
@@ -27,7 +27,7 @@ export const PageSort = ({ sortValue, onChange }) => {
   return (
     <Popover content={<SortComponents />} position="relative" offsetY={20} offsetX={25}>
       <button>
-        <Icon name={activeSort.icon as any} />
+        <IconRenderer icon={activeSort.icon as any} />
       </button>
     </Popover>
   );

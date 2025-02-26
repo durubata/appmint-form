@@ -1,7 +1,8 @@
-import { FormLayoutRender, Icon, classNames, isNotEmpty, getFormStore, validateFormValue, ElementCommonView } from './common-imports';
+import { FormLayoutRender, classNames, isNotEmpty, getFormStore, validateFormValue, ElementCommonView } from './common-imports';
 import React, { useEffect } from 'react';
 import FormLayoutSliderAnimation from './form-layout-slider-animation';
 import { shallow } from 'zustand/shallow';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const FormLayoutSlider = ({ storeId, layoutPath, path, dataPath, schema }) => {
   const { getSchemaItem, getError, getItemValue, updateError, timestamp } = getFormStore(storeId)(state => ({
@@ -126,13 +127,13 @@ export const FormLayoutSlider = ({ storeId, layoutPath, path, dataPath, schema }
       </ElementCommonView>
       <div className="text-xs flex flex-wrap gap-2 w-full mt-2 px-2">
         <button title="Slide" onClick={e => makeActiveSlide(e, -1)} className={classNames(slideIndex < 0 && 'bg-yellow-200', ' h-5 w-5 flex items-center justify-center  border-cyan-400 border rounded p-0 hover:bg-cyan-300')}>
-          <Icon name="GrPlay" />
+          <IconRenderer icon="GrPlay" />
         </button>
         <button title="Previous" onClick={skipPrev} className={classNames(' h-5 w-5 flex items-center justify-center  border-cyan-400 border rounded p-0 hover:bg-cyan-300')}>
-          <Icon name="PiSkipBack" />
+          <IconRenderer icon="PiSkipBack" />
         </button>
         <button title="Next" onClick={skipNext} className={classNames(' h-5 w-5 flex items-center justify-center  border-cyan-400 border rounded p-0 hover:bg-cyan-300')}>
-          <Icon name="PiSkipForward" />
+          <IconRenderer icon="PiSkipForward" />
         </button>
         {layout?.items?.map((_, idx) => (
           <button

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { classNames, toTitleCase } from '../utils';
-import { Icon } from '../common/icons/icon';
+import { IconRenderer } from '../common/icons/icon-renderer';
 import { iconButtonClass, iconClass } from '../common/constants';
 import { withTooltip } from '../common/tooltip';
 
@@ -44,7 +44,7 @@ export const TableButtons: React.FC<any> = ({ onTableEvent, options, selectedRow
         if (button.name !== 'refresh' && isReadOnly) return null;
         return (
           <ButtonTP onClick={onClick} title={toTitleCase(button.name)} key={button.name} name={button.name} type="button" className={classNames(iconButtonClass, button.className, 'relative')}>
-            <Icon name={(buttonStates[button.name] ? 'FaCheck' : button.icon) as any} className={iconClass} />
+            <IconRenderer icon={(buttonStates[button.name] ? 'FaCheck' : button.icon) as any} className={iconClass} />
             {button.name === 'select' && selectedRows.length > 0 && <span className='absolute -top-2 w-4 h-4 -right-2 flex items-center justify-center rounded-full text-xs bg-purple-700 text-white'>{selectedRows.length}</span>}
           </ButtonTP>
         );

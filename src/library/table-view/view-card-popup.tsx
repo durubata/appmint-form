@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { Icon } from '../common/icons/icon';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const CollectionTableCardPopup = (props: { component?; isOpen; close }) => {
   // if (!props.isOpen) return null;
@@ -39,7 +39,7 @@ export const CollectionTableCardPopup = (props: { component?; isOpen; close }) =
                 {popupComponent}
                 <button type="button" className="absolute right-4 top-4 text-gray-600 hover:text-gray-800" onClick={close}>
                   <span className="sr-only">Close</span>
-                  <Icon name="HiOutlineXMark" className="h-6 w-6" aria-hidden="true" />
+                  <IconRenderer icon="HiOutlineXMark" className="h-6 w-6" aria-hidden="true" />
                 </button>
               </Dialog.Panel>
             </Transition.Child>

@@ -3,10 +3,10 @@ import { CollectionHelper, requestQueueInstance } from '../form-view/common-impo
 import { BaseModel, BaseModelDTO, DataType, getResponseErrorMessage, isNotEmpty } from '../utils';
 import { PageSort, sortTreeItem } from './page-sort';
 import { iconButtonClass } from './constants';
-import { Icon } from '../form-elements/common-imports';
 import BusyIcon from './icons/svg';
 import { LoadingIndicator } from './loading-indicator';
 import { FloatBox } from './float-box';
+import { IconRenderer } from './icons/icon-renderer';
 
 export interface DataPickerType {
   collectionName: string;
@@ -136,12 +136,12 @@ export function DataPicker(props: { dataPickerState?: DataPickerType; closeButto
         <div className="py-3 px-5 mb-4">
           <div className="flex gap-4 w-full items-center">
             <div className="p-2  border border-gray-300 flex items-center rounded-xl w-full">
-              <Icon name="FaSearch" />
+              <IconRenderer icon="FaSearch" />
               <input name="search" className="w-full text-sm p-1 border-none mx-2  focus:ring-0 focus-within:ring-0 focus-visible:ring-0 " value={filter} onChange={e => setFilter(e.target.value)} />
             </div>
             <PageSort sortValue={sort} onChange={changeSortType} />
             <button onClick={() => loadNextPage(true)} className={iconButtonClass}>
-              <BusyIcon isLoading={isLoading} /> <Icon name="IoRefresh" />{' '}
+              <BusyIcon isLoading={isLoading} /> <IconRenderer icon="IoRefresh" />{' '}
             </button>
           </div>
         </div>
@@ -172,10 +172,10 @@ export function DataPicker(props: { dataPickerState?: DataPickerType; closeButto
           </div>
         )}
         <button className="button-cancel" title="Cancel" onClick={closeButton}>
-          <Icon name='FaXmark' size={20} />
+          <IconRenderer icon='FaXmark' size={20} />
         </button>
         <button className="button-accept" title="Accept" onClick={selectButton}>
-          <Icon name='FaCheck' size={20} />
+          <IconRenderer icon='FaCheck' size={20} />
         </button>
       </div>
     </FloatBox>

@@ -58,8 +58,6 @@ const requestQueueInstance = {
 };
 import { validateValue } from './form-validator';
 import { localStorageUtils } from '../utils/localstorage';
-import { Icon } from '../common/icons/icon';
-import { iconType } from '../common/icons/list';
 import { Popover } from '../common/popover';
 import { tabButtonActiveClass, tabButtonClass } from '../common/constants';
 import { DataPicker } from '../common/data-picker';
@@ -74,8 +72,6 @@ export {
   applyFunction,
   DataType,
   Transition,
-  iconType,
-  Icon,
   getElementTheme,
   classNames,
   localStorageUtils,

@@ -26,9 +26,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@appmint/form@workspace:."
   dependencies:
-    "@emoji-mart/data": "npm:^1.2.1"
-    "@emoji-mart/react": "npm:^1.1.1"
-    "@faker-js/faker": "npm:^8.4.1"
     "@headlessui/react": "npm:^2.1.2"
     "@heroicons/react": "npm:^2.2.0"
     "@monaco-editor/react": "npm:^4.6.0"
@@ -38,7 +35,6 @@ __metadata:
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
     "@testing-library/react": "npm:^16.2.0"
-    "@tinymce/tinymce-react": "npm:^5.1.1"
     "@types/react": "npm:^18.3.3"
     "@types/react-color": "npm:^2"
     "@types/react-dom": "npm:^18.3.0"
@@ -54,7 +50,6 @@ __metadata:
     husky: "npm:^9.0.11"
     immer: "npm:^10.1.1"
     jsdom: "npm:^26.0.0"
-    leaflet: "npm:^1.9.4"
     object-path: "npm:^0.11.8"
     react: "npm:^18.3.1"
     react-best-gradient-color-picker: "npm:^3.0.14"
@@ -63,7 +58,6 @@ __metadata:
     react-file-icon: "npm:^1.6.0"
     react-icons: "npm:^5.2.1"
     size-limit: "npm:^11.1.4"
-    solid: "link:@heroicons/react/20/solid"
     tailwind-merge: "npm:^3.0.2"
     tsdx: "npm:^0.14.1"
     tslib: "npm:^2.6.3"
@@ -1514,23 +1508,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emoji-mart/data@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@emoji-mart/data@npm:1.2.1"
-  checksum: 10c0/6784b97bf49a0d3ff110d8447bbd3b0449fcbc497294be3d1c3a6cb1609308776895c7520200be604cbecaa5e172c76927e47f34419c72ba8a76fd4e5a53674b
-  languageName: node
-  linkType: hard
-
-"@emoji-mart/react@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@emoji-mart/react@npm:1.1.1"
-  peerDependencies:
-    emoji-mart: ^5.2
-    react: ^16.8 || ^17 || ^18
-  checksum: 10c0/88a9c8c24bbc5695f0ed2458734c9982c965a16db1999bc731c7cce77f9bf228f1871e899744f9a3f9fdd36a11db7ad6c0e049d710cb91c66c69a2cd4d2ee40a
-  languageName: node
-  linkType: hard
-
 "@esbuild/aix-ppc64@npm:0.25.0":
   version: 0.25.0
   resolution: "@esbuild/aix-ppc64@npm:0.25.0"
@@ -1782,13 +1759,6 @@ __metadata:
     "@eslint/core": "npm:^0.12.0"
     levn: "npm:^0.4.1"
   checksum: 10c0/0a1aff1ad63e72aca923217e556c6dfd67d7cd121870eb7686355d7d1475d569773528a8b2111b9176f3d91d2ea81f7413c34600e8e5b73d59e005d70780b633
-  languageName: node
-  linkType: hard
-
-"@faker-js/faker@npm:^8.4.1":
-  version: 8.4.1
-  resolution: "@faker-js/faker@npm:8.4.1"
-  checksum: 10c0/4f2aecddcfdc2cc8b50b2d15d1e37302a7c7a5bbd184ae910a9d271bc11248533ca74dcdd4a9ccbe20410553e7af0f6a4d334c5b955635e09a32ddf4a64942d4
   languageName: node
   linkType: hard
 
@@ -2848,19 +2818,6 @@ __metadata:
     "@types/react-dom":
       optional: true
   checksum: 10c0/7adaedaf237002b42e04a6261d2756074a19cbca0f0c79ba375660f618e123c0ee56256ced00aeb0bb7225ba1a8a81b92b692cca053521a21bb92a8cace1e4c6
-  languageName: node
-  linkType: hard
-
-"@tinymce/tinymce-react@npm:^5.1.1":
-  version: 5.1.1
-  resolution: "@tinymce/tinymce-react@npm:5.1.1"
-  dependencies:
-    prop-types: "npm:^15.6.2"
-    tinymce: "npm:^7.0.0 || ^6.0.0 || ^5.5.1"
-  peerDependencies:
-    react: ^18.0.0 || ^17.0.1 || ^16.7.0
-    react-dom: ^18.0.0 || ^17.0.1 || ^16.7.0
-  checksum: 10c0/101c6385514cba8f63ce80161240409a211cd88e54e0b1cdf33bbfb930e5cf05ae5ea77168f4c3bde9bfb828f9da6fe8dbd97cbad1d0542546c13284d0ae14f4
   languageName: node
   linkType: hard
 
@@ -9043,13 +9000,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"leaflet@npm:^1.9.4":
-  version: 1.9.4
-  resolution: "leaflet@npm:1.9.4"
-  checksum: 10c0/f639441dbb7eb9ae3fcd29ffd7d3508f6c6106892441634b0232fafb9ffb1588b05a8244ec7085de2c98b5ed703894df246898477836cfd0ce5b96d4717b5ca1
-  languageName: node
-  linkType: hard
-
 "leven@npm:^3.1.0":
   version: 3.1.0
   resolution: "leven@npm:3.1.0"
@@ -11007,7 +10957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.10, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -12498,12 +12448,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solid@link:@heroicons/react/20/solid::locator=%40appmint%2Fform%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "solid@link:@heroicons/react/20/solid::locator=%40appmint%2Fform%40workspace%3A."
-  languageName: node
-  linkType: soft
-
 "source-map-js@npm:^1.2.0, source-map-js@npm:^1.2.1":
   version: 1.2.1
   resolution: "source-map-js@npm:1.2.1"
@@ -13168,13 +13112,6 @@ __metadata:
     fdir: "npm:^6.4.3"
     picomatch: "npm:^4.0.2"
   checksum: 10c0/7c9be4fd3625630e262dcb19015302aad3b4ba7fc620f269313e688f2161ea8724d6cb4444baab5ef2826eb6bed72647b169a33ec8eea37501832a2526ff540f
-  languageName: node
-  linkType: hard
-
-"tinymce@npm:^7.0.0 || ^6.0.0 || ^5.5.1":
-  version: 7.7.0
-  resolution: "tinymce@npm:7.7.0"
-  checksum: 10c0/c2fc7e364a4858813d096386c4e108a6d9d0996f4290f173a3e3c06ed348ef43e13ba76b3d6f80f4c6fe0c4bbfeabe6cf2ab40322f0788aaf717f523df637bbb
   languageName: node
   linkType: hard
 

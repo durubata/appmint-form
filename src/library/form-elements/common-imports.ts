@@ -1,6 +1,6 @@
 import { classNames, isEmpty, toSentenceCase, toTitleCase, isNotEmpty } from '../utils';
 import { ElementCommonView } from './element-common-view';
-import { elementStyleClassMap } from '../control-props/element-style-class';
+import { elementStyleClassMap } from './element-style-class';
 import { buttonsActions } from '../form-view/button-actions';
 import { getElementTheme, getFormStore } from '../context/store';
 import * as objectPath from 'object-path';
@@ -11,7 +11,6 @@ import { runElementRules, runFormRules } from '../form-view/form-rules';
 import { validateFormValue } from '../form-view/form-validator';
 import { twMerge } from 'tailwind-merge';
 import { cleanControlType, getControlType } from '../utils/collection-helpers';
-import { Icon } from '../form-view/common-imports';
 
 
 export {
@@ -37,5 +36,4 @@ export {
   runElementRules,
   runFormRules,
   validateFormValue,
-  Icon,
 };

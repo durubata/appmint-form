@@ -1,4 +1,4 @@
-import { Icon, getFormStore, validateFormValue, classNames, isNotEmpty, DataPicker, applyFunction } from './common-imports';
+import { getFormStore, validateFormValue, classNames, isNotEmpty, DataPicker, applyFunction } from './common-imports';
 import React, { useEffect, useState } from 'react';
 import { showNotice, } from '../context/store';
 
@@ -10,6 +10,7 @@ const restAPI = {
   }
 };
 import { useShallow } from 'zustand/shallow';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema }) => {
   const { dataPath, schema } = props;
@@ -156,14 +157,14 @@ export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema })
         title={pendingConfirm ? "Confirm Clear" : "Clear Selection"}
         className={classNames(pendingConfirm ? 'bg-red-400' : '', 'button-remove shadow-[2px_1px_5px_1px_#ccc] m-2 rounded-lg p-2 hover:scale-125 duration-200 transition-all hover:bg-red-200')}
       >
-        <Icon name={pendingConfirm ? 'FaCheck' : 'FaTrash'} size={12} color="currentColor" />
+        <IconRenderer icon={pendingConfirm ? 'FaCheck' : 'FaTrash'} size={12} color="currentColor" />
       </button>
       <button
         onClick={pickData}
         title="Add Item"
         className="button-add shadow-[2px_1px_5px_1px_#ccc] m-2 rounded-lg p-2 hover:scale-125 duration-200 transition-all hover:bg-cyan-200"
       >
-        <Icon name="FaPlus" size={12} color="currentColor" />
+        <IconRenderer icon="FaPlus" size={12} color="currentColor" />
       </button>
     </div>
   );
