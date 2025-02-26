@@ -37,16 +37,18 @@ export const FormRender = (props: { storeId; path; dataPath; name; className; ar
       const _ruleActions = runElementRules(schema, getItemValue(''), arrayData);
       setRuleActions(_ruleActions);
     }
-  }, []);
+  }, [path, props.parentDataPath, props.arrayIndex, props.dataPath, props.storeId, arrayIndex]);
 
   useEffect(() => {
-    let schema = getSchemaItem(path);
-    if (schema?.rules) {
-      const arrayData = typeof arrayIndex === 'number' ? getItemValue(`${props.parentDataPath}.${arrayIndex}`) : null;
-      const _ruleActions = runElementRules(schema, getItemValue(''), arrayData);
-      setRuleActions(_ruleActions);
+    if (dataPathTimestamp) {
+      let schema = getSchemaItem(path);
+      if (schema?.rules) {
+        const arrayData = typeof arrayIndex === 'number' ? getItemValue(`${props.parentDataPath}.${arrayIndex}`) : null;
+        const _ruleActions = runElementRules(schema, getItemValue(''), arrayData);
+        setRuleActions(_ruleActions);
+      }
     }
-  }, [dataPathTimestamp]);
+  }, [dataPathTimestamp, path, props.parentDataPath, arrayIndex]);
 
   let schema = getSchemaItem(path);
   if (schema?.hidden || ruleActions.hide) return null;

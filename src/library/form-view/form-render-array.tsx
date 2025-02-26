@@ -11,18 +11,18 @@ import { classNames } from '../utils';
 import React, { useEffect, useState } from 'react';
 import { getWatchedPaths } from './form-utils';
 import { runElementRules } from './form-rules';
-import { shallow } from 'zustand/shallow';
 import { getTemplateValue } from './form-validator';
+import { useShallow } from 'zustand/shallow';
 
 const defaultTypeValues = type => ({ string: '', number: 0, boolean: false, array: [], object: {} }[type]);
 
 export const FormRenderArray = (props: { storeId; path; dataPath; parentDataPath, childPath; name; fieldName; schema; className; arrayIndex?; hasControl?}) => {
   const { path, dataPath, parentDataPath, name, className, fieldName, childPath, hasControl } = props;
 
-  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(state => ({
+  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(useShallow(state => ({
     dataPathTimestamp: state.timestamp[dataPath],
     theme: state.theme
-  }));
+  })));
   const { getItemValue, refreshPath, removeArrayValue, getSchemaItem, setItemValue } = getFormStore(props.storeId).getState();
 
   const [ruleActions, setRuleActions] = useState<any>({});
@@ -37,16 +37,18 @@ export const FormRenderArray = (props: { storeId; path; dataPath; parentDataPath
       const _ruleActions = runElementRules(schema, getItemValue(''), arrayData);
       setRuleActions(_ruleActions);
     }
-  }, []);
+  }, [path, parentDataPath, props.arrayIndex, props.dataPath, props.parentDataPath, props.storeId]);
 
   useEffect(() => {
-    const schema = props.schema || getSchemaItem(path);
-    if (schema?.rules) {
-      const parentData = getItemValue(`${props.parentDataPath}`);
-      const _ruleActions = runElementRules(schema, getItemValue(''), parentData);
-      setRuleActions(_ruleActions);
+    if (dataPathTimestamp) {
+      const schema = props.schema || getSchemaItem(path);
+      if (schema?.rules) {
+        const parentData = getItemValue(`${props.parentDataPath}`);
+        const _ruleActions = runElementRules(schema, getItemValue(''), parentData);
+        setRuleActions(_ruleActions);
+      }
     }
-  }, [dataPathTimestamp]);
+  }, [dataPathTimestamp, path, props.parentDataPath, props.schema]);
 
   const addArrayItem = (e, itemPath, type = 'string') => {
     const items = getItemValue(itemPath) || [];
@@ -96,7 +98,7 @@ export const FormRenderArray = (props: { storeId; path; dataPath; parentDataPath
           const itemsSchema = getSchemaItem(itemPath);
           const itemName = schema.hideItemLabel === 'false' ? fieldName + ' ' + index + 1 : '';
           const render =
-            itemsSchema.layout === 'horizontal' ? (
+            itemsSchema?.layout === 'horizontal' ? (
               <div className="relative mb-1 even:bg-cyan-50 flex gap-2 items-center">
                 {showIndex && <div className="text-xs">{index + 1}</div>}
                 <FormRender key={itemKey} path={itemPath} className="" name={itemName} dataPath={arrayDataPath} parentDataPath={dataPath} arrayIndex={index} storeId={props.storeId} arrayControl={arrayControl(index)} />

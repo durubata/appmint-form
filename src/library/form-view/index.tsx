@@ -10,34 +10,18 @@ import { FormCollapsible } from './form-collapsible';
 import { isNotEmpty } from '../utils';
 import { tabButtonActiveClass, tabButtonClass } from '../common/constants';
 import React, { useEffect } from 'react';
+import { useShallow } from 'zustand/shallow';
 
 export const CollectionForm = (props: { demo?; data?; path?; title?; schema?; rules?; theme?; accessMode?; id?; datatype?; icon?; readOnly?; hash?; useAI?; collapsible?; onChange?: (path, value, data, files, error) => void }) => {
   const storeId = props.id || props.hash;
-  const { formRef, activePage } = getFormStore(storeId)((state) => ({
-    formRef: state.storeId,
-    activePage: state.activePage
-  }));
-  const { schema, initForm, getItemValue, getSchemaItem, setStateItem, getError, updateError } = getFormStore(storeId).getState();
 
+  const { formRef, activePage } = getFormStore(storeId)(useShallow(state => ({ formRef: state.storeId, activePage: state.activePage })));
+  const { schema, initForm, getItemValue, getSchemaItem, setStateItem, getError, updateError } = getFormStore(storeId).getState();
 
   useEffect(() => {
     const { data = {}, path, schema, rules, theme, accessMode, datatype, onChange, readOnly } = props;
-    const oldData = getItemValue();
     initForm({ data, path, schema, rules, theme, accessMode, storeId, datatype, onChangeCallback: onChange, readOnly });
-    const timestamp = {};
-    if (isNotEmpty(oldData)) {
-      Object.keys(oldData).forEach(k => {
-        if (typeof oldData[k] === 'object' && isNotEmpty(oldData[k])) {
-          Object.keys(oldData[k]).forEach(kk => {
-            timestamp[`${k}.${kk}`] = Date.now();
-          });
-        } else {
-          timestamp[k] = Date.now();
-        }
-      });
-    }
-    setStateItem({ timestamp });
-  }, [storeId, props.id, props.hash]);
+  }, [storeId]);
 
   const setPage = page => {
     setStateItem({ activePage: page, error: {} });
