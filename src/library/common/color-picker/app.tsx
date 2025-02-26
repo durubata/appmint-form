@@ -33,8 +33,8 @@ export const CommonColorPicker = (props: { color; updateColor; type; toggle?; us
     }
 
     if (props.type === 'gradient') {
-      const [r, g, b, a] = gColor.rgb;
-      gColor['rgb'] = { r, g, b, a };
+      // const [r, g, b, a] = gColor.rgb;
+      // gColor['rgb'] = { r, g, b, a };
     }
     if (props.updateColor) props.updateColor(gColor);
   };
@@ -46,12 +46,12 @@ export const CommonColorPicker = (props: { color; updateColor; type; toggle?; us
 
   const onCancel = () => {
     setColorTemp(color);
-    setPopoverState({ timestamp: Date.now(), show: false });
+    setPopoverState({ timestamp: Date.now(), isOpen: false });
   }
 
   const onAccept = () => {
     setColor(colorTemp);
-    setPopoverState({ timestamp: Date.now(), show: false });
+    setPopoverState({ timestamp: Date.now(), isOpen: false });
   }
 
   const getPicker = () => {

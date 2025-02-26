@@ -37,6 +37,7 @@ export const SelectManyCheckbox = (props: { blur; focus; mode; schema; path; nam
         />
       </div>)
     }
+    return <></>;
   }
 
   return (

@@ -3,7 +3,7 @@ import { localStorageUtils } from '../utils/localstorage';
 import withPortal from './with-portal';
 import { Icon } from './icons/icon';
 import { dragElement } from '../utils/drag-element';
-import { CodeEditorAppBar } from './code-editor/app-bar';
+// import { CodeEditorAppBar } from './code-editor/app-bar';
 import { MenuAppBar } from './menu-app-bar';
 
 const defaultStyle = {
@@ -202,7 +202,7 @@ export function FloatBox(props: { name; title; close; children; style?; resizabl
   let barExt;
   if (props.codeBar) {
     const { setName, mode, setMode, setTheme, onClose, onSave } = props.codeBar;
-    barExt = <CodeEditorAppBar setName={setName} name={props.name ? props.name : 'new'} mode={mode} setMode={setMode} setTheme={setTheme} onClose={onClose} onSave={onSave} />;
+    // barExt = <CodeEditorAppBar setName={setName} name={props.name ? props.name : 'new'} mode={mode} setMode={setMode} setTheme={setTheme} onClose={onClose} onSave={onSave} />;
   }
   return (
     <div className={propName} style={collapsed ? { ...style, height: '40px', width: '300px' } : style} onMouseUp={savePosition} ref={ref} onMouseDown={makeActive} onClick={makeActive}>

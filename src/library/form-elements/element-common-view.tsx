@@ -1,4 +1,4 @@
-import { useElementSelector, isNotEmpty, dotPathToDash, twMerge, getElementTheme } from './common-imports';
+import { isNotEmpty, dotPathToDash, twMerge, getElementTheme } from './common-imports';
 import React, { useEffect } from 'react';
 
 export const ElementCommonView = (props: { id?; readOnly?; disabled?; className?; tag?; ui?; path; theme?; name?; children?; alt?; src?; onClick?}) => {
@@ -9,8 +9,6 @@ export const ElementCommonView = (props: { id?; readOnly?; disabled?; className?
   } else {
     dashPath = dotPathToDash(props?.path, props?.name);
   }
-
-  const [element] = useElementSelector();
 
   useEffect(() => { }, []);
 
@@ -43,7 +41,6 @@ export const ElementCommonView = (props: { id?; readOnly?; disabled?; className?
     'data-ui-name': props.name,
     readOnly: props.readOnly,
     id: props.id || dashPath,
-    ref: element,
     className: cls,
     onClick: clickHandler,
     onBlur: onBlur,

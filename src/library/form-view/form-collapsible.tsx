@@ -40,7 +40,7 @@ export const FormCollapsible = (props: { id?; icon?; title?; children; theme?; d
       </div>
       {isOpen && (
         <div className=" p-2 ">
-          <Transition show={isOpen} enter="transition-opacity duration-75" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-150" leaveFrom="opacity-100" leaveTo="opacity-0" className={`${openClassName} `}>
+          <Transition show={isOpen} enter="transition-opacity duration-75" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-150" leaveFrom="opacity-100" leaveTo="opacity-0" >
             <div className="mt-1">{props.children}</div>
           </Transition>
         </div>

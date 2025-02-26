@@ -18,45 +18,14 @@ export const buttonsActions = {
   'submit-form': {
     title: 'Submit Form',
     description: 'Submit the form data to the server',
-    fn: async ({ storeId, dataPath, actionSchema, email, collectionForm, formData, formSchema, formRules }) => {
-      getFormStore(storeId).getState().clearError();
-      const validation = validateForm(formData, formSchema);
-      if (!validation.valid) {
-        getFormStore(storeId)
-          .getState()
-          .updateBulkError(validation as any);
-        console.error('Form validation failed', validation);
-        showNotice(validation.message, 'error');
-        return;
-      }
-      const baseData = genericService.createBaseData(collectionForm?.data?.name, '');
-      baseData.author = email;
-      baseData.data = formData;
-      baseData.owner = { datatype: DataType.form, id: collectionForm?.data.name };
-      // const response = await .getState().request(appEndpoints.crm_collection_form_submit.name, baseData, `${collectionForm.data.name}/${userEmail}`);
-      console.log('submit-form response', baseData, `${collectionForm?.data.name}/${email}`);
-      showNotice('Form was successful submitted', 'success');
-      // return response
-    },
   },
   'validate-form': {
     title: 'Validate Form',
     description: 'Validate the form data',
-    fn: ({ dataPath, actionSchema, email, collectionForm, formData, formSchema, formRules }) => {
-      const validation = validateForm(formData, formSchema);
-      if (!validation.valid) {
-        console.error('Form validation failed', validation);
-      } else {
-      }
-      return validation;
-    },
   },
   'reset-form': {
     title: 'Reset Form',
     description: 'Reset the form data',
-    fn: storeId => {
-      getFormStore(storeId).getState().clearData();
-    },
   },
   // 'goto': {
   //     title: 'Goto',
@@ -69,9 +38,6 @@ export const buttonsActions = {
   link: {
     title: 'Link',
     description: 'Open a new page',
-    fn: ({ dataPath, actionSchema, email, collectionForm, formData, formSchema, formRules }) => {
-      window.location.href = actionSchema.args;
-    },
   },
   // 'set-property': {
   //     title: 'Set Property',
@@ -83,17 +49,9 @@ export const buttonsActions = {
   'run-rule': {
     title: 'Run Rule',
     description: 'Run a rule',
-    fn: ({ formId, dataPath, actionSchema, email, collectionForm, formData, formSchema, formRules }) => {
-      const ruleResults = runFormRules(actionSchema.rule, '', '', '', formSchema, formRules, formData, null);
-      getFormStore(formId).getState().setStateItem({ ruleResults });
-      return ruleResults;
-    },
   },
   'run-script': {
     title: 'Run Script',
     description: 'Run a script',
-    fn: ({ dataPath, actionSchema, email, collectionForm, formData, formSchema, formRules }) => {
-      return applyFunction(actionSchema.script, null, null, formData);
-    },
   },
 };

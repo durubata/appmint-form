@@ -2,7 +2,7 @@ import React from 'react';
 import { icons, IconKeys } from './list';
 
 export const Icon = (props: {
-    name: IconKeys;
+    name: any;
     size?: number;
     color?: string;
     className?: string;

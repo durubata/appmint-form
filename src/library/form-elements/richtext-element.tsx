@@ -1,4 +1,3 @@
-import { RichEditor } from './common-imports';
 import React from 'react';
 
 export const RichtextElement = (props: { change; focus; blur; mode; value; schema; path; name; data }) => {
@@ -12,7 +11,11 @@ export const RichtextElement = (props: { change; focus; blur; mode; value; schem
     props.change(content);
   };
 
-  const handleFocus = () => {};
+  const handleFocus = () => { };
 
-  return <RichEditor id={prop.name} data={props.value} updateContent={handleBlur} inline={false} immediate={false} height={prop.css?.height} className={'w-full'} />;
+  return <div>
+    <div className="flex items-center justify-between page-4 text-sm">
+      <span className=" font-serif ">Richtext</span>
+    </div>
+  </div>
 };

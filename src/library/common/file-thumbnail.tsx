@@ -3,11 +3,12 @@ import { getFileExtension, isImageFile } from './fm-utils';
 import { FileIcon, defaultStyles } from 'react-file-icon';
 import { ButtonDelete } from './button-delete';
 
+const MyFile: any = FileIcon;
 export const FileThumbnail = ({ url, path, deleteClick, showPath = true }) => {
   const getFileIcon = () => {
-    if (isImageFile({ url, path })) return <img src={url} />;
+    if (isImageFile({ url, path })) return <img alt={path} src={url} />;
     const ext = getFileExtension({ url, path });
-    return <FileIcon size={24} extension={ext} {...defaultStyles[ext]} />;
+    return <MyFile size={24} extension={ext} {...defaultStyles[ext]} />;
   };
 
   return (

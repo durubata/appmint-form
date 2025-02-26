@@ -2,6 +2,7 @@ import { isEmpty } from './common-imports';
 import React, { useEffect, useState } from 'react';
 import * as objectPath from 'object-path';
 import { IconButtonDelete } from '../common/icon-button-delete';
+import { FileThumbnail } from '../common/file-thumbnail';
 
 export const DataViewElement = (props: { data; name; schema }) => {
   const [data, setData] = useState({});

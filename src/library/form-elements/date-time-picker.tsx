@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SelectManyList } from './select-many-list';
 import { toTitleCase } from '../utils';
 
-export const DateTimePicker = (props: { onChange; placeholder?; isRange?; showPreset?; className?; mode; min?; max?; startDate; endDate; readOnly?; disabled?}) => {
+export const DateTimePicker = (props: { onChange?; placeholder?; isRange?; showPreset?; className?; mode?; min?; max?; startDate?; endDate?; readOnly?; disabled?}) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [isRange, setIsRange] = useState(props.isRange || false);

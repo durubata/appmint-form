@@ -4,7 +4,7 @@ import { DateTimePicker } from './date-time-picker';
 export const DateElement = (props: { change; focus; blur; mode; value; schema; path; name; data; reloadValue }) => {
   const [dateTime, setDateTime] = useState<any>();
   let variant = props.schema['format'] || props.schema['x-control-variant'] || 'date';
-  variant = variant === ('datetime' || 'date-time') ? 'date-time' : variant;
+  variant = (variant === 'datetime' || variant === 'date-time') ? 'date-time' : variant;
 
   useEffect(() => {
     if (props.value) {

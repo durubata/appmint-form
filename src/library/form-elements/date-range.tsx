@@ -5,7 +5,7 @@ import { DateTimePicker } from './date-time-picker';
 export const DateRangeElement = (props: { change; focus; blur; mode; value; schema; path; name; data }) => {
   const [dateTime, setDateTime] = useState<any>();
   let variant = props.schema['x-control-variant'] || 'date';
-  variant = variant === ('datetime' || 'date-time') ? 'date-time' : variant;
+  variant = (variant === 'date-time' || variant === 'datetime') ? 'date-time' : variant;
 
   useEffect(() => {
     if (Array.isArray(props.value)) {

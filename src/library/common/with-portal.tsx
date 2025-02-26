@@ -11,28 +11,34 @@ const withPortal = WrappedComponent => {
     }, []);
 
     useEffect(() => {
+      let newContainer;
+      let targetDocument = document;
       if (usePortal) {
         console.log('usePortal', isIframe);
-        const targetDocument = isIframe ? window.top.document : document;
+        targetDocument = isIframe ? window.top.document : document;
 
-        let newContainer = targetDocument.getElementById(id + '-portal');
+        newContainer = targetDocument.getElementById(id + '-portal');
         if (!newContainer) {
           newContainer = targetDocument.createElement('div');
           newContainer.id = id + '-portal';
           targetDocument.body.appendChild(newContainer);
         }
         setContainer(newContainer);
-
-        return () => {
+      }
+      return () => {
+        if (newContainer) {
           if (newContainer && newContainer.childNodes.length === 0) {
             try {
-              targetDocument.body.removeChild(newContainer);
+              if (targetDocument) {
+                targetDocument.body.removeChild(newContainer);
+              }
             } catch (e) {
               console.error(e);
             }
           }
-        };
-      }
+        }
+
+      };
     }, [id, usePortal, isIframe]);
 
     const content = <WrappedComponent {...props} />;
