@@ -20,13 +20,13 @@
   },
   "scripts": {
     "start": "vite build --watch",
-    "dev": "vite build --watch",
     "build": "vite build",
     "test": "vitest run --passWithNoTests",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prepare": "vite build",
     "size": "size-limit",
     "analyze": "size-limit --why",
+    "dev": "vite --config vite.demo.config.ts",
     "demo": "vite --config vite.demo.config.ts",
     "build:demo": "vite build --config vite.demo.config.ts"
   },
