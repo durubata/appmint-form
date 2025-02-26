@@ -1,6 +1,6 @@
 import { Icon, getFormStore, validateFormValue, classNames, isNotEmpty, DataPicker, applyFunction } from './common-imports';
 import React, { useEffect, useState } from 'react';
-import { useSiteStore } from '../context/store';
+import { showNotice, } from '../context/store';
 
 // Stub for restAPI
 const restAPI = {
@@ -9,11 +9,11 @@ const restAPI = {
     return [];
   }
 };
-import shallow from 'zustand/shallow';
+import { useShallow } from 'zustand/shallow';
 
 export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema }) => {
   const { dataPath, schema } = props;
-  const { setItemValue, updateError, getItemValue, getDefaultValue } = getFormStore(props.storeId)(state => ({ setItemValue: state.setItemValue, updateError: state.updateError, getItemValue: state.getItemValue, getDefaultValue: state.getDefaultValue }), shallow);
+  const { setItemValue, updateError, getItemValue, getDefaultValue } = getFormStore(props.storeId)(useShallow(state => ({ setItemValue: state.setItemValue, updateError: state.updateError, getItemValue: state.getItemValue, getDefaultValue: state.getDefaultValue })));
   const [selectedItems, setSelectedItems] = React.useState([]);
   const [pendingConfirm, setPendingConfirm] = React.useState(false);
   const [dataPickerProp, setDataPickerProps] = useState(null);
@@ -78,7 +78,7 @@ export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema })
       const message: string = Object.values(tooManItemsError)
         .map((temp: string) => temp)
         .join(' ');
-      useSiteStore.getState().showNotice(message, 'error');
+      showNotice(message, 'error');
       console.log(tooManItemsError);
       return;
     }
@@ -104,7 +104,7 @@ export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema })
         });
       }
     } else {
-      useSiteStore.getState().showNotice(`Invalid picker schema definition ${schema}`, 'error');
+      showNotice(`Invalid picker schema definition ${schema}`, 'error');
       console.log(`Invalid picker schema definition ${schema}`);
       return;
     }

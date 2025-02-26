@@ -1,7 +1,6 @@
 import React from 'react';
-import { CommonFilePicker } from 'components/common/input/CommonFilePicker';
-import { CustomFileUpload } from 'components/common/input/CommonFileUpload';
 import { isNotEmpty } from '../utils';
+import { CustomFileUpload } from '../common/common-file-upload';
 
 export const FileElement = (props: { change; focus; blur; mode; value; schema; path; name; data }) => {
   let eValue;
@@ -45,18 +44,9 @@ export const FileElement = (props: { change; focus; blur; mode; value; schema; p
   };
 
   const variant = props.schema['x-control-variant'] || 'file';
-  if (variant === 'upload') {
-    return (
-      <div>
-        <CustomFileUpload location={'/'} onFileUpload={handleFileUpload} />
-      </div>
-    );
-  }
-
-  const max = props.schema.type === 'object' ? 1 : props.schema.maxItems ? props.schema.maxItems : undefined;
   return (
-    <div className="w-full shadow border-white border-8 bg-gray-50 p-10">
-      <CommonFilePicker files={eValue} handleFilePicked={handleFilePicked} max={max} hideSelection={props.schema?.hideSelection} />
+    <div>
+      <CustomFileUpload location={'/'} onFileUpload={handleFileUpload} />
     </div>
   );
 };

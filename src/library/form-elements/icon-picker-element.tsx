@@ -1,9 +1,12 @@
-import { Icon, emojiMartCustom, Popover, classNames } from './common-imports';
 import React, { useEffect, useState } from 'react';
 import data_icon from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+import { classNames } from '../utils';
+import { Icon } from './common-imports';
+import { emojiMartCustom } from '../common/icons/emoji-mart-custom';
+import { Popover } from '../common/popover';
 
-export const IconPickerElement = (props: { blur; focus; change; value; path; label; name; data; schema; autoUnselect }) => {
+export const IconPickerElement = (props: { blur?; focus?; change?; value?; path?; label?; name?; data?; schema?; autoUnselect?}) => {
   const { path, name, schema, label } = props;
   const [value, setValue] = useState<any>('');
   const [show, setShow] = useState(false);

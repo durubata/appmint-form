@@ -1,6 +1,7 @@
 export enum DataType {
     form = 'form',
     collection = 'collection',
+    post = 'post',
     // Add other data types as needed
 }
 
@@ -20,6 +21,12 @@ export function FileInfoSchema(): FileInfoSchema {
 }
 
 export interface BaseModelDTO<T> {
+    data: T;
+    total: number;
+    // Add other properties as needed
+}
+
+export interface BaseModel<T> {
     data: T;
     // Add other properties as needed
 }

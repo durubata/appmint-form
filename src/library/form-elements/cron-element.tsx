@@ -1,14 +1,13 @@
-import { Cron } from './common-imports';
 import React from 'react';
 
 export const CronElement = (props: { path; name }) => {
   const prop: any = {};
 
-  const handleUpdate = () => {};
+  const handleUpdate = () => { };
 
   return (
     <div>
-      <Cron value={prop.value} setValue={handleUpdate} />
+      CronElement
     </div>
   );
 };

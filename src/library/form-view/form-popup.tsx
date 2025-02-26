@@ -2,7 +2,7 @@ import { Popover, classNames, Icon, getElementTheme } from './common-imports';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-export const FormPopup = (props: { icon; title; children, theme, ui, popupStyle }) => {
+export const FormPopup = (props: { icon; title; children, theme?, ui?, popupStyle?}) => {
 
   const { classes, style } = (props.ui || {})['popup'] || {};
   const controlTheme = getElementTheme('popup', props.theme);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { isEmpty, getFormStore, elementStyleClassMap, classNames, ElementCommonDesign, toTitleCase, toSentenceCase, ElementCommonView, buttonsActions, getElementTheme } from './common-imports';
+import { isEmpty, getFormStore, elementStyleClassMap, classNames, toTitleCase, toSentenceCase, ElementCommonView, buttonsActions, getElementTheme } from './common-imports';
 import { ElementIcon } from './element-icon';
 
 export const ButtonElement = (props: {
@@ -35,7 +35,7 @@ export const ButtonElement = (props: {
   const isInline = inlineControls.includes(schema['x-control-variant']);
   const iconStarEnd = !(schema.iconPosition === 'beforeLabel' || schema.iconPosition === 'afterLabel');
 
-  const Wrapper: any = props.mode === 'design' ? ElementCommonDesign : ElementCommonView;
+  const Wrapper: any = ElementCommonView;
 
   let info = '';
   if (schema?.validations?.length > 0) {

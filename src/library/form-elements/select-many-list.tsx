@@ -4,7 +4,7 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { classNames } from '../utils';
 import { ElementIcon } from './element-icon';
 
-export const SelectManyList = (props: { blur; change; focus; mode; schema; path; name; data; value; options; dataPath; className; buttonClassName; theme?}) => {
+export const SelectManyList = (props: { blur?; change?; focus?; mode?; schema?; path?; name?; data?; value?; options?; dataPath?; className?; buttonClassName?; theme?}) => {
   const [selected, setSelected] = useState<any>();
 
   useEffect(() => {

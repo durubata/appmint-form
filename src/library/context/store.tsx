@@ -39,6 +39,7 @@ interface FormStoreProps {
   email?: string;
   files: any;
   readOnly?: boolean;
+  dataBindValue?: any;
   repository?: { [key: string]: any };
   notifications?: any[];
   refreshPath?(path: string): void;
@@ -59,7 +60,12 @@ interface FormStoreProps {
   applyRuleResult?: (path?, schema?) => any;
   onChangeCallback?: (path: string, value: any, data: any, files: any, error: any) => void;
   updateRepository?: (path: string, value?: any) => void;
-  showNotice?: (message, type: string) => void;
+}
+
+export const showNotice = (message, type: string) => {
+  if (typeof message !== 'string') return;
+  const notification = { id: getRandomString(6), title: '', message, type, status: 'new' };
+  // set({ notifications: [...(get().notifications || []), notification] });
 }
 
 const createFormStore = () => {
@@ -261,11 +267,6 @@ const createFormStore = () => {
       });
       set({ repository });
     },
-    showNotice: (message, type: string) => {
-      if (typeof message !== 'string') return;
-      const notification = { id: getRandomString(6), title: '', message, type, status: 'new' };
-      set({ notifications: [...(get().notifications || []), notification] });
-    },
   }));
 };
 
@@ -277,35 +278,6 @@ export const getFormStore = (storeId): FormStore => {
   const store = storeMap.get(storeId);
   return store;
 };
-
-// Create a site store for global state management
-interface SiteStoreProps {
-  notifications?: any[];
-  dataFormProps?: any;
-  setStateItem: (item: { [key: string]: any }) => void;
-  showNotice: (message: string, type: string) => void;
-  listAIModels: () => Promise<any[]>;
-}
-
-const createSiteStore = () => {
-  return create<SiteStoreProps>((set, get) => ({
-    notifications: [],
-    dataFormProps: {},
-    setStateItem: (item: { [key: string]: any }) => set((state: any) => ({ ...item })),
-    showNotice: (message, type: string) => {
-      if (typeof message !== 'string') return;
-      const notification = { id: getRandomString(6), title: '', message, type, status: 'new' };
-      set({ notifications: [...(get().notifications || []), notification] });
-    },
-    listAIModels: async () => {
-      console.log('Listing AI models (stub implementation)');
-      return [];
-    }
-  }));
-};
-
-// Export a singleton instance of the site store
-export const useSiteStore = createSiteStore();
 
 
 export const getElementTheme = (name, theme = 'default') => {

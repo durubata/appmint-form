@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Switch } from '@headlessui/react';
 import { classNames } from '../utils';
 
-export const SwitchElement = (props: { change; blur; focus; mode; value; schema; path; name; data }) => {
+export const SwitchElement = (props: { change?; blur?; focus?; mode?; value?; schema?; path?; name?; data?}) => {
   const [enabled, setEnabled] = useState(props.value);
 
   const handleUpdate = update => {

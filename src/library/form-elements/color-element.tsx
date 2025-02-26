@@ -1,4 +1,5 @@
-import { CommonColorPicker, getElementTheme, twMerge } from './common-imports';
+import { CommonColorPicker } from '../common/color-picker';
+import { getElementTheme, twMerge } from './common-imports';
 import React from 'react';
 
 export const ColorElement = (props: { path; name; value; blur, schema, theme, className }) => {

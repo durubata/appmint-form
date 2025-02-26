@@ -46,7 +46,7 @@ export const DataLookupCombo = (props: { schema; change }) => {
     setIsLoading(true);
     requestQueueInstance
       .searchData(datatype, keyword, null)
-      .then(res => {
+      .then((res: any) => {
         setResult(res);
       })
       .catch(e => {
@@ -71,7 +71,7 @@ export const DataLookupCombo = (props: { schema; change }) => {
         handleSearch();
       }, 500);
     } else if (value.length === 0) {
-      setResult([]);
+      setResult({} as any);
       if (debouncedRef.current) {
         clearTimeout(debouncedRef.current);
       }
@@ -139,7 +139,7 @@ export const DataLookupCombo = (props: { schema; change }) => {
         <div className="bg-white rounded-lg shadow-md p-4 max-h-96 overflow-auto mt-2 absolute z-10">
           <div className='flex justify-between items-center'>
             <div className="text-sm font-semibold mb-2">{result?.total} Matching Results:</div>
-            <ButtonCancel handler={() => setResult({})} />
+            <ButtonCancel handler={() => setResult({} as any)} />
           </div>
           <ul className="space-y-2">
             {result?.data.map((result: any) => (

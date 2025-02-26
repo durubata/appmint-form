@@ -1,6 +1,7 @@
-import { isEmpty, FileThumbnail, IconButtonDelete } from './common-imports';
+import { isEmpty } from './common-imports';
 import React, { useEffect, useState } from 'react';
 import * as objectPath from 'object-path';
+import { IconButtonDelete } from '../common/icon-button-delete';
 
 export const DataViewElement = (props: { data; name; schema }) => {
   const [data, setData] = useState({});
@@ -34,7 +35,7 @@ export const DataViewElement = (props: { data; name; schema }) => {
 const primitiveType = ['string', 'number', 'boolean'];
 
 const DataDisplay = (props: { path; pathData }) => {
-  const onDelete = () => {};
+  const onDelete = () => { };
 
   let renderValue;
   if (primitiveType.includes(typeof props.pathData)) {

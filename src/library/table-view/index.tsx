@@ -7,7 +7,6 @@ import { useReactTable, getCoreRowModel, getFilteredRowModel, getPaginationRowMo
 import { rankItem, compareItems } from '@tanstack/match-sorter-utils';
 import { TableFilter } from './table-filter';
 import { TablePagination } from './table-pagination';
-import { useSiteStore } from '../context/store';
 import { TablePresetFilter } from './table-preset-filter';
 import { TableButtons } from './table-buttons';
 import { CollectionTableView } from './view-table';
@@ -243,78 +242,78 @@ export const CollectionTable = (props: {
             setSelectedRows([]);
         } else if (name === 'add') {
             const data = genericService.createBaseData(props.datatype, '');
-            useSiteStore.getState().setStateItem({ dataFormProps: { data, datatype: props.datatype } });
+            .getState().setStateItem({ dataFormProps: { data, datatype: props.datatype } });
         } else if (name === 'datatype') {
-            setDatatype(option);
-        }
+    setDatatype(option);
+}
     };
 
-    const selectRow = e => {
-        const id = e.currentTarget.id;
-        const index = selectedRows.indexOf(id);
-        if (index > -1) {
-            setSelectedRows(selectedRows.filter(row => row !== id));
-        } else {
-            setSelectedRows([...selectedRows, id]);
-        }
-    };
+const selectRow = e => {
+    const id = e.currentTarget.id;
+    const index = selectedRows.indexOf(id);
+    if (index > -1) {
+        setSelectedRows(selectedRows.filter(row => row !== id));
+    } else {
+        setSelectedRows([...selectedRows, id]);
+    }
+};
 
-    const canSearch = props.options?.search !== false;
-    const slimRow = props.options?.slimRow === true || props.options?.compact === true;
-    const showGroup = props.options?.grouping !== false;
-    const showPagination = props.options?.pagination !== false;
-    const cardView = props.options?.cardView === true;
+const canSearch = props.options?.search !== false;
+const slimRow = props.options?.slimRow === true || props.options?.compact === true;
+const showGroup = props.options?.grouping !== false;
+const showPagination = props.options?.pagination !== false;
+const cardView = props.options?.cardView === true;
 
-    const title = typeof props.title === 'undefined' && props.datatype ? toTitleCase(props.datatype) : props.title;
-    return (
-        <div className="h-full w-full overflow-hidden">
-            <div className="px-4 sm:px-6 lg:px-8 h-full w-full">
-                {canSearch && (
-                    <div className="sm:flex sm:items-center mt-6">
-                        <div className="sm:flex-auto">
-                            <h1 className="text-base font-semibold leading-6 text-gray-900">{title || ''}</h1>
-                            <p className="mt-2 text-sm text-gray-700">{props.description}</p>
-                        </div>
-                        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none flex items-center gap-0">
-                            <TableFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} datatype={datatype} onTableEvent={onTableEvent} />
-                            <TableButtons onTableEvent={onTableEvent} options={props.options} selectedRows={selectedRows} />
-                        </div>
+const title = typeof props.title === 'undefined' && props.datatype ? toTitleCase(props.datatype) : props.title;
+return (
+    <div className="h-full w-full overflow-hidden">
+        <div className="px-4 sm:px-6 lg:px-8 h-full w-full">
+            {canSearch && (
+                <div className="sm:flex sm:items-center mt-6">
+                    <div className="sm:flex-auto">
+                        <h1 className="text-base font-semibold leading-6 text-gray-900">{title || ''}</h1>
+                        <p className="mt-2 text-sm text-gray-700">{props.description}</p>
                     </div>
-                )}
-                {(showGroup || props.filterPreset) && (
-                    <div className="lg:flex justify-between items-center gap-6">
-                        {props.filterPreset && <TablePresetFilter filterPreset={props.filterPreset} />}
-                        {showGroup && <TableGroup />}
-                    </div>
-                )}
-                <div
-                    className={classNames(
-                        canSearch && showGroup ? 'h-[calc(100%-300px)] ' : canSearch && !showGroup ? 'h-[calc(100%-150px)] ' : !canSearch && showGroup ? 'h-[calc(100%-150px)]' : 'h-[calc(100%-90px)]',
-                        'mt-8 flow-root w-full overflow-auto',
-                    )}
-                >
-                    <div className="-mx-4 -my-2  sm:-mx-6 lg:-mx-8">
-                        {cardView ? (
-                            <CollectionTableCardView
-                                table={table}
-                                selectRow={selectRow}
-                                selectedRows={selectedRows}
-                                slimRow={slimRow}
-                                onRowEvent={props.onRowEvent}
-                                options={props.options}
-                                itemRenderer={props.itemRenderer}
-                                onRowDataEvent={onRowDataEvent}
-                                datatype={props.datatype}
-                            />
-                        ) : (
-                            <CollectionTableView table={table} selectRow={selectRow} selectedRows={selectedRows} slimRow={slimRow} onRowEvent={props.onRowEvent} options={props.options} onRowDataEvent={onRowDataEvent} datatype={props.datatype} />
-                        )}
+                    <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none flex items-center gap-0">
+                        <TableFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} datatype={datatype} onTableEvent={onTableEvent} />
+                        <TableButtons onTableEvent={onTableEvent} options={props.options} selectedRows={selectedRows} />
                     </div>
                 </div>
-                {showPagination && <TablePagination table={table} />}
+            )}
+            {(showGroup || props.filterPreset) && (
+                <div className="lg:flex justify-between items-center gap-6">
+                    {props.filterPreset && <TablePresetFilter filterPreset={props.filterPreset} />}
+                    {showGroup && <TableGroup />}
+                </div>
+            )}
+            <div
+                className={classNames(
+                    canSearch && showGroup ? 'h-[calc(100%-300px)] ' : canSearch && !showGroup ? 'h-[calc(100%-150px)] ' : !canSearch && showGroup ? 'h-[calc(100%-150px)]' : 'h-[calc(100%-90px)]',
+                    'mt-8 flow-root w-full overflow-auto',
+                )}
+            >
+                <div className="-mx-4 -my-2  sm:-mx-6 lg:-mx-8">
+                    {cardView ? (
+                        <CollectionTableCardView
+                            table={table}
+                            selectRow={selectRow}
+                            selectedRows={selectedRows}
+                            slimRow={slimRow}
+                            onRowEvent={props.onRowEvent}
+                            options={props.options}
+                            itemRenderer={props.itemRenderer}
+                            onRowDataEvent={onRowDataEvent}
+                            datatype={props.datatype}
+                        />
+                    ) : (
+                        <CollectionTableView table={table} selectRow={selectRow} selectedRows={selectedRows} slimRow={slimRow} onRowEvent={props.onRowEvent} options={props.options} onRowDataEvent={onRowDataEvent} datatype={props.datatype} />
+                    )}
+                </div>
             </div>
+            {showPagination && <TablePagination table={table} />}
         </div>
-    );
+    </div>
+);
 };
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {

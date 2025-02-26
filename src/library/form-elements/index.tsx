@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ButtonElement, elementToNameMap } from './all-elements';
 import { ElementWrapperControl } from './element-wrapper-control';
-import { getElementTheme, getFormStore } from '../context/store';
+import { getElementTheme, getFormStore, showNotice } from '../context/store';
 import { ControlType, deepCopy, isNotEmpty, toSentenceCase, toTitleCase } from '../utils';
 import { FormCollapsible } from '../form-view/form-collapsible';
 import { FormPopup } from '../form-view/form-popup';
-import { useSiteStore } from '../context/store';
 import { cleanControlType, getControlType, getWatchedPaths, applyFormTransform, applyFunction, runElementRules, runFormRules, validateFormValue, twMerge, objectPath } from './common-imports';
-import shallow from 'zustand/shallow';
+import shallow, { useShallow } from 'zustand/shallow';
 
 // Stubs for missing dependencies
 const requestQueueInstance = {
@@ -29,10 +28,9 @@ export const FormElementRender = (props: { storeId; theme?: any; mode: string; n
   const dataPath = props.dataPath ? props.dataPath : `${props.dataPath}.${name}`;
   const parentPath = dataPath.includes('.') ? dataPath.split('.').slice(0, -1).join('.') : '';
 
-  const { dataPathTimestamp, theme: formTheme, datatype, storeId, activeDataPath, readOnly } = getFormStore(props.storeId)(state => ({ dataPathTimestamp: state.timestamp?.[dataPath], theme: state.theme, datatype: state.datatype, storeId: state.storeId, activeDataPath: state.activeDataPath, readOnly: state.readOnly }), shallow);
+  const { dataPathTimestamp, theme: formTheme, datatype, storeId, activeDataPath, readOnly, dataBindValue } = getFormStore(props.storeId)(useShallow(state => ({ dataPathTimestamp: state.timestamp?.[dataPath], theme: state.theme, datatype: state.datatype, storeId: state.storeId, activeDataPath: state.activeDataPath, readOnly: state.readOnly, dataBindValue: state.dataBindValue })));
   const { rules, getItemValue, setStateItem, applyRuleResult, getDefaultValue, setItemValue, updateError, getError, getSchemaItem, updateRepository } = getFormStore(props.storeId).getState();
   let schema = deepCopy(props.schema || getSchemaItem(path));
-  const { dataBindValue, repository } = getFormStore(props.storeId)(state => ({ dataBindValue: schema?.dataBind ? objectPath.get(state.repository, schema?.dataBind) : '', repository: state.repository }), shallow);
 
   const theme = props.theme || formTheme;
   const [ruleActions, setRuleActions] = useState<any>({});
@@ -131,7 +129,7 @@ export const FormElementRender = (props: { storeId; theme?: any; mode: string; n
           }
         } catch (error) {
           const errorMessage = error?.response?.data?.message || error?.response?.data?.error || error.message;
-          useSiteStore.getState().showNotice(errorMessage, 'error');
+          showNotice(errorMessage, 'error');
           updateError(dataPath, ' must be unique, error: ' + errorMessage);
         }
       }

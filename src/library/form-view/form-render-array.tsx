@@ -75,7 +75,7 @@ export const FormRenderArray = (props: { storeId; path; dataPath; parentDataPath
   const showIndex = typeof schema.showIndex === 'undefined' ? true : schema.showIndex;
 
   const arrayControl = (index) => ({
-    delete: <ButtonDelete deleteHandler={e => removeArrayItem(e, valuePath, index)} className="shrink-0 w-4 h-4" icon='FaXmark' iconColor='red' unStyled={true} />,
+    delete: <ButtonDelete deleteHandler={e => removeArrayItem(e, valuePath, index)} className="shrink-0 w-4 h-4" iconColor='red' unStyled={true} />,
     index: showIndex ? index + 1 : ''
   })
   return (

@@ -23,23 +23,6 @@ import { formLayouts } from '../context/store';
 import { diff } from 'deep-object-diff';
 
 // Stubs for missing imports
-const tabButtonActiveClass = 'bg-blue-500 text-white';
-const tabButtonClass = 'bg-gray-200 text-gray-700';
-const DataPicker = (props: {
-  dataPickerState: any;
-  closeButton: () => void;
-  selectButton: (selectedItems: any) => void;
-  selectedIds: any[]
-}) => null;
-const ButtonAdd = () => null;
-const ButtonDelete = () => null;
-const LoadingIndicator = () => null;
-const useAIButtons = () => ({
-  buttons: [],
-  aiButtons: [],
-  setAIButtonConfig: (config: any) => { }
-});
-// Stubs for missing dependencies
 const CollectionHelper = {
   getInstance: () => ({
     getAll: (includeData = false) => [],
@@ -78,6 +61,11 @@ import { localStorageUtils } from '../utils/localstorage';
 import { Icon } from '../common/icons/icon';
 import { iconType } from '../common/icons/list';
 import { Popover } from '../common/popover';
+import { tabButtonActiveClass, tabButtonClass } from '../common/constants';
+import { DataPicker } from '../common/data-picker';
+import { ButtonAdd } from '../common/button-add';
+import { ButtonDelete } from '../common/button-delete';
+import { LoadingIndicator } from '../common/loading-indicator';
 // Export all individual imports without combining names from the same path
 export {
   validateForm,
@@ -111,7 +99,6 @@ export {
   LoadingIndicator,
   objectPath,
   Ajv,
-  useAIButtons,
   validateFormValue,
   getRandomString,
   FormPicker,

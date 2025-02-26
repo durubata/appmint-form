@@ -1,6 +1,5 @@
 import { classNames } from './common-imports';
 import React, { useEffect, useRef, useState } from 'react';
-import anime from 'animejs';
 export const FormLayoutSliderAnimation = ({ direction = 'horizontal', slideIndex, items, getView }) => {
   const scrollContainerRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -22,13 +21,13 @@ export const FormLayoutSliderAnimation = ({ direction = 'horizontal', slideIndex
     const newIndex = Math.max(0, Math.min(index, items.length - 1));
     setCurrentIndex(newIndex);
 
-    anime({
-      targets: scrollContainerRef.current,
-      translateX: direction === 'horizontal' ? -newIndex * dim.width : 0,
-      translateY: direction === 'vertical' ? -newIndex * dim.height : 0,
-      easing: 'spring(1, 80, 15, 10)', // This will create a spring-like effect
-      duration: 100, // Adjust duration according to your needs
-    });
+    // anime({
+    //   targets: scrollContainerRef.current,
+    //   translateX: direction === 'horizontal' ? -newIndex * dim.width : 0,
+    //   translateY: direction === 'vertical' ? -newIndex * dim.height : 0,
+    //   easing: 'spring(1, 80, 15, 10)', // This will create a spring-like effect
+    //   duration: 100, // Adjust duration according to your needs
+    // });
   };
 
   useEffect(() => {

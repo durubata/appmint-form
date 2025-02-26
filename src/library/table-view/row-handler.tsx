@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSiteStore } from '../context/store';
+import { showNotice } from '../context/store';
 
 // Stubs for missing components
 const IconButtonDelete = (props) => (
@@ -57,7 +57,7 @@ export const RowHandler: React.FC<any> = (props: { options?; row; onRowEvent: (e
             await requestQueueInstance
                 .deleteData(props.datatype, row.original.sk)
                 .then(res => {
-                    useSiteStore.getState().showNotice(props.datatype.toUpperCase() + ' deleted', 'info');
+                    showNotice(props.datatype.toUpperCase() + ' deleted', 'info');
                     if (props.onRowDataEvent) {
                         props.onRowDataEvent('delete', row.original.sk, row);
                     }
@@ -92,7 +92,7 @@ export const RowHandler: React.FC<any> = (props: { options?; row; onRowEvent: (e
             });
 
         if (props.datatype) {
-            useSiteStore.getState().setStateItem({ dataFormProps: { data: data, datatype: props.datatype } });
+            // useSiteStore.getState().setStateItem({ dataFormProps: { data: data, datatype: props.datatype } });
         }
         console.log('rowEditHandler', row);
     };

@@ -27,9 +27,6 @@ import { LegalConsentElement } from './legal-concent';
 import { DateRangeElement } from './date-range';
 import { DataViewElement } from './data-view-element';
 import { DataLookupCombo } from './data-lookup-combo';
-import { FontPickerElement } from './font-picker-element';
-import { ElementCommonDesign } from './element-common-design';
-import { ElementCommonView } from './element-common-view';
 
 export * from './color-element';
 export * from './code-element';
@@ -91,6 +88,5 @@ export const elementToNameMap = {
   sociallinks: SocialLinksElement,
   legalconsent: LegalConsentElement,
   lookup: DataLookupCombo,
-  font: FontPickerElement,
   default: ({ name }) => <div>Unknown element {name}</div>,
 };

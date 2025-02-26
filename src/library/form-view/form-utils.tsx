@@ -1,7 +1,7 @@
 import { isJsonString, getCountryRegions, getCountryDropDownOptions, isNotEmpty, toSentenceCase, toTitleCase, themeSettingsList } from '../utils';
 import * as objectPath from 'object-path';
 import { validateValue } from './form-validator';
-import { useSiteStore } from '../context/store';
+import { } from '../context/store';
 
 // Stubs for missing dependencies
 const CollectionHelper = {
@@ -73,7 +73,7 @@ export const getSelectOptions = async (dataSource, data, arrayIndex?) => {
     } else if (dValue === 'getThemeSettingsList'.toLowerCase() || dValue === 'theme-settings') {
       options = themeSettingsList.map(row => ({ value: row.name, label: row.name }));
     } else if (dValue === 'listAIModels'.toLowerCase() || dValue === 'ai-models') {
-      options = await useSiteStore.getState().listAIModels();
+      // options = await listAIModels();
     }
   } else if (dataSource.source === 'json') {
     options = dataSource.json || dataSource.value;

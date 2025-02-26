@@ -1,5 +1,5 @@
 // Removed unused import
-import { getElementTheme, getFormStore, LoadingIndicator, ElementCommonView, FormRender, classNames, deepCopy, validateForm, useAIButtons, FormCollapsible, isNotEmpty, tabButtonActiveClass, tabButtonClass } from './common-imports';
+import { getElementTheme, getFormStore, LoadingIndicator, ElementCommonView, FormRender, classNames, deepCopy, validateForm, FormCollapsible, isNotEmpty, tabButtonActiveClass, tabButtonClass } from './common-imports';
 import React, { useEffect } from 'react';
 
 export const CollectionForm = (props: { demo?; data?; path?; title?; schema?; rules?; theme?; accessMode?; id?; datatype?; icon?; readOnly?; hash?; useAI?; collapsible?; onChange?: (path, value, data, files, error) => void }) => {
@@ -9,12 +9,7 @@ export const CollectionForm = (props: { demo?; data?; path?; title?; schema?; ru
     activePage: state.activePage
   }));
   const { schema, initForm, getItemValue, getSchemaItem, setStateItem, getError, updateError } = getFormStore(storeId).getState();
-  const { aiButtons, setAIButtonConfig } = useAIButtons();
 
-  useEffect(() => {
-    // setSchemaItem({ watchedPaths: {} });
-    setAIButtonConfig({ onUpdate: aiUpdate, schema: props.schema });
-  }, [storeId]);
 
   useEffect(() => {
     const { data = {}, path, schema, rules, theme, accessMode, datatype, onChange, readOnly } = props;
@@ -142,7 +137,6 @@ export const CollectionForm = (props: { demo?; data?; path?; title?; schema?; ru
           {title}
         </ElementCommonView>
       )}
-      {props.useAI && aiButtons}
       <ElementCommonView id={props.datatype} path="" name="cb-form" ui={schema['x-ui']} theme={props.theme} className={classNames(formTheme.className, ' cb-form ')}>
         {errorMsg && (
           <ElementCommonView ui={schema['x-ui']} path="" name="cb-form-error" className="cb-control-help text-xs text-red-400 max-w-screen-sm mx-auto">

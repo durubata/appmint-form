@@ -1,4 +1,4 @@
-import { classNames, isEmpty, toSentenceCase, toTitleCase, ElementCommonDesign, ElementCommonView, elementStyleClassMap, getElementTheme } from './common-imports';
+import { classNames, isEmpty, toSentenceCase, toTitleCase, ElementCommonView, elementStyleClassMap, getElementTheme } from './common-imports';
 import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ElementIcon } from './element-icon';
@@ -39,7 +39,7 @@ export const ElementWrapperControl = (props: {
   const isInline = inlineControls.includes(schema['x-control-variant']);
   const iconStarEnd = !(schema.iconPosition === 'beforeLabel' || schema.iconPosition === 'afterLabel');
 
-  const Wrapper: any = props.mode === 'design' ? ElementCommonDesign : ElementCommonView;
+  const Wrapper: any = ElementCommonView;
 
   let info = '';
   if (schema?.validations?.length > 0) {

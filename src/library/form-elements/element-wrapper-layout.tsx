@@ -1,5 +1,5 @@
 import React from 'react';
-import { classNames, isEmpty, toSentenceCase, toTitleCase, ElementCommonDesign, ElementCommonView, getElementTheme, twMerge } from './common-imports';
+import { classNames, isEmpty, toSentenceCase, toTitleCase, ElementCommonView, getElementTheme, twMerge } from './common-imports';
 import { FormCollapsible } from '../form-view/form-collapsible';
 import { FormPopup } from '../form-view/form-popup';
 import { ElementIcon } from './element-icon';
@@ -20,7 +20,7 @@ export const ElementWrapperLayout = (props: {
 
   const iconPosition = schema.iconPosition || 'start';
   const labelPosition = schema.labelPosition || 'top';
-  const Wrapper = props.mode === 'design' ? ElementCommonDesign : ElementCommonView;
+  const Wrapper = ElementCommonView;
 
   const controlHelpTheme = getElementTheme('-help', props.theme);
   const description = schema.description ? (

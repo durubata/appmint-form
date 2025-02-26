@@ -1,4 +1,4 @@
-import { useSiteStore } from '../context/store';
+import { showNotice, } from '../context/store';
 import { validateForm, getFormStore, runFormRules, applyFunction, DataType } from './common-imports';
 
 // Stub for genericService
@@ -26,16 +26,16 @@ export const buttonsActions = {
           .getState()
           .updateBulkError(validation as any);
         console.error('Form validation failed', validation);
-        useSiteStore.getState().showNotice(validation.message, 'error');
+        showNotice(validation.message, 'error');
         return;
       }
       const baseData = genericService.createBaseData(collectionForm?.data?.name, '');
       baseData.author = email;
       baseData.data = formData;
       baseData.owner = { datatype: DataType.form, id: collectionForm?.data.name };
-      // const response = await useSiteStore.getState().request(appEndpoints.crm_collection_form_submit.name, baseData, `${collectionForm.data.name}/${userEmail}`);
+      // const response = await .getState().request(appEndpoints.crm_collection_form_submit.name, baseData, `${collectionForm.data.name}/${userEmail}`);
       console.log('submit-form response', baseData, `${collectionForm?.data.name}/${email}`);
-      useSiteStore.getState().showNotice('Form was successful submitted', 'success');
+      showNotice('Form was successful submitted', 'success');
       // return response
     },
   },
@@ -46,9 +46,7 @@ export const buttonsActions = {
       const validation = validateForm(formData, formSchema);
       if (!validation.valid) {
         console.error('Form validation failed', validation);
-        useSiteStore.getState().showNotice(validation.message, 'error');
       } else {
-        useSiteStore.getState().showNotice('Form data is valid', 'success');
       }
       return validation;
     },
