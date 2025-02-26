@@ -1,18 +1,14 @@
-import React from "react";
-import MDEditor from "@uiw/react-md-editor"
+import React from 'react';
 
-export const MarkdownElement = (props: { path, name }) => {
-  const prop: any = {}
 
-  const handleUpdate = (emoji: any) => {
-  };
+
+export const MarkdownElement = (props: { path; name, validate, Value, change, blur, className, ui, theme }) => {
+
 
   return (
-    <div >
-      <MDEditor onChange={handleUpdate} textareaProps={{ placeholder: "Please enter Markdown text" }}
-        height={600}
-        value={'# Mermaid\n'}
-      />
+    <div>
+      MarkdownElement
     </div>
   );
 };
+

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getRandomString } from '../utils';
-import { Icon } from './icons/list';
+import { Icon } from './icons/icon';
 
 export const IconButtonDelete = (props: { deleteHandler; variant?; controlRef?; className?; style?, color?; size?}) => {
   const [isActive, setActive] = useState(false);

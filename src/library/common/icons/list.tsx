@@ -32,35 +32,35 @@ import * as iconLu from 'react-icons/lu';
 
 export const icons = {
     ...iconFa,
-    ...iconFa6,
-    ...iconAi,
-    ...iconBs,
-    ...iconBi,
-    ...iconCi,
-    ...iconDi,
-    ...iconFi,
-    ...iconFc,
-    ...iconGi,
-    ...iconGo,
-    ...iconGr,
-    ...iconHi,
-    ...iconHi2,
-    ...iconIm,
-    ...iconIo,
-    ...iconIo5,
-    ...iconMd,
-    ...iconRx,
-    ...iconRi,
-    ...iconSi,
-    ...iconSl,
-    ...iconTb,
-    ...iconTfi,
-    ...iconTi,
-    ...iconVsc,
-    ...iconWi,
-    ...iconCg,
-    ...iconPi,
-    ...iconLu
+    // ...iconFa6,
+    // ...iconAi,
+    // ...iconBs,
+    // ...iconBi,
+    // ...iconCi,
+    // ...iconDi,
+    // ...iconFi,
+    // ...iconFc,
+    // ...iconGi,
+    // ...iconGo,
+    // ...iconGr,
+    // ...iconHi,
+    // ...iconHi2,
+    // ...iconIm,
+    // ...iconIo,
+    // ...iconIo5,
+    // ...iconMd,
+    // ...iconRx,
+    // ...iconRi,
+    // ...iconSi,
+    // ...iconSl,
+    // ...iconTb,
+    // ...iconTfi,
+    // ...iconTi,
+    // ...iconVsc,
+    // ...iconWi,
+    // ...iconCg,
+    // ...iconPi,
+    // ...iconLu
 } as const;
 
 export type IconKeys = keyof typeof icons;
@@ -72,25 +72,3 @@ export const iconType: Record<IconKeys, IconKeys> = Object.keys(icons).reduce(
     },
     {} as Record<IconKeys, IconKeys>,
 );
-
-export const Icon = (props: {
-    name: IconKeys;
-    size?: number;
-    color?: string;
-    className?: string;
-    ref?: React.Ref<SVGSVGElement>;
-    onClick?: () => void;
-}) => {
-    const Icon = icons[props.name] as any;
-    if (!Icon) return null;
-    return (
-        <Icon
-            size={props.size}
-            color={props.color}
-            className={props.className}
-            aria-hidden={true}
-            ref={props.ref}
-            onClick={props.onClick}
-        />
-    );
-};

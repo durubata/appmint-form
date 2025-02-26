@@ -1,65 +1,53 @@
+import { isNotEmpty, dotPathToDash, twMerge, getElementTheme } from './common-imports';
 import React, { useEffect } from 'react';
-import { classNames, isNotEmpty } from '../utils';
-import { dotPathToDash } from './element-helpers';
-import { useElementSelector } from '../common/basic-context';
 
-export const ElementCommonView = (props: { className?, tag?, ui?, path, name?, children?, alt?, src?}) => {
-  const dashPath = dotPathToDash(props.path, props.name)
-
-  const [element] = useElementSelector()
-
-  useEffect(() => {
-
-  }, [])
-
-  const clickHandler = (e) => {
+export const ElementCommonView = (props: { id?; readOnly?; disabled?; className?; tag?; ui?; path; theme?; name?; children?; alt?; src?; onClick?}) => {
+  let dashPath = '';
+  if (!dotPathToDash) {
+    console.error('dotPathToDash is not defined', { id: props.id, path: props.path, name: props.name });
+    throw new Error('dotPathToDash is not defined');
+  } else {
+    dashPath = dotPathToDash(props?.path, props?.name);
   }
 
-  const onDoubleClick = (e) => {
+  useEffect(() => { }, []);
 
-  }
+  const clickHandler = e => {
+    if (props.onClick) {
+      props.onClick(e);
+    }
+  };
 
-  const onBlur = (e) => {
-  }
+  const onDoubleClick = e => { };
 
+  const onBlur = e => { };
 
   let styleObj: any = {};
   if (props.ui && props.name) {
-    styleObj = props.ui[props.name] || {}
+    styleObj = props.ui[props.name] || {};
   } else if (props.ui) {
-    styleObj = props.ui || {}
+    styleObj = props.ui || {};
   }
-  let { classes, style, data, animation } = styleObj
+  const theme = getElementTheme(props.name, props.theme)
 
-  const TAG = props.tag || 'div';
+  let { classes, style } = styleObj;
 
-  let cls = classNames(`element-common`, Array.isArray(classes) && classes.join(' '), props.className)
-  if (cls.indexOf('w-') === -1) cls += ' w-full'
-  cls = cls.replaceAll('element-secondary-border', '')
-  cls = cls.replaceAll('element-click-border', '')
-  cls = cls.replaceAll('element-hover-border', '')
+  let cls = twMerge(` w-full element-common`, props.className, theme?.className, Array.isArray(classes) && classes.join(' '));
+  cls = cls.replaceAll('element-secondary-border', '');
+  cls = cls.replaceAll('element-click-border', '');
+  cls = cls.replaceAll('element-hover-border', '');
 
-  const getAttribs = () => {
-    const attribs = {};
-    if (isNotEmpty(data?.action)) {
-      attribs['data-action'] = JSON.stringify(data?.action)
-    }
+  const elementProps = {
+    'data-ui-name': props.name,
+    readOnly: props.readOnly,
+    id: props.id || dashPath,
+    className: cls,
+    onClick: clickHandler,
+    onBlur: onBlur,
+    onDoubleClick: onDoubleClick,
+    style: style,
+    disabled: props.disabled
+  };
 
-    if (element.current?.id?.startsWith('slider-') && element.current?.classList?.contains('swiper') && data?.slider) {
-      attribs['data-slider'] = JSON.stringify(data?.slider)
-    }
-
-    if (isNotEmpty(animation)) {
-      attribs['data-animation'] = true
-    }
-    return attribs;
-  }
-  const renderTag = () => {
-    if (props.children) {
-      return <TAG id={dashPath} {...getAttribs()} onBlur={onBlur} onDoubleClick={onDoubleClick} ref={element} className={cls} onClick={clickHandler} style={style} >{props.children}</TAG>
-    } else {
-      return <TAG id={dashPath} {...getAttribs()} ref={element} className={cls} onClick={clickHandler} style={style} src={props.src} alt={props.alt} />
-    }
-  }
-  return renderTag()
-}
+  return React.createElement(props.tag || 'div', elementProps, props.children);
+};

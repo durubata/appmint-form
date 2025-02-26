@@ -1,8 +1,8 @@
 import { getRandomString } from '../utils';
 import React, { useState, useEffect, useRef } from 'react';
-import { Icon } from './icons/list';
+import { Icon } from '../form-elements/common-imports';
 
-export const ButtonDelete = (props: { deleteHandler; controlRef?; className?; style?, unStyled?, reset?, size?}) => {
+export const ButtonDelete = (props: { deleteHandler; icon?; iconColor?; controlRef?; className?; style?, unStyled?, reset?, size?}) => {
   const [isActive, setActive] = useState(false);
   const { deleteHandler, controlRef, className, style, unStyled } = props;
   const ref = useRef(null);

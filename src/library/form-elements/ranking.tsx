@@ -13,12 +13,11 @@ interface RankingControlProps {
   getOptionIconOrImage: (option: OptionType) => JSX.Element | null;
 }
 
-export const RankingInput = (props: { update, mode, schema, path, name, data }) => {
+export const RankingInput = (props: { update; mode; schema; path; name; data }) => {
   const [rankings, setRankings] = useState<Record<string, number>>({});
 
-  const options: any = props.schema?.options || []
-  const topics: any = props.schema?.topics || []
-
+  const options: any = props.schema?.options || [];
+  const topics: any = props.schema?.topics || [];
 
   // useEffect(() => {
   //   // Initialize rankings
@@ -34,56 +33,19 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
     // onChange({ ...rankings, [optionName]: rank });
   };
 
-  const getInput = (option) => {
+  const getInput = option => {
     switch (props.schema['x-control-variant']) {
       case 'checkbox':
-        return (
-          <input
-            title={option.label}
-            type="checkbox"
-            value={rankings[option.value]}
-            onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
-            className="border border-gray-300 rounded px-2 py-1 text-gray-700 h-4 w-4"
-          />
-        );
+        return <input type="checkbox" value={rankings[option.value]} onChange={e => handleSelectChange(option.value, parseInt(e.target.value))} className="border border-gray-300 rounded px-2 py-1 text-gray-700 h-4 w-4" />;
       case 'radio':
-        return (
-          <input
-            type="radio"
-            title={option.label}
-            value={rankings[option.value]}
-            onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
-            className="border border-gray-300 rounded px-2 py-1 text-gray-700 h-4 w-4"
-          />
-        );
+        return <input type="radio" value={rankings[option.value]} onChange={e => handleSelectChange(option.value, parseInt(e.target.value))} className="border border-gray-300 rounded px-2 py-1 text-gray-700 h-4 w-4" />;
       case 'slider':
-        return (
-          <input
-            type="range"
-            title={option.label}
-            value={rankings[option.value]}
-            onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
-            className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full"
-          />
-        );
+        return <input type="range" value={rankings[option.value]} onChange={e => handleSelectChange(option.value, parseInt(e.target.value))} className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full" />;
       case 'number':
-        return (
-          <input
-            type="number"
-            title={option.label}
-            value={rankings[option.value]}
-            onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
-            className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full"
-          />
-        );
+        return <input type="number" value={rankings[option.value]} onChange={e => handleSelectChange(option.value, parseInt(e.target.value))} className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full" />;
       default:
         return (
-          <select
-            title={option.label}
-            value={rankings[option.value]}
-            onChange={(e) => handleSelectChange(option.value, parseInt(e.target.value))}
-            className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full"
-          >
+          <select value={rankings[option.value]} onChange={e => handleSelectChange(option.value, parseInt(e.target.value))} className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-full">
             {options.map((_, i) => (
               <option key={i} value={i + 1}>
                 {i + 1}
@@ -92,7 +54,7 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
           </select>
         );
     }
-  }
+  };
 
   return (
     <div className="w-full">
@@ -102,7 +64,7 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
             <div key={topic.value} className="flex items-center justify-center">
               <span className="mr-2">{topic.label}</span>
             </div>
-          )
+          );
         })}
         {options?.map((option, index) => {
           return (
@@ -111,14 +73,10 @@ export const RankingInput = (props: { update, mode, schema, path, name, data }) 
                 <span className="mr-2">{option.label}</span>
               </div>
               {topics?.map((topic, index) => {
-                return (
-                  <div className=' items-center justify-center p-2 w-full text-center'>
-                    {getInput(option)}
-                  </div>
-                )
+                return <div className=" items-center justify-center p-2 w-full text-center">{getInput(option)}</div>;
               })}
             </>
-          )
+          );
         })}
       </div>
     </div>

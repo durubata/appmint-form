@@ -1,21 +1,30 @@
 {
   "version": "0.1.0",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/appmint-form.cjs.js",
+  "module": "dist/appmint-form.es.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/appmint-form.es.js",
+      "require": "./dist/appmint-form.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "engines": {
     "node": ">=18"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "start": "vite build --watch",
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "prepare": "vite build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
@@ -24,7 +33,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "eslint src --ext ts,tsx"
     }
   },
   "prettier": {
@@ -35,28 +44,42 @@
   },
   "name": "@appmint/form",
   "author": "Jac Light",
-  "module": "dist/appmint-form.esm.js",
   "size-limit": [
     {
-      "path": "dist/appmint-form.cjs.production.min.js",
+      "path": "dist/appmint-form.cjs.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/appmint-form.esm.js",
+      "path": "dist/appmint-form.es.js",
       "limit": "10 KB"
     }
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^11.1.4",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
     "@types/react": "^18.3.3",
+    "@types/react-color": "^2",
     "@types/react-dom": "^18.3.0",
+    "@types/react-file-icon": "^1",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react": "^7.37.4",
     "husky": "^9.0.11",
+    "jsdom": "^26.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "size-limit": "^11.1.4",
     "tsdx": "^0.14.1",
     "tslib": "^2.6.3",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vite": "^6.2.0",
+    "vite-plugin-dts": "^4.5.0",
+    "vite-plugin-lib-inject-css": "^2.2.1",
+    "vitest": "^3.0.7"
   },
   "repository": {
     "type": "git",
@@ -68,18 +91,25 @@
     "@emoji-mart/react": "^1.1.1",
     "@faker-js/faker": "^8.4.1",
     "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.2.0",
     "@monaco-editor/react": "^4.6.0",
     "@tanstack/match-sorter-utils": "^8.15.1",
     "@tanstack/react-table": "^8.19.2",
     "@tinymce/tinymce-react": "^5.1.1",
     "@uiw/react-md-editor": "^4.0.4",
     "axios": "^1.7.2",
+    "deep-object-diff": "^1.1.9",
     "immer": "^10.1.1",
     "leaflet": "^1.9.4",
     "object-path": "^0.11.8",
+    "react-best-gradient-color-picker": "^3.0.14",
+    "react-color": "^2.19.3",
+    "react-file-icon": "^1.6.0",
     "react-icons": "^5.2.1",
-    "react-leaflet": "^4.2.1",
+    "solid": "link:@heroicons/react/20/solid",
+    "tailwind-merge": "^3.0.2",
     "uuid": "^10.0.0",
-    "zustand": "^4.5.4"
-  }
+    "zustand": "5.0.2"
+  },
+  "packageManager": "yarn@4.6.0"
 }

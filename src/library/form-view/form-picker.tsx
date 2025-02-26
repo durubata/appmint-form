@@ -1,14 +1,19 @@
+import { Icon, getFormStore, validateFormValue, classNames, isNotEmpty, DataPicker, applyFunction } from './common-imports';
 import React, { useEffect, useState } from 'react';
-import { useFormStore } from './form-store';
-import { validateFormValue } from './form-validator';
-import { classNames, isNotEmpty } from '../utils';
-// import { DataPicker } from 'components/data-view/data-picker';
-import { applyFunction } from './form-transforms';
-import { Icon } from '../common/icons/list';
+import { showNotice, } from '../context/store';
 
-export const FormPicker = (props: { dataPath, schema }) => {
+// Stub for restAPI
+const restAPI = {
+  getDataFromUrl: async (url: string) => {
+    console.log(`Fetching data from URL: ${url}`);
+    return [];
+  }
+};
+import { useShallow } from 'zustand/shallow';
+
+export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema }) => {
   const { dataPath, schema } = props;
-  const { setItemValue, updateError, getItemValue, getDefaultValue } = useFormStore(state => state, (ov, nv) => { return ov.schema === nv.schema });
+  const { setItemValue, updateError, getItemValue, getDefaultValue } = getFormStore(props.storeId)(useShallow(state => ({ setItemValue: state.setItemValue, updateError: state.updateError, getItemValue: state.getItemValue, getDefaultValue: state.getDefaultValue })));
   const [selectedItems, setSelectedItems] = React.useState([]);
   const [pendingConfirm, setPendingConfirm] = React.useState(false);
   const [dataPickerProp, setDataPickerProps] = useState(null);
@@ -25,21 +30,19 @@ export const FormPicker = (props: { dataPath, schema }) => {
     if (schema.dataSource?.source === 'collection') {
       setCollectionName(schema.dataSource.value);
     }
-    // if (schema.dataSource?.source === 'url') {
-    //   (async () => {
-    //     const newDataRow = await restAPI.getDataFromUrl(schema.dataSource.url);
-    //     setSourceData(newDataRow);
-    //   })();
-    // } else if (schema.dataSource?.source === 'json') {
-    //   if (typeof schema.dataSource.json === 'string') {
-    //     setSourceData(JSON.parse(schema.dataSource.json));
-    //   } else {
-    //     setSourceData(schema.dataSource.json);
-    //   }
-    // }
+    if (schema.dataSource?.source === 'url') {
+      (async () => {
+        const newDataRow = await restAPI.getDataFromUrl(schema.dataSource.url);
+        setSourceData(newDataRow);
+      })();
+    } else if (schema.dataSource?.source === 'json') {
+      if (typeof schema.dataSource.json === 'string') {
+        setSourceData(JSON.parse(schema.dataSource.json));
+      } else {
+        setSourceData(schema.dataSource.json);
+      }
+    }
   }, []);
-
-
   const clearAll = () => {
     if (pendingConfirm) {
       console.log('clearAll button');
@@ -51,7 +54,7 @@ export const FormPicker = (props: { dataPath, schema }) => {
         setPendingConfirm(false);
       }, 3000);
     }
-  }
+  };
 
   const pickData = () => {
     const maxItems = schema.type === 'object' ? 1 : schema.maxItems;
@@ -65,10 +68,8 @@ export const FormPicker = (props: { dataPath, schema }) => {
       rowData: sourceData,
     });
   };
-
-
   const updateSelected = selectedItems => {
-    updateError(dataPath, null)
+    updateError(dataPath, null);
     if (schema.maxItems > 0 && selectedItems && selectedItems.length > schema.maxItems) {
       const tooManItemsError: any = {
         message: `Too many items selected, you can select a maximum of ${schema.maxItems}`,
@@ -77,10 +78,7 @@ export const FormPicker = (props: { dataPath, schema }) => {
       const message: string = Object.values(tooManItemsError)
         .map((temp: string) => temp)
         .join(' ');
-      // notificationStore.addNotification({
-      //   message,
-      //   type: 'error',
-      // });
+      showNotice(message, 'error');
       console.log(tooManItemsError);
       return;
     }
@@ -106,11 +104,7 @@ export const FormPicker = (props: { dataPath, schema }) => {
         });
       }
     } else {
-      // notificationStore.addNotification({
-      //   message: `Invalid picker schema definition ${schema}`,
-      //   type: 'error',
-      //   title: ' Data Picker Error',
-      // });
+      showNotice(`Invalid picker schema definition ${schema}`, 'error');
       console.log(`Invalid picker schema definition ${schema}`);
       return;
     }
@@ -118,13 +112,13 @@ export const FormPicker = (props: { dataPath, schema }) => {
     //remove all empty values;
     newSelected.forEach((item, rowIndex) => {
       Object.keys(item).forEach(key => {
-        item[key] = item[key] || getDefaultValue(key, fieldProps[key], null, item)
+        item[key] = item[key] || getDefaultValue(key, fieldProps[key], null, item);
         if (fieldProps[key] && fieldProps[key].fn) {
           const fnResult = applyFunction(fieldProps[key].fn, item[key], item, null);
           if (fnResult.status === 'success') {
             item[key] = fnResult.value;
           } else {
-            updateError(`${dataPath}.${rowIndex}.${key}`, fnResult.message)
+            updateError(`${dataPath}.${rowIndex}.${key}`, fnResult.message);
           }
         }
         if (item[key] === '') {
@@ -132,12 +126,12 @@ export const FormPicker = (props: { dataPath, schema }) => {
         }
       });
     });
-    const validationResult = validateFormValue(dataPath, newSelected, schema, getItemValue(''))
+    const validationResult = validateFormValue(dataPath, newSelected, schema, getItemValue(''));
     if (isNotEmpty(validationResult.errors)) {
-      updateError(dataPath, validationResult.message)
+      updateError(dataPath, validationResult.message);
       console.log(validationResult.message);
     } else {
-      updateError(dataPath, null)
+      updateError(dataPath, null);
       setSelectedItems(newSelected);
       const localSelected = schema.type === 'object' ? [newSelected] : newSelected;
       setItemValue(dataPath, localSelected);
@@ -156,12 +150,20 @@ export const FormPicker = (props: { dataPath, schema }) => {
 
   return (
     <div className=" flex justify-end gap-2 p-2 mx-auto w-fit">
-      {/* {dataPickerProp && <DataPicker dataPickerState={dataPickerProp} closeButton={closeButton} selectButton={selectButton} selectedIds={selectedItems?.map(item => item.id)} />} */}
-      <button title='Confirm' type='button' onClick={clearAll} className={classNames(pendingConfirm ? 'bg-red-400' : '', 'button-remove shadow-[2px_1px_5px_1px_#ccc] m-2 rounded-lg p-2 hover:scale-125 duration-200 transition-all hover:bg-red-200')}>
-        <Icon name={pendingConfirm ? 'FaCheck' : 'FaTrash'} size={12} />
+      {dataPickerProp && <DataPicker dataPickerState={dataPickerProp} closeButton={closeButton} selectButton={selectButton} selectedIds={selectedItems?.map(item => item.id)} />}
+      <button
+        onClick={clearAll}
+        title={pendingConfirm ? "Confirm Clear" : "Clear Selection"}
+        className={classNames(pendingConfirm ? 'bg-red-400' : '', 'button-remove shadow-[2px_1px_5px_1px_#ccc] m-2 rounded-lg p-2 hover:scale-125 duration-200 transition-all hover:bg-red-200')}
+      >
+        <Icon name={pendingConfirm ? 'FaCheck' : 'FaTrash'} size={12} color="currentColor" />
       </button>
-      <button title='Add' type='button' className='button-add shadow-[2px_1px_5px_1px_#ccc] m-2 rounded-lg p-2 hover:scale-125 duration-200 transition-all hover:bg-cyan-200' onClick={pickData}>
-        <Icon name='FaPlus' size={12} />
+      <button
+        onClick={pickData}
+        title="Add Item"
+        className="button-add shadow-[2px_1px_5px_1px_#ccc] m-2 rounded-lg p-2 hover:scale-125 duration-200 transition-all hover:bg-cyan-200"
+      >
+        <Icon name="FaPlus" size={12} color="currentColor" />
       </button>
     </div>
   );
