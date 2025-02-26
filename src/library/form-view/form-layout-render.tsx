@@ -1,9 +1,15 @@
-import { useShallow } from 'zustand/react/shallow';
+import { shallow } from 'zustand/shallow';
 import { getFormStore, FormElementRender, ElementWrapperLayout, FormRender, FormRenderArray, ElementCommonView, deepCopy } from './common-imports';
 import React from 'react';
 
 export const FormLayoutRender = ({ storeId, path, dataPath, layoutPath, className = '', arrayIndex = undefined }) => {
-  const { setStateItem, setItemValue, getItemValue, getSchemaItem, theme } = getFormStore(storeId)(useShallow(state => ({ setStateItem: state.setStateItem, setItemValue: state.setItemValue, getItemValue: state.getItemValue, getSchemaItem: state.getSchemaItem, theme: state.theme })));
+  const { setStateItem, setItemValue, getItemValue, getSchemaItem, theme } = getFormStore(storeId)(state => ({
+    setStateItem: state.setStateItem,
+    setItemValue: state.setItemValue,
+    getItemValue: state.getItemValue,
+    getSchemaItem: state.getSchemaItem,
+    theme: state.theme
+  }));
   const properties = getSchemaItem(path);
   const onEditItem = (event, itemPath) => {
     event.stopPropagation();
@@ -40,10 +46,10 @@ export const FormLayoutRender = ({ storeId, path, dataPath, layoutPath, classNam
           }
           if (!hasControl && field.type === 'array') {
             const childPath = path;
-            return <FormRenderArray path={fieldPath} dataPath={valuePath} childPath={childPath} name={fieldName} fieldName={fieldName} schema={field} className={className} hasControl={hasControl} storeId={storeId} />;
+            return <FormRenderArray path={fieldPath} dataPath={valuePath} parentDataPath={dataPath} childPath={childPath} name={fieldName} fieldName={fieldName} schema={field} className={className} hasControl={hasControl} storeId={storeId} />;
           } else {
             if (field.group) {
-              if (!fieldNames.includes(fieldName)) return;
+              if (!fieldNames.includes(fieldName)) return null;
               const groupFields = Object.keys(properties)
                 .filter(key => properties[key] && properties[key].group === field.group)
                 .map(key => ({ key, field: properties[key] }));
@@ -54,12 +60,12 @@ export const FormLayoutRender = ({ storeId, path, dataPath, layoutPath, classNam
                     fieldNames.splice(fieldNames.indexOf(key), 1);
                     const valuePath = dataPath ? dataPath + '.' + key : key;
                     const groupFieldPath = path + '.' + key;
-                    return <FormElementRender mode="view" name={key} path={groupFieldPath} schema={getSchemaItem(groupFieldPath) || {}} dataPath={valuePath} storeId={storeId} />;
+                    return <FormElementRender mode="view" name={key} path={groupFieldPath} schema={getSchemaItem(groupFieldPath) || {}} dataPath={valuePath} parentDataPath={dataPath} storeId={storeId} />;
                   })}
                 </ElementCommonView>
               );
             } else {
-              return <FormElementRender mode="view" name={fieldName} path={fieldPath} schema={getSchemaItem(fieldPath) || {}} dataPath={valuePath} storeId={storeId} />;
+              return <FormElementRender mode="view" name={fieldName} path={fieldPath} schema={getSchemaItem(fieldPath) || {}} dataPath={valuePath} parentDataPath={dataPath} storeId={storeId} />;
             }
           }
         })}

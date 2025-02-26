@@ -9,7 +9,7 @@ const restAPI = {
     return [];
   }
 };
-import shallow from 'zustand/react/shallow';
+import shallow from 'zustand/shallow';
 
 export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema }) => {
   const { dataPath, schema } = props;

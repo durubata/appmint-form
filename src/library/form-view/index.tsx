@@ -1,10 +1,13 @@
+// Removed unused import
 import { getElementTheme, getFormStore, LoadingIndicator, ElementCommonView, FormRender, classNames, deepCopy, validateForm, useAIButtons, FormCollapsible, isNotEmpty, tabButtonActiveClass, tabButtonClass } from './common-imports';
 import React, { useEffect } from 'react';
-import { useShallow } from 'zustand/react/shallow';
 
 export const CollectionForm = (props: { demo?; data?; path?; title?; schema?; rules?; theme?; accessMode?; id?; datatype?; icon?; readOnly?; hash?; useAI?; collapsible?; onChange?: (path, value, data, files, error) => void }) => {
   const storeId = props.id || props.hash;
-  const { formRef, activePage } = getFormStore(storeId)(useShallow(state => ({ formRef: state.storeId, activePage: state.activePage })));
+  const { formRef, activePage } = getFormStore(storeId)((state) => ({
+    formRef: state.storeId,
+    activePage: state.activePage
+  }));
   const { schema, initForm, getItemValue, getSchemaItem, setStateItem, getError, updateError } = getFormStore(storeId).getState();
   const { aiButtons, setAIButtonConfig } = useAIButtons();
 

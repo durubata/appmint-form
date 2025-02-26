@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { runElementRules } from './form-rules';
 import { getWatchedPaths } from './form-utils';
 import { getTemplateValue } from './form-validator';
-import { useShallow } from 'zustand/react/shallow'
+import { shallow } from 'zustand/shallow'
 
 export const FormRender = (props: { storeId; path; dataPath; name; className; arrayIndex?; parentDataPath?, layoutPath?, arrayControl?}) => {
   const { name, path, dataPath, className, arrayIndex, layoutPath } = props;
-  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(useShallow(state => ({ dataPathTimestamp: state.timestamp[dataPath], theme: state.theme })));
+  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(state => ({
+    dataPathTimestamp: state.timestamp[dataPath],
+    theme: state.theme
+  }));
   const { getItemValue, setStateItem, applyRuleResult, getSchemaItem } = getFormStore(props.storeId).getState();
   const [ruleActions, setRuleActions] = useState<any>({});
 

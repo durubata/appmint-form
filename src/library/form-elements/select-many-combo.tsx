@@ -4,6 +4,7 @@ import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, ComboboxButto
 import { classNames, isEmpty, isNotEmpty } from '../utils';
 import { ElementIcon } from './element-icon';
 import { twMerge } from 'tailwind-merge';
+import { Icon } from '../common/icons/icon';
 
 export const SelectManyCombo = (props: { className?; blur?; change?; focus?; mode?; value?; schema?; path?; name?; data?; options?, theme?}) => {
   const [query, setQuery] = useState('');

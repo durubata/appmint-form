@@ -1,4 +1,5 @@
 import React from 'react';
+import { icons, IconKeys } from './list';
 
 export const Icon = (props: {
     name: IconKeys;

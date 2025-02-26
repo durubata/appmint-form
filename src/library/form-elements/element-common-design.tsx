@@ -6,7 +6,7 @@ import { classNames } from '../utils';
 import { dotPathToDash } from './element-helpers';
 import { useCollectionStore } from '../collection-store';
 import { handleDynamicEvent } from 'components/property/style-mint/style-action-utils';
-import { useShallow } from 'zustand/react/shallow';
+import { useShallow } from 'zustand/shallow';
 
 export const ElementCommonDesign = (props: { use?; className?; tag?; ui?; path; name?; children?; src?; alt?; onClick?}) => {
   const dashPath = dotPathToDash(props?.path, props?.name);

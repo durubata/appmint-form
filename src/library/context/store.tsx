@@ -4,9 +4,9 @@ import { FormLayoutAccordion } from '../form-view/form-layout-accordion';
 import { FormLayoutTab } from '../form-view/form-layout-tab';
 import { FormLayoutSlider } from '../form-view/form-layout-slider';
 import { produce } from 'immer';
-import { getTemplateValue } from '../form-view/form-validator';
 import { deepCopy, getRandomString, isEmpty, isNotEmpty } from '../utils';
 import { runFormRules } from '../form-view/form-rules';
+import { getTemplateValue } from '../form-view/form-validator';
 
 const accessModes = { full: 1, read: 2, create: 3, update: 4, delete: 5 };
 

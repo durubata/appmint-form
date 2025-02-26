@@ -29,7 +29,7 @@ export const FormCollapsible = (props: { id?; icon?; title?; children; theme?; d
     <div className={twMerge(classNames('cb-collapsible', props.className, controlTheme.className, classes?.join(' ')))}>
       <div onClick={toggle} className="p-2 flex justify-between items-center cursor-pointer  border-b-1 border-gray-300 gap-2 bg-gray-50 ">
         <div className='flex gap-2 items-center'>
-          {typeof props.icon === 'string' ? <Icon name={props.icon} /> : props.icon}
+          {typeof props.icon === 'string' ? <Icon name={props.icon as any} /> : props.icon}
           {typeof props.arrayControl?.index === 'number' && props.arrayControl.index}
           {props.title && <span>{props.title}</span>}
         </div>

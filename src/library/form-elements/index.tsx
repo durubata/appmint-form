@@ -7,7 +7,7 @@ import { FormCollapsible } from '../form-view/form-collapsible';
 import { FormPopup } from '../form-view/form-popup';
 import { useSiteStore } from '../context/store';
 import { cleanControlType, getControlType, getWatchedPaths, applyFormTransform, applyFunction, runElementRules, runFormRules, validateFormValue, twMerge, objectPath } from './common-imports';
-import shallow from 'zustand/react/shallow';
+import shallow from 'zustand/shallow';
 
 // Stubs for missing dependencies
 const requestQueueInstance = {

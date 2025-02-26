@@ -2,7 +2,7 @@ import { getElementTheme, getFormStore, ElementWrapperLayout, ButtonAdd, getRand
 import React, { useEffect, useState } from 'react';
 import { getWatchedPaths } from './form-utils';
 import { runElementRules } from './form-rules';
-import { useShallow } from 'zustand/react/shallow';
+import { shallow } from 'zustand/shallow';
 import { getTemplateValue } from './form-validator';
 
 const defaultTypeValues = type => ({ string: '', number: 0, boolean: false, array: [], object: {} }[type]);
@@ -10,7 +10,10 @@ const defaultTypeValues = type => ({ string: '', number: 0, boolean: false, arra
 export const FormRenderArray = (props: { storeId; path; dataPath; parentDataPath, childPath; name; fieldName; schema; className; arrayIndex?; hasControl?}) => {
   const { path, dataPath, parentDataPath, name, className, fieldName, childPath, hasControl } = props;
 
-  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(useShallow(state => ({ dataPathTimestamp: state.timestamp[dataPath], theme: state.theme })));
+  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(state => ({
+    dataPathTimestamp: state.timestamp[dataPath],
+    theme: state.theme
+  }));
   const { getItemValue, refreshPath, removeArrayValue, getSchemaItem, setItemValue } = getFormStore(props.storeId).getState();
 
   const [ruleActions, setRuleActions] = useState<any>({});

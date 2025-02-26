@@ -1,4 +1,4 @@
-import { useShallow } from 'zustand/react/shallow';
+import { useShallow } from 'zustand/shallow';
 import { classNames, FormLayoutRender, getFormStore, ElementCommonView, tabButtonActiveClass, tabButtonClass } from './common-imports';
 import React from 'react';
 

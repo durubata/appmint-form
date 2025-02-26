@@ -30,7 +30,8 @@ export const TableCardRenderer = ({ row, selected, onSelect, slimRow }) => {
           const value = cell.getValue(); // Get raw data
 
           // Handle specific cases if needed, e.g., file attachments
-          if (header.toLowerCase().includes('file') || header.toLowerCase().includes('attachment')) {
+          const headerStr = String(header);
+          if (headerStr.toLowerCase().includes('file') || headerStr.toLowerCase().includes('attachment')) {
             return (
               <div key={cell.id} className="flex">
                 <div className="font-semibold w-1/3">{header}:</div>

@@ -1,10 +1,16 @@
 import { FormLayoutRender, Icon, classNames, isNotEmpty, getFormStore, validateFormValue, ElementCommonView } from './common-imports';
 import React, { useEffect } from 'react';
 import FormLayoutSliderAnimation from './form-layout-slider-animation';
-import { useShallow } from 'zustand/react/shallow';
+import { shallow } from 'zustand/shallow';
 
 export const FormLayoutSlider = ({ storeId, layoutPath, path, dataPath, schema }) => {
-  const { getSchemaItem, getError, getItemValue, updateError, timestamp } = getFormStore(storeId)(useShallow(state => ({ getSchemaItem: state.getSchemaItem, getError: state.getError, getItemValue: state.getItemValue, updateError: state.updateError, timestamp: state.timestamp })));
+  const { getSchemaItem, getError, getItemValue, updateError, timestamp } = getFormStore(storeId)(state => ({
+    getSchemaItem: state.getSchemaItem,
+    getError: state.getError,
+    getItemValue: state.getItemValue,
+    updateError: state.updateError,
+    timestamp: state.timestamp
+  }));
   const [slideIndex, setSlideIndex] = React.useState(0);
   const [error, setError] = React.useState(null);
 
