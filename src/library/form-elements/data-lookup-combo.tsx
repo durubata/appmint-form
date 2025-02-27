@@ -157,7 +157,7 @@ export const DataLookupCombo = (props: { schema; change }) => {
         <SelectManyList change={setDatatype} options={CollectionHelper.getInstance().getCollectionOptions()} schema={{ placeholder: 'Select Datatype' }} />
         <input type="text" placeholder="Enter name to search" value={keyword} onChange={onKeywordChange} className="flex-grow rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none" />
         <button title="Search" onClick={handleSearch} className={classNames(slimButtonClass, 'flex items-center gap-2 shadow-none')}>
-          <BusyIcon isLoading={isLoading} notLoadingMessage={<IconRenderer icon='FaSearch' />} />
+          <BusyIcon isLoading={isLoading} notLoadingMessage={<IconRenderer icon='Search' />} />
         </button>
       </div>
       {isNotEmpty(result) && (
@@ -191,7 +191,7 @@ const LookupItem = ({ item, remove = null }) => {
     <div className={classNames(remove && 'shadow px-2 py-1 rounded-lg w-full', ' text-gray-400 text-xs flex gap-4 items-center overflow-auto')}>
       {remove && (
         <button title="Remove Item" onClick={e => remove(item.sk)} className=" text-red-500">
-          <IconRenderer icon="FaXmark" />
+          <IconRenderer icon="X" />
         </button>
       )}
       <div className="">

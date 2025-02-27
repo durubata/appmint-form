@@ -10,6 +10,8 @@ import { getElementTheme, useFormStore } from '../context/store';
 import { isEmpty, isNotEmpty, toSentenceCase, toTitleCase } from '../utils';
 
 const getSelectType = type => {
+
+  console.log('type', type);
   const selectTypes = {
     select: SelectManyList,
     combo: SelectManyCombo,

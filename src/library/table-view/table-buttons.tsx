@@ -9,10 +9,10 @@ export const tableButtonNames = [
   { name: 'delete', icon: 'Trash', className: 'text-red-500', confirm: true },
   { name: 'add', icon: 'Plus' },
   { name: 'select', icon: 'Check' },
-  // { name: 'Edit', icon: 'FaEdit' },
+  // { name: 'Edit', icon: 'Edit' },
   { name: 'export', icon: 'FileDown' },
   { name: 'import', icon: 'FileUp' },
-  // { name: 'Print', icon: 'FaPrint' },
+  // { name: 'Print', icon: 'Printer' },
 ];
 
 const ButtonTP = withTooltip('button', 'bottom', 5, 0);
@@ -44,7 +44,7 @@ export const TableButtons: React.FC<any> = ({ onTableEvent, options, selectedRow
         if (button.name !== 'refresh' && isReadOnly) return null;
         return (
           <ButtonTP onClick={onClick} title={toTitleCase(button.name)} key={button.name} name={button.name} type="button" className={classNames(iconButtonClass, button.className, 'relative')}>
-            <IconRenderer icon={(buttonStates[button.name] ? 'FaCheck' : button.icon) as any} className={iconClass} />
+            <IconRenderer icon={(buttonStates[button.name] ? 'Check' : button.icon) as any} className={iconClass} />
             {button.name === 'select' && selectedRows.length > 0 && <span className='absolute -top-2 w-4 h-4 -right-2 flex items-center justify-center rounded-full text-xs bg-purple-700 text-white'>{selectedRows.length}</span>}
           </ButtonTP>
         );

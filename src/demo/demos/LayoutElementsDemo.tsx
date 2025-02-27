@@ -46,8 +46,104 @@ const schema = {
                     default: 'This content is inside a collapsible section'
                 }
             }
+        },
+        color: {
+            type: 'string',
+            'x-control': 'color',
+            layoutGroup: 'x-layout.tabs.items.0'
+        },
+        textArea: {
+            type: 'string',
+            'x-control': 'richtext',
+            layoutGroup: 'x-layout.tabs.items.1'
+        },
+        code: {
+            type: 'string',
+            'x-control': 'code',
+            'x-control-variant': 'css',
+            layoutGroup: 'x-layout.tabs.items.2'
+        },
+        color1: {
+            type: 'string',
+            'x-control': 'color',
+            layoutGroup: 'x-layout.accordion.items.0'
+        },
+        textArea1: {
+            type: 'string',
+            'x-control': 'richtext',
+            layoutGroup: 'x-layout.accordion.items.1'
+        },
+        code1: {
+            type: 'string',
+            'x-control': 'code',
+            'x-control-variant': 'css',
+            layoutGroup: 'x-layout.accordion.items.2'
+        },
+        color2: {
+            type: 'string',
+            'x-control': 'color',
+            layoutGroup: 'x-layout.slides.items.0'
+        },
+        textArea2: {
+            type: 'string',
+            'x-control': 'richtext',
+            layoutGroup: 'x-layout.slides.items.1'
+        },
+        code2: {
+            type: 'string',
+            'x-control': 'code',
+            'x-control-variant': 'css',
+            layoutGroup: 'x-layout.slides.items.2'
+        },
+    },
+    'x-layout': {
+        tabs: {
+            type: 'tab',
+            title: 'Tabs',
+            items: [
+                {
+                    title: 'Tab 1 Name',
+                },
+                {
+                    title: 'Tab 2',
+                },
+                {
+                    title: 'Tab 3',
+                }
+            ]
+        },
+        accordion: {
+            type: 'accordion',
+            title: 'Accordion',
+            items: [
+                {
+                    title: 'Tab 1 Name',
+                },
+                {
+                    title: 'Tab 2',
+                },
+                {
+                    title: 'Tab 3',
+                }
+            ]
+        },
+        slides: {
+            type: 'slide',
+            title: 'Slides',
+            items: [
+                {
+                    title: 'Tab 1 Name',
+                },
+                {
+                    title: 'Tab 2',
+                },
+                {
+                    title: 'Tab 3',
+                }
+            ]
         }
     }
+
 };
 
 const LayoutElementsDemo: React.FC = () => {

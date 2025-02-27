@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { classNames } from '../utils';
 import { IconRenderer } from './icons/icon-renderer';
 import { Popover } from './popover';
-
 const sortTypes = [
-  { value: 'name-desc', label: 'Name', icon: 'FaSortAlphaDown' },
-  { value: 'name-asc', label: 'Name', icon: 'FaSortAlphaUp' },
-  { value: 'date-desc', label: 'Date', icon: 'FaSortAlphaDown' },
-  { value: 'date-asc', label: 'Date', icon: 'FaSortAlphaUp' },
+  { value: 'name-desc', label: 'Name', icon: 'ArrowUpAZ' },
+  { value: 'name-asc', label: 'Name', icon: 'ArrowDownZA' },
+  { value: 'date-desc', label: 'Date', icon: 'ArrowUp10' },
+  { value: 'date-asc', label: 'Date', icon: 'ArrowDown01' },
 ];
-
 export const PageSort = ({ sortValue, onChange }) => {
   const activeSort = sortTypes.find(sort => sort.value === sortValue) || sortTypes[0];
   const SortComponents = () => {

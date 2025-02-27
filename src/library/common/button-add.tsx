@@ -11,7 +11,7 @@ export const ButtonAdd = (props: { handler; controlRef?; className?}) => {
   const buttonClass = 'custom-button custom-button-add ' + props.className
   return (
     <button key={getRandomString()} className={buttonClass} onClick={onClick} title="Add item">
-      <IconRenderer icon='FaPlus' />
+      <IconRenderer icon='Plus' />
     </button>
   );
 };

@@ -32,7 +32,7 @@ export const MenuAppBar = (props: { close; name; title; restore; docked?; canDoc
       <div className=" static text-gray-300 bg-gray-900 shadow transition-all duration-300  h-10 text-sm flex items-center justify-between pr-2 rounded-t-md">
         <div className="  flex items-center justify-between overflow-auto mr-28">
           <ButtonTP className="p-2" title="Dialog Menu">
-            <IconRenderer icon='FaHamburger' />
+            <IconRenderer icon='Hamburger' />
           </ButtonTP>
           <span className=" whitespace-nowrap text-ellipsis">{props.title}</span>
         </div>
@@ -50,10 +50,10 @@ export const MenuAppBar = (props: { close; name; title; restore; docked?; canDoc
             </ButtonTP>
           )}
           <ButtonTP title={props.collapsed ? 'Restore' : 'Collapse'} onClick={e => props.setCollapsed(!props.collapsed)} className="p-1">
-            <IconRenderer icon={props.collapsed ? 'FaRegWindowMaximize' : 'FaWindowMinimize'} />
+            <IconRenderer icon={props.collapsed ? 'Maximize' : 'Minimize'} />
           </ButtonTP>
           <ButtonTP title="Close" onClick={props.close} className="p-1">
-            <IconRenderer icon='FaXmark' />
+            <IconRenderer icon='X' />
           </ButtonTP>
         </div>
       </div>

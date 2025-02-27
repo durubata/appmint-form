@@ -11,7 +11,7 @@ export const ButtonCancel = (props: { handler; controlRef?, className?}) => {
 
   return (
     <button key={getRandomString()} className={"custom-button custom-button-add " + (props.className || "")} onClick={confirmClick}>
-      <IconRenderer icon='FaXmark' />
+      <IconRenderer icon='X' />
     </button>
   );
 };

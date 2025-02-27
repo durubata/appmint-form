@@ -18,7 +18,7 @@ export const IconButtonDelete = (props: { deleteHandler; variant?; controlRef?; 
   const iconName = props.variant === 'outline' ? 'MdDeleteOutline' : 'MdDelete';
   return (
     <button key={getRandomString()} className={className} onClick={confirmClick} style={style}>
-      {isActive ? <IconRenderer icon='FaCheck' size={props.size || 14} color={'red'} /> : <IconRenderer icon={iconName} size={props.size || 14} color={props.color || 'red'} />}
+      {isActive ? <IconRenderer icon='Check' size={props.size || 14} color={'red'} /> : <IconRenderer icon={iconName} size={props.size || 14} color={props.color || 'red'} />}
     </button>
   );
 };

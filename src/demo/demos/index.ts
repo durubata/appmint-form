@@ -231,6 +231,18 @@ const schema = {
             default: ['Option A', 'Option C'],
             'x-control': 'selectmany'
         },
+        selectManyCombo: {
+            type: 'array',
+            title: 'Select Many (Checkboxes)',
+            description: 'Multiple selection with checkboxes',
+            items: {
+                type: 'string',
+                enum: ['Red', 'Green', 'Blue', 'Yellow', 'Purple']
+            },
+            default: ['Red', 'Blue'],
+            'x-control': 'selectmany'
+            'x-control-variant': 'combo'
+        },
         selectManyCheckbox: {
             type: 'array',
             title: 'Select Many (Checkboxes)',
@@ -240,7 +252,8 @@ const schema = {
                 enum: ['Red', 'Green', 'Blue', 'Yellow', 'Purple']
             },
             default: ['Red', 'Blue'],
-            'x-control': 'selectmanycheckbox'
+            'x-control': 'selectmany'
+            'x-control-variant': 'checkbox'
         },
         selectManyRadio: {
             type: 'string',
@@ -248,13 +261,15 @@ const schema = {
             description: 'Single selection with radio buttons',
             enum: ['Small', 'Medium', 'Large', 'X-Large'],
             default: 'Medium',
-            'x-control': 'selectmanyradio'
+            'x-control': 'selectmany'
+            'x-control-variant': 'radio'
         },
         switch: {
             type: 'boolean',
             title: 'Switch',
             description: 'Boolean toggle switch',
             default: true,
+            'x-control': 'selectsingle'
             'x-control': 'switch'
         },
         rating: {

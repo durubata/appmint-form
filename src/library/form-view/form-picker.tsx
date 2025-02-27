@@ -161,14 +161,14 @@ export const FormPicker = (props: { storeId; dataPath; parentDataPath, schema })
         title={pendingConfirm ? "Confirm Clear" : "Clear Selection"}
         className={classNames(pendingConfirm ? 'bg-red-400' : '', 'button-remove shadow-[2px_1px_5px_1px_#ccc] m-2 rounded-lg p-2 hover:scale-125 duration-200 transition-all hover:bg-red-200')}
       >
-        <IconRenderer icon={pendingConfirm ? 'FaCheck' : 'FaTrash'} size={12} color="currentColor" />
+        <IconRenderer icon={pendingConfirm ? 'Check' : 'Trash'} size={12} color="currentColor" />
       </button>
       <button
         onClick={pickData}
         title="Add Item"
         className="button-add shadow-[2px_1px_5px_1px_#ccc] m-2 rounded-lg p-2 hover:scale-125 duration-200 transition-all hover:bg-cyan-200"
       >
-        <IconRenderer icon="FaPlus" size={12} color="currentColor" />
+        <IconRenderer icon="Plus" size={12} color="currentColor" />
       </button>
     </div>
   );

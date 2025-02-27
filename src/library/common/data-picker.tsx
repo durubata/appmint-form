@@ -207,10 +207,10 @@ export function DataPicker(props: { dataPickerState?: DataPickerType; closeButto
           </div>
         )}
         <button className="button-cancel" title="Cancel" onClick={closeButton}>
-          <IconRenderer icon='FaXmark' size={20} />
+          <IconRenderer icon='X' size={20} />
         </button>
         <button className="button-accept" title="Accept" onClick={selectButton}>
-          <IconRenderer icon='FaCheck' size={20} />
+          <IconRenderer icon='Check' size={20} />
         </button>
       </div>
     </FloatBox>

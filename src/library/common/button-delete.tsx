@@ -36,7 +36,7 @@ export const ButtonDelete = (props: { deleteHandler; icon?; iconColor?; controlR
 
   return (
     <button ref={ref} key={getRandomString()} className={buttonClass} onClick={confirmClick} onBlur={e => setActive(false)} style={style}>
-      {isActive ? <IconRenderer icon='FaCheck' size={props.size} /> : <IconRenderer icon='MdDelete' size={props.size} />}
+      {isActive ? <IconRenderer icon='Check' size={props.size} /> : <IconRenderer icon='MdDelete' size={props.size} />}
     </button>
   );
 };

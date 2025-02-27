@@ -62,7 +62,7 @@ export function SiteNotification() {
                                             }}
                                         >
                                             <span className="sr-only">Close</span>
-                                            <IconRenderer icon={'FaXmark'} className="h-5 w-5" />
+                                            <IconRenderer icon={'X'} className="h-5 w-5" />
                                         </button>
                                     </div>
                                 </div>

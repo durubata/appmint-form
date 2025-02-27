@@ -39,7 +39,7 @@ export const FormCollapsible = (props: { id?; icon?; title?; children; theme?; d
         </div>
         <div className='flex gap-2 items-center'>
           {props.arrayControl?.delete && props.arrayControl.delete}
-          <div className="flex items-center gap-2 ">{isOpen ? <IconRenderer icon={'FaChevronDown'} aria-hidden="true" className="" size={10} /> : <IconRenderer icon={'FaChevronRight'} aria-hidden="true" className="" size={10} />}</div>
+          <div className="flex items-center gap-2 ">{isOpen ? <IconRenderer icon={'ChevronDown'} aria-hidden="true" className="" size={10} /> : <IconRenderer icon={'ChevronRight'} aria-hidden="true" className="" size={10} />}</div>
         </div>
       </div>
       {isOpen && (

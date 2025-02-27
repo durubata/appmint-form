@@ -15,7 +15,7 @@ export const UuidElement = (props: { path; name }) => {
     <div className="flex items-center justify-between page-4 text-sm">
       <span className=" font-serif ">{value}</span>
       <button title="Regenerate" className="button-refresh p-1 rounded-full shadow bg-white" onClick={handleUpdate}>
-        <IconRenderer icon="IoRefresh" />
+        <IconRenderer icon="RefreshCcw" />
       </button>
     </div>
   );
