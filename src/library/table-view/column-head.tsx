@@ -1,12 +1,12 @@
 import React from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { classNames } from '../utils';
-import { Icon } from '../form-elements/common-imports';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 const sortIcons = {
-    asc: <Icon name="HiOutlineArrowNarrowUp" />,
-    desc: <Icon name="HiOutlineArrowNarrowDown" />,
-    none: <Icon name="CgArrowsVAlt" />,
+    asc: <IconRenderer icon="ArrowUp" />,
+    desc: <IconRenderer icon="ArrowDown" />,
+    none: <IconRenderer icon="ChevronsUpDown" />,
 };
 
 export const ColumnHead: React.FC<any> = ({ header }) => {
@@ -35,7 +35,7 @@ export const ColumnHead: React.FC<any> = ({ header }) => {
             <div className="header-item text-gray-500 group">
                 <div className="flex gap-1 items-center mb-1">
                     <div className="drag-handle cursor-grabbing " draggable onDragStart={handleDragStart}>
-                        <Icon name="RiDraggable" />
+                        <IconRenderer icon="GripVertical" />
                     </div>
                     <div onClick={header.column.getToggleSortingHandler()} className={classNames(`sort-button`, canSort ? 'sortable' : '', 'w-full whitespace-nowrap text-ellipsis text-sm')}>
                         {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}

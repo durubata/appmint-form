@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { classNames } from '../utils';
-import { Icon } from '../common/icons/icon';
+import { IconRenderer } from '../common/icons/icon-renderer';
 import { buttonClass, buttonHoverClass } from '../common/constants';
 import { DebouncedInput } from '../common/debounced-input';
 import { Popover } from '../common/popover';
@@ -33,7 +33,7 @@ export const ColumnFilters: React.FC<any> = ({ table }) => {
     <div className="inline-block">
       <div className="px-2 py-1  mb-2">
         <button className={classNames(buttonClass, buttonHoverClass)} onClick={clearAllFilters}>
-          <Icon name="FaXmark" /> <span>Clear All</span>
+          <IconRenderer icon="X" /> <span>Clear All</span>
         </button>
       </div>
       {table.getAllLeafColumns().map(column => {
@@ -50,9 +50,9 @@ export const ColumnFilters: React.FC<any> = ({ table }) => {
   );
 
   return (
-    <Popover content={content} position="context" offsetX={-20} offsetY={-40}>
+    <Popover content={content} position="context" offsetX={-20} offsetY={15}>
       <button className="">
-        <Icon name="FiFilter" />{' '}
+        <IconRenderer icon="Filter" />
       </button>
     </Popover>
   );

@@ -1,5 +1,8 @@
-import { showNotice, } from '../context/store';
-import { validateForm, getFormStore, runFormRules, applyFunction, DataType } from './common-imports';
+import { showNotice, useFormStore } from '../context/store';
+import { validateForm } from './form-validator';
+import { runFormRules } from './form-rules';
+import { applyFunction } from './form-transforms';
+import { DataType } from '../utils';
 
 // Stub for genericService
 const genericService = {
@@ -32,7 +35,7 @@ export const buttonsActions = {
   //     description: 'Navigate to a different page',
   //     options: ['Next Item', 'Prev Item', 'First Item', 'Last Item', 'Next Page', 'Prev Page', 'Last Page', 'First Page'],
   //     fn: (path) => {
-  //         getFormStore(storeId).getState().goto(path);
+  //         useFormStore.getState().goto(path);
   //     }
   // },
   link: {
@@ -43,7 +46,7 @@ export const buttonsActions = {
   //     title: 'Set Property',
   //     description: 'Set a property value',
   //     fn: (path, value) => {
-  //         getFormStore(storeId).getState().setItemValue(path, value);
+  //         useFormStore.getState().setItemValue(path, value);
   //     }
   // },
   'run-rule': {

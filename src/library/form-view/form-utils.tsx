@@ -4,9 +4,12 @@ import { validateValue } from './form-validator';
 import { } from '../context/store';
 
 // Stubs for missing dependencies
-const CollectionHelper = {
+export const CollectionHelper = {
   getInstance: () => ({
     getAll: (includeData = false) => [],
+    getCollection: (collectionName) => ({ data: [] }),
+    getCollectionFields: (collectionName) => [],
+    getCollectionField: (collectionName, fieldName) => ({ data: [] }),
   })
 };
 

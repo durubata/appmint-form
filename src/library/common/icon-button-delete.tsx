@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getRandomString } from '../utils';
-import { Icon } from './icons/icon';
+import { IconRenderer } from './icons/icon-renderer';
 
 export const IconButtonDelete = (props: { deleteHandler; variant?; controlRef?; className?; style?, color?; size?}) => {
   const [isActive, setActive] = useState(false);
@@ -15,10 +15,9 @@ export const IconButtonDelete = (props: { deleteHandler; variant?; controlRef?; 
     }
   };
 
-  const iconName = props.variant === 'outline' ? 'MdDeleteOutline' : 'MdDelete';
   return (
     <button key={getRandomString()} className={className} onClick={confirmClick} style={style}>
-      {isActive ? <Icon name='FaCheck' size={props.size || 14} color={'red'} /> : <Icon name={iconName} size={props.size || 14} color={props.color || 'red'} />}
+      {isActive ? <IconRenderer icon='Check' size={props.size || 14} color={'red'} /> : <IconRenderer icon={'Trash'} size={props.size || 14} color={props.color || 'red'} />}
     </button>
   );
 };

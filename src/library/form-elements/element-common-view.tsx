@@ -1,4 +1,7 @@
-import { isNotEmpty, dotPathToDash, twMerge, getElementTheme } from './common-imports';
+import { isNotEmpty } from '../utils';
+import { dotPathToDash } from './element-helpers';
+import { twMerge } from 'tailwind-merge';
+import { getElementTheme } from '../context/store';
 import React, { useEffect } from 'react';
 
 export const ElementCommonView = (props: { id?; readOnly?; disabled?; className?; tag?; ui?; path; theme?; name?; children?; alt?; src?; onClick?}) => {

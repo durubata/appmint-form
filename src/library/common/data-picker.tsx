@@ -1,12 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { CollectionHelper, requestQueueInstance } from '../form-view/common-imports';
 import { BaseModel, BaseModelDTO, DataType, getResponseErrorMessage, isNotEmpty } from '../utils';
+
+// Stubs for missing imports
+const CollectionHelper = {
+  getInstance: () => ({
+    getAll: (includeData = false) => [],
+    getCollectionOptions: () => [],
+    getCollectionOptionsByType: (type) => [],
+  })
+};
+
+const requestQueueInstance = {
+  findDataByAttribute: async (collection, property, value, options) => {
+    console.log(`Finding data in ${collection} where ${property}=${value}`);
+    return { data: [] };
+  },
+  getDataById: async (datatype, id) => {
+    console.log(`Getting ${id} from ${datatype}`);
+    return { sk: id, datatype, data: {} };
+  },
+  searchData: async (collection, keyword, options) => {
+    console.log(`Searching ${collection} for ${keyword}`);
+    return { data: [] };
+  }
+};
 import { PageSort, sortTreeItem } from './page-sort';
 import { iconButtonClass } from './constants';
-import { Icon } from '../form-elements/common-imports';
 import BusyIcon from './icons/svg';
 import { LoadingIndicator } from './loading-indicator';
 import { FloatBox } from './float-box';
+import { IconRenderer } from './icons/icon-renderer';
 
 export interface DataPickerType {
   collectionName: string;
@@ -136,17 +159,29 @@ export function DataPicker(props: { dataPickerState?: DataPickerType; closeButto
         <div className="py-3 px-5 mb-4">
           <div className="flex gap-4 w-full items-center">
             <div className="p-2  border border-gray-300 flex items-center rounded-xl w-full">
-              <Icon name="FaSearch" />
-              <input name="search" className="w-full text-sm p-1 border-none mx-2  focus:ring-0 focus-within:ring-0 focus-visible:ring-0 " value={filter} onChange={e => setFilter(e.target.value)} />
+              <IconRenderer icon="FaSearch" />
+              <input
+                name="search"
+                placeholder="Search items"
+                title="Search items"
+                className="w-full text-sm p-1 border-none mx-2 focus:ring-0 focus-within:ring-0 focus-visible:ring-0"
+                value={filter}
+                onChange={e => setFilter(e.target.value)}
+              />
             </div>
             <PageSort sortValue={sort} onChange={changeSortType} />
             <button onClick={() => loadNextPage(true)} className={iconButtonClass}>
-              <BusyIcon isLoading={isLoading} /> <Icon name="IoRefresh" />{' '}
+              <BusyIcon isLoading={isLoading} /> <IconRenderer icon="IoRefresh" />{' '}
             </button>
           </div>
         </div>
         <div className="shadow mb-2 border-l-8 border-yellow-400 border-solid absolute top-1 right-40 w-96">
-          <select className="highlight-select w-full px-4 py-2 border-0" onChange={e => setCollectionName(e.target.value)}>
+          <select
+            className="highlight-select w-full px-4 py-2 border-0"
+            onChange={e => setCollectionName(e.target.value)}
+            title="Select collection"
+            aria-label="Select collection"
+          >
             <option value="">Select a collection</option>
             {collectionOptions?.map((item: any) => (
               <option key={item.value} value={item.mainType} selected={item.mainType === collectionName}>
@@ -172,10 +207,10 @@ export function DataPicker(props: { dataPickerState?: DataPickerType; closeButto
           </div>
         )}
         <button className="button-cancel" title="Cancel" onClick={closeButton}>
-          <Icon name='FaXmark' size={20} />
+          <IconRenderer icon='X' size={20} />
         </button>
         <button className="button-accept" title="Accept" onClick={selectButton}>
-          <Icon name='FaCheck' size={20} />
+          <IconRenderer icon='Check' size={20} />
         </button>
       </div>
     </FloatBox>

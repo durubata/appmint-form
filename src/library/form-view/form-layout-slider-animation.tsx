@@ -1,4 +1,4 @@
-import { classNames } from './common-imports';
+import { classNames } from '../utils';
 import React, { useEffect, useRef, useState } from 'react';
 export const FormLayoutSliderAnimation = ({ direction = 'horizontal', slideIndex, items, getView }) => {
   const scrollContainerRef = useRef(null);

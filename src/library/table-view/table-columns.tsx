@@ -1,6 +1,6 @@
 import React from 'react';
-import { Icon } from '../common/icons/icon';
-import { Popover } from '../form-view/common-imports';
+import { IconRenderer } from '../common/icons/icon-renderer';
+import { Popover } from '../common/popover';
 
 export const TableColumns: React.FC<any> = ({ table }) => {
     const content = (
@@ -40,9 +40,9 @@ export const TableColumns: React.FC<any> = ({ table }) => {
     );
 
     return (
-        <Popover content={content} position="context" offsetX={-20} offsetY={-40}>
+        <Popover content={content} position="context" offsetX={-20} offsetY={15}>
             <button className="">
-                <Icon name="BiColumns" />{' '}
+                <IconRenderer icon="Columns3" />
             </button>
         </Popover>
     );

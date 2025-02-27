@@ -1,4 +1,8 @@
-import { classNames, Icon, ElementCommonView, getElementTheme, twMerge } from './common-imports';
+import { IconRenderer } from '../common/icons/icon-renderer';
+import { ElementCommonView } from './element-common-view';
+import { getElementTheme } from '../context/store';
+import { classNames } from '../utils';
+import { twMerge } from 'tailwind-merge';
 import React from 'react';
 
 export const ElementIcon = (props: { icon; mode; image; className?; defaultIcon?; path?, theme?, ui?}) => {
@@ -19,7 +23,7 @@ export const ElementIcon = (props: { icon; mode; image; className?; defaultIcon?
     }
   }
   if (icon) {
-    return icon.length === 2 ? icon : <Icon name={icon} className={twMerge("control-icon", iconTheme?.className, iconClasses?.join(' '))} />;
+    return icon.length === 2 ? icon : <IconRenderer icon={icon} className={twMerge("control-icon", iconTheme?.className, iconClasses?.join(' '))} />;
   }
   return;
 };

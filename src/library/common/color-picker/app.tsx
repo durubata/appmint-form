@@ -5,7 +5,7 @@ import ColorPicker, { useColorPicker } from 'react-best-gradient-color-picker';
 import { Popover } from '../popover';
 import { useShallow } from 'zustand/shallow';
 import { colorUtils } from '../color-utils';
-import { Icon } from '../icons/icon';
+import { IconRenderer } from '../icons/icon-renderer';
 
 export const CommonColorPicker = (props: { color; updateColor; type; toggle?; useFloatBox?; floatBoxPos?; style?; icon?; className?}) => {
   const [colorTemp, setColorTemp] = useState('#000000');
@@ -90,7 +90,7 @@ export const CommonColorPicker = (props: { color; updateColor; type; toggle?; us
   const toggleButton = () => {
     return (<Popover position="context" offsetY={0} content={getPicker()}  >
       <button className={props.className} onClick={e => setPopoverState({ timestamp: Date.now(), isOpen: !popoverState.isOpen })} style={{ ...props.style, backgroundColor: colorTemp }} >
-        {typeof props.icon === 'string' ? <Icon color={colorTemp ? colorUtils.getInverseColor(colorTemp) : undefined} name={props.icon} className={' '} /> : props.icon}
+        {typeof props.icon === 'string' ? <IconRenderer color={colorTemp ? colorUtils.getInverseColor(colorTemp) : undefined} icon={props.icon} className={' '} /> : props.icon}
       </button>
     </Popover >);
   };

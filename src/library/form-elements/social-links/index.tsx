@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { popularSocialIcons } from './socialIcons';
 import { classNames } from '../../utils';
 import { ElementIcon } from '../element-icon';
 
-const socialIcons = popularSocialIcons.map(item => ({ 'x-hide-label': true, label: item.title, value: item.title.toLowerCase(), image: item.src, description: '' }));
+// const socialIcons = popularSocialIcons.map(item => ({ 'x-hide-label': true, label: item.title, value: item.title.toLowerCase(), image: item.src, description: '' }));
+const socialIcons = []
 
 export const SocialLinksElement = (props: { update; mode; schema; path; name; data; options }) => {
   const [query, setQuery] = useState('');

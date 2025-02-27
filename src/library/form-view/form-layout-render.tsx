@@ -1,15 +1,21 @@
-import { shallow } from 'zustand/shallow';
-import { getFormStore, FormElementRender, ElementWrapperLayout, FormRender, FormRenderArray, ElementCommonView, deepCopy } from './common-imports';
+import { useShallow } from 'zustand/shallow';
+import { useFormStore } from '../context/store';
+import { FormElementRender } from '../form-elements';
+import { ElementWrapperLayout } from '../form-elements/element-wrapper-layout';
+import { FormRender } from './form-render';
+import { FormRenderArray } from './form-render-array';
+import { ElementCommonView } from '../form-elements/element-common-view';
+import { deepCopy } from '../utils';
 import React from 'react';
 
 export const FormLayoutRender = ({ storeId, path, dataPath, layoutPath, className = '', arrayIndex = undefined }) => {
-  const { setStateItem, setItemValue, getItemValue, getSchemaItem, theme } = getFormStore(storeId)(state => ({
+  const { setStateItem, setItemValue, getItemValue, getSchemaItem, theme } = useFormStore(useShallow(state => ({
     setStateItem: state.setStateItem,
     setItemValue: state.setItemValue,
     getItemValue: state.getItemValue,
     getSchemaItem: state.getSchemaItem,
     theme: state.theme
-  }));
+  })));
   const properties = getSchemaItem(path);
   const onEditItem = (event, itemPath) => {
     event.stopPropagation();

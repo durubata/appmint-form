@@ -1,14 +1,7 @@
-import Ajv from 'ajv';
+import { z } from 'zod';
 import * as objectPath from 'object-path';
-import { ruleOperations } from './form-rules.js';
-import { deepCopy } from './common-imports.js';
-
-const MAjv: any = Ajv;
-const ajv = new MAjv({
-  allErrors: true,
-  useDefaults: true,
-  strict: false,
-});
+import { ruleOperations } from './form-rules';
+import { deepCopy } from '../utils';
 
 interface ValidationResult {
   valid: boolean;
@@ -17,10 +10,118 @@ interface ValidationResult {
   path?: string;
 }
 
+// Helper function to convert JSON Schema to Zod schema
+const jsonSchemaToZod = (schema: any): z.ZodTypeAny => {
+  if (!schema || typeof schema !== 'object') {
+    return z.any();
+  }
+
+  // Handle different types
+  switch (schema.type) {
+    case 'string':
+      let stringSchema = z.string();
+
+      if (schema.pattern) {
+        stringSchema = stringSchema.regex(new RegExp(schema.pattern));
+      }
+
+      if (schema.minLength !== undefined) {
+        stringSchema = stringSchema.min(schema.minLength);
+      }
+
+      if (schema.maxLength !== undefined) {
+        stringSchema = stringSchema.max(schema.maxLength);
+      }
+
+      if (schema.enum) {
+        return z.enum(schema.enum as [string, ...string[]]);
+      }
+
+      return stringSchema;
+
+    case 'number':
+    case 'integer':
+      let numberSchema = schema.type === 'integer' ? z.number().int() : z.number();
+
+      if (schema.minimum !== undefined) {
+        numberSchema = numberSchema.min(schema.minimum);
+      }
+
+      if (schema.maximum !== undefined) {
+        numberSchema = numberSchema.max(schema.maximum);
+      }
+
+      return numberSchema;
+
+    case 'boolean':
+      return z.boolean();
+
+    case 'null':
+      return z.null();
+
+    case 'array':
+      let arraySchema = z.array(schema.items ? jsonSchemaToZod(schema.items) : z.any());
+
+      if (schema.minItems !== undefined) {
+        arraySchema = arraySchema.min(schema.minItems);
+      }
+
+      if (schema.maxItems !== undefined) {
+        arraySchema = arraySchema.max(schema.maxItems);
+      }
+
+      return arraySchema;
+
+    case 'object':
+      if (!schema.properties) {
+        return z.record(z.any());
+      }
+
+      const shape: Record<string, z.ZodTypeAny> = {};
+      const required = schema.required || [];
+
+      for (const key in schema.properties) {
+        const propSchema = schema.properties[key];
+        const zodPropSchema = jsonSchemaToZod(propSchema);
+
+        shape[key] = required.includes(key) ? zodPropSchema : zodPropSchema.optional();
+      }
+
+      return z.object(shape);
+
+    default:
+      // Handle multiple types or no type specified
+      if (Array.isArray(schema.type)) {
+        // Union of types
+        const schemas = schema.type.map((type: string) => jsonSchemaToZod({ ...schema, type }));
+        return z.union(schemas as [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]);
+      }
+
+      // If no type is specified, use any
+      return z.any();
+  }
+};
+
 export const schemaValidator = (data: any, schema: any): { valid: boolean; validate: any } => {
-  const validate = ajv.compile(schema);
-  const valid = validate(data);
-  return { valid, validate };
+  try {
+    const zodSchema = jsonSchemaToZod(schema);
+    const result = zodSchema.safeParse(data);
+
+    return {
+      valid: result.success,
+      validate: {
+        errors: result.success ? undefined : result.error.errors
+      }
+    };
+  } catch (error) {
+    console.error('Schema validation error:', error);
+    return {
+      valid: false,
+      validate: {
+        errors: [{ message: 'Schema validation error' }]
+      }
+    };
+  }
 };
 
 export const getTemplateValue = (key: string, parentPath: string, data: any): any => {
@@ -47,18 +148,45 @@ export const validateForm = (data: any, schema: any): { valid: boolean; validate
   let schemaCopy = deepCopy(schema);
   schemaCopy = replaceIdWithDollarIdAndCleanSchema(schemaCopy);
   schemaCopy = findAndSetRequiredFields(schemaCopy);
-  const validate = ajv.compile(schemaCopy);
-  const valid = validate(data);
-  const validationResults: ValidationResult[] = [];
-  if (!valid) {
-    validationResults.push({ valid: false, errors: validate.errors, message: validate?.errors?.map((e: any) => e.message).join(', ') });
-  }
-  validateSchemaItems('', '', deepCopy(schema), data, validationResults);
 
-  if (validationResults.length) {
-    return { valid: false, validate, errors: validationResults.map(v => v.errors), message: validationResults.map(v => `${v.path ? v.path + ' : ' : ''}${v.message || ''}`).join('\n'), validationResults };
+  try {
+    const zodSchema = jsonSchemaToZod(schemaCopy);
+    const result = zodSchema.safeParse(data);
+    const validationResults: ValidationResult[] = [];
+
+    if (!result.success) {
+      const formattedErrors = result.error.format();
+      validationResults.push({
+        valid: false,
+        errors: result.error.errors,
+        message: result.error.errors.map((e: any) => e.message).join(', ')
+      });
+    }
+
+    // Additional custom validations
+    validateSchemaItems('', '', deepCopy(schema), data, validationResults);
+
+    if (validationResults.length) {
+      return {
+        valid: false,
+        validate: { errors: validationResults.map(v => v.errors) },
+        errors: validationResults.map(v => v.errors),
+        message: validationResults.map(v => `${v.path ? v.path + ' : ' : ''}${v.message || ''}`).join('\n'),
+        validationResults
+      };
+    }
+
+    return { valid: true, validate: { errors: undefined } };
+  } catch (error) {
+    console.error('Form validation error:', error);
+    return {
+      valid: false,
+      validate: { errors: [{ message: 'Form validation error' }] },
+      errors: [{ message: 'Form validation error' }],
+      message: 'Form validation error',
+      validationResults: [{ valid: false, errors: [{ message: 'Form validation error' }], message: 'Form validation error' }]
+    };
   }
-  return { valid: true, validate };
 };
 
 const validateSchemaItems = (path: string, dataPath: string, schema: any, data: any, store: ValidationResult[]): any => {
@@ -109,11 +237,11 @@ const validateSchemaItems = (path: string, dataPath: string, schema: any, data: 
 };
 
 export const validateFormValue = (path: string, value: any, schema: any, data?: any): ValidationResult => {
-  //no validation for hidden fields
+  // No validation for hidden fields
   if (!schema || schema.hidden) return { path, valid: true };
 
   const copySchema = deepCopy(schema);
-  //remove minItems or maxItems if undefined and property exist
+  // Remove minItems or maxItems if undefined and property exist
   if (copySchema.hasOwnProperty('minItems') && !copySchema.minItems) {
     delete copySchema.minItems;
   }
@@ -128,14 +256,27 @@ export const validateFormValue = (path: string, value: any, schema: any, data?: 
     });
   }
 
-  const validate = ajv.compile(copySchema);
-  const valid = validate(value);
-  if (!valid) {
-    if ((value === null || value === undefined) && JSON.stringify(validate.errors).indexOf('must be string') >= 0) {
-    } else {
-      console.log('Validation failed:', path, value, validate.errors);
-      return { path, valid: false, errors: validate.errors, message: validate?.errors?.map((e: any) => e.message).join(', ') };
+  try {
+    const zodSchema = jsonSchemaToZod(copySchema);
+    const result = zodSchema.safeParse(value);
+
+    if (!result.success) {
+      console.log('Validation failed:', path, value, result.error.errors);
+      return {
+        path,
+        valid: false,
+        errors: result.error.errors,
+        message: result.error.errors.map((e: any) => e.message).join(', ')
+      };
     }
+  } catch (error) {
+    console.error('Value validation error:', error);
+    return {
+      path,
+      valid: false,
+      errors: [{ message: 'Value validation error' }],
+      message: 'Value validation error'
+    };
   }
 
   if (schema.inputRequired && !value) {
@@ -189,7 +330,7 @@ export const validateFormValue = (path: string, value: any, schema: any, data?: 
     }
   }
 
-  //entityValidations
+  // entityValidations
   return { path, valid: true };
 };
 

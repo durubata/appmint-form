@@ -55,20 +55,20 @@ const genericService = {
 export const CollectionTable = (props: {
     hash?;
     options?;
-    title;
-    description;
-    data;
-    path;
+    title?;
+    description?;
+    data?;
+    path?;
     columns?;
-    filterPreset;
+    filterPreset?;
     schema?;
     filters?;
     accessMode?;
     inlineEdit?;
     datatype?;
     isDemo?;
-    onRowEvent?: (event, rowId, row) => boolean;
-    onTableEvent?: (event, option, selected) => boolean;
+    onRowEvent?: (event, rowId, row) => any;
+    onTableEvent?: (event, option, selected) => any;
     isLoading?;
     cellRenderers?;
     itemRenderer?;

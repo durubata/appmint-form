@@ -1,4 +1,4 @@
-import { Icon } from './common-imports';
+import { IconRenderer } from '../common/icons/icon-renderer';
 import React, { useState } from 'react';
 
 export const RatingInput = (props: { path; change; blur; value; data; schema: { scale; update; total; min; max } }) => {
@@ -21,14 +21,20 @@ export const RatingInput = (props: { path; change; blur; value; data; schema: { 
           return (
             <span key={ratingValue} onMouseEnter={() => setHover(ratingValue)} onMouseLeave={() => setHover(0)}>
               {ratingValue <= (hover || rating) ? (
-                <button onClick={() => handleRating(ratingValue)}>
-                  {' '}
-                  <Icon name="FaStar" className=" fill-yellow-400 stroke-yellow-500 " />
+                <button
+                  onClick={() => handleRating(ratingValue)}
+                  title={`Rate ${ratingValue} out of ${scale}`}
+                  aria-label={`Rate ${ratingValue} out of ${scale}`}
+                >
+                  <IconRenderer icon="Star" className="fill-yellow-400 stroke-yellow-500" />
                 </button>
               ) : (
-                <button onClick={() => handleRating(ratingValue)}>
-                  {' '}
-                  <Icon name="FaRegStar" className=" fill-yellow-400 stroke-yellow-500 " />
+                <button
+                  onClick={() => handleRating(ratingValue)}
+                  title={`Rate ${ratingValue} out of ${scale}`}
+                  aria-label={`Rate ${ratingValue} out of ${scale}`}
+                >
+                  <IconRenderer icon="Star" className=" fill-white stroke-gray-500 " />
                 </button>
               )}
             </span>

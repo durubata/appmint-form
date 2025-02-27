@@ -1,6 +1,6 @@
 import React from 'react';
 import { getRandomString } from '../utils';
-import { Icon } from '../form-elements/common-imports';
+import { IconRenderer } from './icons/icon-renderer';
 
 export const ButtonAdd = (props: { handler; controlRef?; className?}) => {
 
@@ -11,7 +11,7 @@ export const ButtonAdd = (props: { handler; controlRef?; className?}) => {
   const buttonClass = 'custom-button custom-button-add ' + props.className
   return (
     <button key={getRandomString()} className={buttonClass} onClick={onClick} title="Add item">
-      <Icon name='FaPlus' />
+      <IconRenderer icon='Plus' />
     </button>
   );
 };

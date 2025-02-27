@@ -1,9 +1,13 @@
 import { useShallow } from 'zustand/shallow';
-import { classNames, FormLayoutRender, getFormStore, ElementCommonView, tabButtonActiveClass, tabButtonClass } from './common-imports';
+import { classNames } from '../utils';
+import { FormLayoutRender } from './form-layout-render';
+import { useFormStore } from '../context/store';
+import { ElementCommonView } from '../form-elements/element-common-view';
+import { tabButtonActiveClass, tabButtonClass } from '../common/constants';
 import React from 'react';
 
 export const FormLayoutTab = ({ storeId, layoutPath, path, dataPath, theme }) => {
-  const { getSchemaItem } = getFormStore(storeId)(useShallow(state => ({ getSchemaItem: state.getSchemaItem })));
+  const { getSchemaItem } = useFormStore(useShallow(state => ({ getSchemaItem: state.getSchemaItem })));
   const [value, setValue] = React.useState(layoutPath + '.items.0');
 
   const layout = getSchemaItem(layoutPath);
@@ -29,7 +33,7 @@ export const FormLayoutTab = ({ storeId, layoutPath, path, dataPath, theme }) =>
 };
 
 export const FormLayoutTab2 = ({ storeId, layoutPath, path, dataPath, theme }) => {
-  const { getSchemaItem } = getFormStore(storeId).getState();
+  const { getSchemaItem } = useFormStore.getState();
   const [value, setValue] = React.useState(layoutPath + '.items.0');
 
   const layout = getSchemaItem(layoutPath);

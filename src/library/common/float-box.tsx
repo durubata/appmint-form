@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { localStorageUtils } from '../utils/localstorage';
 import withPortal from './with-portal';
-import { Icon } from './icons/icon';
+import { IconRenderer } from './icons/icon-renderer';
 import { dragElement } from '../utils/drag-element';
 // import { CodeEditorAppBar } from './code-editor/app-bar';
 import { MenuAppBar } from './menu-app-bar';
@@ -227,7 +227,7 @@ export function FloatBox(props: { name; title; close; children; style?; resizabl
       </div>
       {!collapsed && props.resizable && (
         <div className="resize-handle cursor-nwse-resize absolute bottom-1 right-1 rotate-90 z-10" onMouseDown={startResizing}>
-          <Icon name="GiResize" />
+          <IconRenderer icon="GiResize" />
         </div>
       )}
     </div>

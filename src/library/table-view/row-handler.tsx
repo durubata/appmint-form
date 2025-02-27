@@ -1,5 +1,6 @@
 import React from 'react';
 import { showNotice } from '../context/store';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 // Stubs for missing components
 const IconButtonDelete = (props) => (
@@ -138,15 +139,15 @@ export const RowHandler: React.FC<any> = (props: { options?; row; onRowEvent: (e
                     title="Edit"
                     className="p-1 bg-gray-100  border-white border-2 rounded-full  hover:scale-125 block transition-all duration-200 shadow "
                 >
-                    <Icon name="FaEdit" color="blue" size={iconSize} />
+                    <IconRenderer icon="Edit" color="blue" size={iconSize} />
                 </button>
             )}
             <button title="View JSON" onClick={rowJSONViewHandler} className="p-1 bg-gray-100 border-2  border-white rounded-full shadow hover:scale-125 block transition-all duration-200">
-                <Icon name="FaEye" color="orange" size={iconSize} />
+                <IconRenderer icon="Eye" color="orange" size={iconSize} />
             </button>
             {canClone && (
                 <button title="Clone" onClick={rowCloneHandler} className="p-1 bg-gray-100 border-2  border-white rounded-full shadow hover:scale-125 block transition-all duration-200">
-                    <Icon name="FaClone" color="green" size={iconSize} />
+                    <IconRenderer icon="Copy" color="green" size={iconSize} />
                 </button>
             )}
             {canDelete && <IconButtonDelete size={iconSize} deleteHandler={deleteHandler} className="p-1 bg-gray-100 border-2  border-white rounded-full shadow hover:scale-125 block transition-all duration-200" />}

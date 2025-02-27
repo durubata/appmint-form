@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { classNames } from '../utils';
-import { FaCheckCircle, FaTimesCircle, FaDownload, FaEdit, FaTrash } from 'react-icons/fa';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const TableCardRenderer = ({ row, selected, onSelect, slimRow }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -41,7 +41,7 @@ export const TableCardRenderer = ({ row, selected, onSelect, slimRow }) => {
                     <div className="flex items-center">
                       <a href={value} download className="text-blue-500 hover:underline flex items-center">
                         Download
-                        <FaDownload className="ml-1" />
+                        <IconRenderer icon='Download' className="ml-1" />
                       </a>
                     </div>
                   ) : (
@@ -89,7 +89,7 @@ export const TableCardRenderer = ({ row, selected, onSelect, slimRow }) => {
           }}
           aria-label={`Edit ${row.original.name || 'N/A'}`}
         >
-          <FaEdit />
+          <IconRenderer icon='Edit' />
         </button>
         <button
           className="text-red-500 hover:text-red-700"
@@ -100,7 +100,7 @@ export const TableCardRenderer = ({ row, selected, onSelect, slimRow }) => {
           }}
           aria-label={`Delete ${row.original.name || 'N/A'}`}
         >
-          <FaTrash />
+          <IconRenderer icon='Trash' />
         </button>
       </div>
     </div>
@@ -171,8 +171,7 @@ const RecursiveRenderer = ({ value }) => {
   // Handle primitive types
   switch (typeof value) {
     case 'boolean':
-      return value ? <FaCheckCircle className="text-green-500 inline-block" /> : <FaTimesCircle className="text-red-500 inline-block" />;
-
+      return value ? <IconRenderer icon='CircleCheck' className="text-green-500 inline-block" /> : <IconRenderer icon='CircleX' className="text-red-500 inline-block" />;
     case 'number':
       return <span className="text-right">{value}</span>;
 

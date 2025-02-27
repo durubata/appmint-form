@@ -1,6 +1,6 @@
-import { Icon } from './common-imports';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const GeneratedElement = (props: { path; name }) => {
   const prop: any = {};
@@ -16,7 +16,7 @@ export const GeneratedElement = (props: { path; name }) => {
       <span className=" font-serif ">{value}</span>
       <button title="Regenerate" className="button-refresh p-1 rounded-full shadow bg-white" onClick={handleUpdate}>
         {' '}
-        <Icon name="IoRefresh" />{' '}
+        <IconRenderer icon="RefreshCcw" />{' '}
       </button>
     </div>
   );

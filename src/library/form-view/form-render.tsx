@@ -1,17 +1,29 @@
-import { LoadingIndicator, formLayouts, getElementTheme, getFormStore, FormElementRender, ElementWrapperLayout, ElementCommonView, classNames, deepCopy, isEmpty, isNotEmpty, FormRenderArray, runFormRules } from './common-imports';
+import { LoadingIndicator } from '../common/loading-indicator';
+import { formLayouts } from '../context/store';
+import { getElementTheme } from '../context/store';
+import { useFormStore } from '../context/store';
+import { FormElementRender } from '../form-elements';
+import { ElementWrapperLayout } from '../form-elements/element-wrapper-layout';
+import { ElementCommonView } from '../form-elements/element-common-view';
+import { classNames } from '../utils';
+import { deepCopy } from '../utils';
+import { isEmpty } from '../utils';
+import { isNotEmpty } from '../utils';
+import { FormRenderArray } from './form-render-array';
+import { runFormRules } from './form-rules';
 import React, { useEffect, useState } from 'react';
 import { runElementRules } from './form-rules';
 import { getWatchedPaths } from './form-utils';
 import { getTemplateValue } from './form-validator';
-import { shallow } from 'zustand/shallow'
+import { useShallow } from 'zustand/shallow';
 
 export const FormRender = (props: { storeId; path; dataPath; name; className; arrayIndex?; parentDataPath?, layoutPath?, arrayControl?}) => {
   const { name, path, dataPath, className, arrayIndex, layoutPath } = props;
-  const { dataPathTimestamp, theme } = getFormStore(props.storeId)(state => ({
+  const { dataPathTimestamp, theme } = useFormStore(useShallow(state => ({
     dataPathTimestamp: state.timestamp[dataPath],
     theme: state.theme
-  }));
-  const { getItemValue, setStateItem, applyRuleResult, getSchemaItem } = getFormStore(props.storeId).getState();
+  })));
+  const { getItemValue, setStateItem, applyRuleResult, getSchemaItem } = useFormStore.getState();
   const [ruleActions, setRuleActions] = useState<any>({});
 
 
@@ -19,23 +31,25 @@ export const FormRender = (props: { storeId; path; dataPath; name; className; ar
     let schema = getSchemaItem(path);
     let watchedPaths = getWatchedPaths(schema, props.parentDataPath, props.arrayIndex);
     if (isNotEmpty(watchedPaths)) {
-      getFormStore(props.storeId).getState().updateWatchedPath(props.dataPath, watchedPaths);
+      useFormStore.getState().updateWatchedPath(props.dataPath, watchedPaths);
     }
     if (schema?.rules) {
       const arrayData = typeof arrayIndex === 'number' ? getItemValue(`${props.parentDataPath}.${arrayIndex}`) : null;
       const _ruleActions = runElementRules(schema, getItemValue(''), arrayData);
       setRuleActions(_ruleActions);
     }
-  }, []);
+  }, [path, props.parentDataPath, props.arrayIndex, props.dataPath, props.storeId, arrayIndex]);
 
   useEffect(() => {
-    let schema = getSchemaItem(path);
-    if (schema?.rules) {
-      const arrayData = typeof arrayIndex === 'number' ? getItemValue(`${props.parentDataPath}.${arrayIndex}`) : null;
-      const _ruleActions = runElementRules(schema, getItemValue(''), arrayData);
-      setRuleActions(_ruleActions);
+    if (dataPathTimestamp) {
+      let schema = getSchemaItem(path);
+      if (schema?.rules) {
+        const arrayData = typeof arrayIndex === 'number' ? getItemValue(`${props.parentDataPath}.${arrayIndex}`) : null;
+        const _ruleActions = runElementRules(schema, getItemValue(''), arrayData);
+        setRuleActions(_ruleActions);
+      }
     }
-  }, [dataPathTimestamp]);
+  }, [dataPathTimestamp, path, props.parentDataPath, arrayIndex]);
 
   let schema = getSchemaItem(path);
   if (schema?.hidden || ruleActions.hide) return null;

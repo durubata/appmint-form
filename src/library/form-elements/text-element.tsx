@@ -2,7 +2,7 @@ import { classNames } from '../utils';
 import React, { useEffect, useState } from 'react';
 import { SocialTextArea } from './social-textarea';
 import { twMerge } from 'tailwind-merge';
-import { getElementTheme } from './common-imports';
+import { getElementTheme } from '../context/store';
 
 export const TextElement = (props: { readOnly?; change; dataPath, focus; blur; mode; value; schema; path; name; data, className, theme?, ui?}) => {
   const [_value, setValue] = useState(props.value);

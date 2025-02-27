@@ -1,6 +1,10 @@
 import { twMerge } from 'tailwind-merge';
-import { Transition, iconType, Icon, getElementTheme, classNames, localStorageUtils } from './common-imports';
+import { Transition } from '@headlessui/react';
+import { getElementTheme } from '../context/store';
+import { classNames } from '../utils';
+import { localStorageUtils } from '../utils/localstorage';
 import React, { useEffect, useState } from 'react';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const FormCollapsible = (props: { id?; icon?; title?; children; theme?; defaultState?; className?, ui?, arrayControl?}) => {
   const [isOpen, setOpen] = useState(props.defaultState === 'open' ? true : false);
@@ -29,13 +33,13 @@ export const FormCollapsible = (props: { id?; icon?; title?; children; theme?; d
     <div className={twMerge(classNames('cb-collapsible', props.className, controlTheme.className, classes?.join(' ')))}>
       <div onClick={toggle} className="p-2 flex justify-between items-center cursor-pointer  border-b-1 border-gray-300 gap-2 bg-gray-50 ">
         <div className='flex gap-2 items-center'>
-          {typeof props.icon === 'string' ? <Icon name={props.icon as any} /> : props.icon}
+          {typeof props.icon === 'string' ? <IconRenderer icon={props.icon as any} /> : props.icon}
           {typeof props.arrayControl?.index === 'number' && props.arrayControl.index}
           {props.title && <span>{props.title}</span>}
         </div>
         <div className='flex gap-2 items-center'>
           {props.arrayControl?.delete && props.arrayControl.delete}
-          <div className="flex items-center gap-2 ">{isOpen ? <Icon name={iconType.FaChevronDown} aria-hidden="true" className="" size={10} /> : <Icon name={iconType.FaChevronRight} aria-hidden="true" className="" size={10} />}</div>
+          <div className="flex items-center gap-2 ">{isOpen ? <IconRenderer icon={'ChevronDown'} aria-hidden="true" className="" size={10} /> : <IconRenderer icon={'ChevronRight'} aria-hidden="true" className="" size={10} />}</div>
         </div>
       </div>
       {isOpen && (

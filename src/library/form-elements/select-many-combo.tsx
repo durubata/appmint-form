@@ -4,7 +4,7 @@ import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, ComboboxButto
 import { classNames, isEmpty, isNotEmpty } from '../utils';
 import { ElementIcon } from './element-icon';
 import { twMerge } from 'tailwind-merge';
-import { Icon } from '../common/icons/icon';
+import { IconRenderer } from '../common/icons/icon-renderer';
 
 export const SelectManyCombo = (props: { className?; blur?; change?; focus?; mode?; value?; schema?; path?; name?; data?; options?, theme?}) => {
   const [query, setQuery] = useState('');
@@ -164,7 +164,7 @@ export const SelectManyCombo = (props: { className?; blur?; change?; focus?; mod
                 <span className="ml-1 block truncate">{typeof item === 'string' ? item : item?.label}</span>
                 <button onClick={() => removeSelection(item)} className="ml-3 text-gray-400 bg-white hover:text-gray-600 focus:outline-none rounded-full shadow p-[2px]">
                   <span className="sr-only">Remove</span>
-                  <Icon name="FaXmark" className="h-4 w-4 hover:fill-red-500 hover:stroke-red-500" aria-hidden="true" />
+                  <IconRenderer icon="X" className="h-4 w-4 hover:fill-red-500 hover:stroke-red-500" aria-hidden="true" />
                 </button>
               </div>
             ))}
@@ -187,11 +187,11 @@ export const SelectManyCombo = (props: { className?; blur?; change?; focus?; mod
           {listSelected && selections?.length > 0 && <span className=" inset-y-0 rounded-r-md  focus:outline-none  text-xs text-purple-600">{selections?.length}</span>}
           {selections?.length > 0 && (
             <ComboboxButton className=" inset-y-0  rounded-r-md focus:outline-none group" onClick={clearItems}>
-              <Icon name="FaXmark" className="h-4 w-4  group-hover:text-sky-500 text-red-400" aria-hidden="true" />
+              <IconRenderer icon="X" className="h-4 w-4  group-hover:text-sky-500 text-red-400" aria-hidden="true" />
             </ComboboxButton>
           )}
           <ComboboxButton className=" inset-y-0 rounded-r-md focus:outline-none" onClick={addOrSelectItem}>
-            <Icon name="FaPlus" className="h-4 w-4 text-gray-400" aria-hidden="true" />
+            <IconRenderer icon="Plus" className="h-4 w-4 text-gray-400" aria-hidden="true" />
           </ComboboxButton>
           <ComboboxButton className=" inset-y-0  flex rounded-r-md focus:outline-none">
             <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -213,7 +213,7 @@ export const SelectManyCombo = (props: { className?; blur?; change?; focus?; mod
                   </div>
                   <div className='flex items-center'>
                     <button className="" onClick={() => removeItem(itemValue)}>
-                      <Icon name="FaXmark" className="h-4 w-4  group-hover:text-sky-500 text-red-400" aria-hidden="true" />
+                      <IconRenderer icon="X" className="h-4 w-4  group-hover:text-sky-500 text-red-400" aria-hidden="true" />
                     </button>
                   </div>
                 </div>

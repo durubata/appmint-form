@@ -1,21 +1,33 @@
 import React from 'react';
+import RichTextEditor from '../common/richtext-editor';
 
-export const RichtextElement = (props: { change; focus; blur; mode; value; schema; path; name; data }) => {
-  const prop: any = {};
-
-  const handleBlur = (id, content) => {
-    props.blur(content);
+export const RichtextElement = (props: { change; focus; blur; mode; value; schema; path; name; data; height?}) => {
+  const handleChange = (content: string) => {
+    if (props.change) {
+      props.change(content);
+    }
   };
 
-  const handleChange = content => {
-    props.change(content);
+  const handleBlur = () => {
+    if (props.blur) {
+      props.blur(props.value);
+    }
   };
 
-  const handleFocus = () => { };
+  const handleFocus = () => {
+    if (props.focus) {
+      props.focus();
+    }
+  };
 
-  return <div>
-    <div className="flex items-center justify-between page-4 text-sm">
-      <span className=" font-serif ">Richtext</span>
+  return (
+    <div className="richtext-element-container">
+      <RichTextEditor
+        value={props.value || ''}
+        onChange={handleChange}
+        height={props.height || 300}
+        menubar="file edit view insert format tools table help"
+      />
     </div>
-  </div>
+  );
 };
