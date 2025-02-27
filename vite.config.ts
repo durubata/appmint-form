@@ -8,8 +8,8 @@ export default defineConfig({
     plugins: [
         react(),
         dts({
-            include: ['src'],
-            exclude: ['_old', 'node_modules', 'dist'],
+            include: ['src/library', 'src/index.tsx', 'src/types'],
+            exclude: ['_old', 'node_modules', 'dist', 'src/demo', 'src/demo.tsx'],
         }),
         libInjectCss(),
     ],
