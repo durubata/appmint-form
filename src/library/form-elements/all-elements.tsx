@@ -27,6 +27,7 @@ import { LegalConsentElement } from './legal-concent';
 import { DateRangeElement } from './date-range';
 import { DataViewElement } from './data-view-element';
 import { DataLookupCombo } from './data-lookup-combo';
+import { ShadowElement } from './shadow-element';
 
 export * from './color-element';
 export * from './code-element';
@@ -62,6 +63,7 @@ export const elementToNameMap = {
   text: TextElement,
   textarea: TextElement,
   number: NumberElement,
+  shadow: ShadowElement,
   file: FileElement,
   selectsingle: SelectSingleElement,
   selectmany: SelectManyElement,

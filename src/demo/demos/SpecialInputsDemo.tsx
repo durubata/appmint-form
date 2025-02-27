@@ -17,14 +17,10 @@ const schema = {
             description: 'File upload input',
             'x-control': 'file'
         },
-        multipleFiles: {
-            type: 'array',
-            title: 'Multiple File Upload',
-            description: 'Multiple file upload input',
-            items: {
-                type: 'string'
-            },
-            'x-control': 'file'
+        shadow: {
+            type: 'string',
+            description: 'Shadow color picker',
+            'x-control': 'shadow'
         },
         map: {
             type: 'object',
