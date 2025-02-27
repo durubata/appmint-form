@@ -21,14 +21,20 @@ export const RatingInput = (props: { path; change; blur; value; data; schema: { 
           return (
             <span key={ratingValue} onMouseEnter={() => setHover(ratingValue)} onMouseLeave={() => setHover(0)}>
               {ratingValue <= (hover || rating) ? (
-                <button onClick={() => handleRating(ratingValue)}>
-                  {' '}
-                  <IconRenderer icon="FaStar" className=" fill-yellow-400 stroke-yellow-500 " />
+                <button
+                  onClick={() => handleRating(ratingValue)}
+                  title={`Rate ${ratingValue} out of ${scale}`}
+                  aria-label={`Rate ${ratingValue} out of ${scale}`}
+                >
+                  <IconRenderer icon="Star" className="fill-yellow-400 stroke-yellow-500" />
                 </button>
               ) : (
-                <button onClick={() => handleRating(ratingValue)}>
-                  {' '}
-                  <IconRenderer icon="FaRegStar" className=" fill-yellow-400 stroke-yellow-500 " />
+                <button
+                  onClick={() => handleRating(ratingValue)}
+                  title={`Rate ${ratingValue} out of ${scale}`}
+                  aria-label={`Rate ${ratingValue} out of ${scale}`}
+                >
+                  <IconRenderer icon="Star" className=" fill-white stroke-gray-500 " />
                 </button>
               )}
             </span>

@@ -1,14 +1,27 @@
 import React from 'react';
+import MarkdownEditor from '../common/markdown-editor';
 
+export const MarkdownElement = (props: { path; name; validate; value; change; blur; className; ui; theme; height?}) => {
+  const handleChange = (value: string) => {
+    if (props.change) {
+      props.change(value);
+    }
+  };
 
-
-export const MarkdownElement = (props: { path; name, validate, Value, change, blur, className, ui, theme }) => {
-
+  const handleBlur = () => {
+    if (props.blur) {
+      props.blur(props.value);
+    }
+  };
 
   return (
-    <div>
-      MarkdownElement
+    <div className={props.className || "markdown-element-container"}>
+      <MarkdownEditor
+        value={props.value || ''}
+        onChange={handleChange}
+        height={props.height || 300}
+        preview="live"
+      />
     </div>
   );
 };
-
