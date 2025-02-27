@@ -50,14 +50,14 @@ export const TablePagination: React.FC<any> = ({ table }) => {
                                 disabled={!table.getCanPreviousPage()}
                                 className="relative inline-flex items-center rounded-l-md px-2 py-1 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                             >
-                                <IconRenderer icon="HiChevronDoubleLeft" className="h-5 w-5" aria-hidden="true" />
+                                <IconRenderer icon="ChevronsLeft" className="h-5 w-5" aria-hidden="true" />
                             </button>
                             <button
                                 onClick={() => table.previousPage()}
                                 disabled={!table.getCanPreviousPage()}
                                 className="relative inline-flex items-center px-4 py-1 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                             >
-                                <IconRenderer icon="HiChevronLeft" className="h-5 w-5" aria-hidden="true" />
+                                <IconRenderer icon="ChevronLeft" className="h-5 w-5" aria-hidden="true" />
                             </button>
 
                             <span className="relative inline-flex items-center gap-1 px-4 py-1 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">
@@ -77,14 +77,14 @@ export const TablePagination: React.FC<any> = ({ table }) => {
                                 disabled={!table.getCanNextPage()}
                                 className="relative inline-flex items-center px-4 py-1 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                             >
-                                <IconRenderer icon="HiChevronRight" className="h-5 w-5" aria-hidden="true" />
+                                <IconRenderer icon="ChevronRight" className="h-5 w-5" aria-hidden="true" />
                             </button>
                             <button
                                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                                 disabled={!table.getCanNextPage()}
                                 className="relative inline-flex items-center rounded-r-md px-2 py-1 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                             >
-                                <IconRenderer icon="HiChevronDoubleRight" className="h-5 w-5" aria-hidden="true" />
+                                <IconRenderer icon="ChevronsRight" className="h-5 w-5" aria-hidden="true" />
                             </button>
                         </nav>
                     </div>

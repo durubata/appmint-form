@@ -40,9 +40,9 @@ export const TableColumns: React.FC<any> = ({ table }) => {
     );
 
     return (
-        <Popover content={content} position="context" offsetX={-20} offsetY={-40}>
+        <Popover content={content} position="context" offsetX={-20} offsetY={15}>
             <button className="">
-                <IconRenderer icon="BiColumns" />{' '}
+                <IconRenderer icon="Columns3" />
             </button>
         </Popover>
     );

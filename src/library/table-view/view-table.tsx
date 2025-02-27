@@ -22,7 +22,7 @@ export const CollectionTableView = (props: { table; selectRow; selectedRows; sli
                     checked: table.getIsAllPageRowsSelected(),
                     indeterminate: table.getIsSomePageRowsSelected(),
                     onChange: table.getToggleAllPageRowsSelectedHandler(),
-                    className: ' w-3 h-3 mb-[2px]',
+                    className: ' w-4 h-4 mb-[5px]',
                   }}
                 />
                 <TableColumns table={table} />

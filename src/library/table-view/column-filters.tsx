@@ -33,7 +33,7 @@ export const ColumnFilters: React.FC<any> = ({ table }) => {
     <div className="inline-block">
       <div className="px-2 py-1  mb-2">
         <button className={classNames(buttonClass, buttonHoverClass)} onClick={clearAllFilters}>
-          <IconRenderer icon="FaXmark" /> <span>Clear All</span>
+          <IconRenderer icon="X" /> <span>Clear All</span>
         </button>
       </div>
       {table.getAllLeafColumns().map(column => {
@@ -50,9 +50,9 @@ export const ColumnFilters: React.FC<any> = ({ table }) => {
   );
 
   return (
-    <Popover content={content} position="context" offsetX={-20} offsetY={-40}>
+    <Popover content={content} position="context" offsetX={-20} offsetY={15}>
       <button className="">
-        <IconRenderer icon="FiFilter" />{' '}
+        <IconRenderer icon="Filter" />
       </button>
     </Popover>
   );

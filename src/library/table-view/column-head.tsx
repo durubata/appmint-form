@@ -4,9 +4,9 @@ import { classNames } from '../utils';
 import { IconRenderer } from '../common/icons/icon-renderer';
 
 const sortIcons = {
-    asc: <IconRenderer icon="HiOutlineArrowNarrowUp" />,
-    desc: <IconRenderer icon="HiOutlineArrowNarrowDown" />,
-    none: <IconRenderer icon="CgArrowsVAlt" />,
+    asc: <IconRenderer icon="ArrowUp" />,
+    desc: <IconRenderer icon="ArrowDown" />,
+    none: <IconRenderer icon="ChevronsUpDown" />,
 };
 
 export const ColumnHead: React.FC<any> = ({ header }) => {
@@ -35,7 +35,7 @@ export const ColumnHead: React.FC<any> = ({ header }) => {
             <div className="header-item text-gray-500 group">
                 <div className="flex gap-1 items-center mb-1">
                     <div className="drag-handle cursor-grabbing " draggable onDragStart={handleDragStart}>
-                        <IconRenderer icon="RiDraggable" />
+                        <IconRenderer icon="GripVertical" />
                     </div>
                     <div onClick={header.column.getToggleSortingHandler()} className={classNames(`sort-button`, canSort ? 'sortable' : '', 'w-full whitespace-nowrap text-ellipsis text-sm')}>
                         {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}

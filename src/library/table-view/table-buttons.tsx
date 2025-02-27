@@ -5,13 +5,13 @@ import { iconButtonClass, iconClass } from '../common/constants';
 import { withTooltip } from '../common/tooltip';
 
 export const tableButtonNames = [
-  { name: 'refresh', icon: 'FaSync' },
-  { name: 'delete', icon: 'FaTrash', className: 'text-red-500', confirm: true },
-  { name: 'add', icon: 'FaPlus' },
-  { name: 'select', icon: 'FaCheck' },
+  { name: 'refresh', icon: 'RefreshCcw' },
+  { name: 'delete', icon: 'Trash', className: 'text-red-500', confirm: true },
+  { name: 'add', icon: 'Plus' },
+  { name: 'select', icon: 'Check' },
   // { name: 'Edit', icon: 'FaEdit' },
-  { name: 'export', icon: 'FaFileExport' },
-  { name: 'import', icon: 'FaFileImport' },
+  { name: 'export', icon: 'FileDown' },
+  { name: 'import', icon: 'FileUp' },
   // { name: 'Print', icon: 'FaPrint' },
 ];
 
