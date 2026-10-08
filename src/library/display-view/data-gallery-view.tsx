@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { BaseModelDTO, classNames, getRandomString, getResponseErrorMessage } from '../utils';
 import { useShallow } from 'zustand/shallow';
@@ -5,27 +6,25 @@ import { useFormStore } from '../context/store';
 import { LoadingIndicator } from '../common/loading-indicator';
 import { IconRenderer } from '../common/icons/icon-renderer';
 import CollectionTable from '../table-view';
-import { iconButtonClass } from '../common/constants';
 import { JSONViewer } from '../common/json-viewer';
 import CollectionForm from '../form-view';
-import { FloatBox } from '../common/float-box';
 import { CollectionHelper } from '../form-view/form-utils';
+import ViewManager from '../common/view-manager/view-manager';
+import { iconButtonClass } from '../utils/constants';
+import { StyledComponent } from '../form-elements/styling';
 
-
-const style = { left: 'calc(30% / 2)', top: 'calc(30% / 4)', width: '70%', height: '70%' };
-
-export const DataGalleryView = (props: { datatype; data, filter }) => {
+export const DataGalleryView = (props: { datatype?; data?, popup?, filter?, openRecord?}) => {
   const { dataViewProps } = useFormStore(useShallow(state => ({ dataViewProps: state.dataViewProps })));
   const [activeTab, setActiveTab] = React.useState('list');
   const [activeRecord, setActiveRecord] = React.useState(null);
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [dataDTO, setDataDTO] = React.useState<BaseModelDTO<any>>(null);
+  const [dataDTO, setDataDTO] = React.useState<BaseModelDTO<any> | null>(null);
   const [error, setError] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [datatype, setDatatype] = React.useState(props.datatype || dataViewProps?.datatype);
 
   useEffect(() => {
-    if (dataViewProps?.viewType === 'gallery') {
+    if (dataViewProps?.type === 'gallery') {
       changeDatatype(dataViewProps.datatype);
     }
 
@@ -54,79 +53,121 @@ export const DataGalleryView = (props: { datatype; data, filter }) => {
   const nextRecord = () => {
     setError(null);
     const currentIndex = dataDTO?.data.findIndex(item => item.sk === activeRecord?.sk);
-    if (currentIndex < dataDTO?.data.length - 1) {
-      setActiveRecord(dataDTO?.data[currentIndex + 1]);
+    if (currentIndex !== undefined && dataDTO && currentIndex < dataDTO.data.length - 1) {
+      setActiveRecord(dataDTO.data[currentIndex + 1]);
       setCurrentIndex(currentIndex + 1);
     }
-    // else if (dataDTO?.hasNext) {
-    //   loadNextPage();
-    // }
   };
 
   const prevRecord = () => {
     setError(null);
     const currentIndex = dataDTO?.data.findIndex(item => item.sk === activeRecord?.sk);
-    if (currentIndex > 0) {
+    if (currentIndex !== undefined && currentIndex > 0) {
       setActiveRecord(dataDTO?.data[currentIndex - 1]);
       setCurrentIndex(currentIndex - 1);
     }
   };
 
-  const openRecord = record => {
+  const openRecord = (record) => {
     const currentIndex = dataDTO?.data.findIndex(item => item.sk === record.sk);
+    if (props.openRecord) {
+      props.openRecord(record);
+      return;
+    }
     setActiveRecord(record);
-    setCurrentIndex(currentIndex);
+    if (currentIndex !== undefined) {
+      setCurrentIndex(currentIndex);
+    }
     setActiveTab('detail');
   };
 
   const collection: any = datatype ? CollectionHelper.getInstance().getCollection(datatype) : "";
-  if (dataViewProps?.viewType !== 'gallery') return null;
+  if (dataViewProps?.type !== 'gallery') return null;
 
-  return (
-    <FloatBox style={style} key="data-gallery-view" name="data-gallery-view" title="Data Gallery View" close={closeHandler}>
-      <div className="h-full w-full relative">
-        <div className="flex gap-1 w-full bg-gray-100 px-3">
-          <button onClick={e => setActiveTab('list')} className={classNames(activeTab === 'list' ? 'bg-cyan-100' : 'bg-gray-50', 'text-sm px-6 py-2')}>
-            List
-          </button>
-          <button onClick={e => setActiveTab('detail')} className={classNames(activeTab === 'detail' ? 'bg-cyan-100' : 'bg-gray-50', 'text-sm px-6 py-2')}>
-            Data View
-          </button>
-        </div>
-        {error && <div className=" max-w-screen-md mx-auto bg-red-100 p-2 text-sm text-center">{error}</div>}
-        {(!collection || isLoading) ? <LoadingIndicator /> :
-          (
-            <>
-              <div className="text-sm flex items-center w-fit gap-5 absolute top-0 right-0 h-9 px-4">
-                <div className='bg-purple-700 h-full text-white px-2 py-1'>{collection?.data?.name}</div>
-                <div>{activeRecord?.sk}</div>
-                {dataDTO?.total && (<div>
+  const table = (
+    <div className="h-full w-full relative">
+      <StyledComponent
+        componentType="data-gallery-view"
+        part="tabs"
+      >
+        <StyledComponent
+          componentType="data-gallery-view"
+          part={activeTab === 'list' ? "tabActive" : "tab"}
+          onClick={e => setActiveTab('list')}
+        >
+          List
+        </StyledComponent>
+        <StyledComponent
+          componentType="data-gallery-view"
+          part={activeTab === 'detail' ? "tabActive" : "tab"}
+          onClick={e => setActiveTab('detail')}
+        >
+          Data View
+        </StyledComponent>
+      </StyledComponent>
+      {error && <div className=" max-w-screen-md mx-auto bg-red-100 p-2 text-sm text-center">{error}</div>}
+      {(!collection || isLoading) ? <LoadingIndicator /> :
+        (
+          <>
+            <div className="text-sm flex items-center w-fit gap-5 absolute top-0 right-0 h-9 px-4">
+              <StyledComponent
+                componentType="data-gallery-view"
+                part="header"
+              >
+                {collection?.data?.name}
+              </StyledComponent>
+              <div>{activeRecord?.sk}</div>
+              {dataDTO?.total && (
+                <div>
                   {currentIndex + 1} of {dataDTO?.total}
                 </div>
-                )}
-              </div>
-              <div className="h-[calc(100%-100px)] w-full mt-4">
-                <ItemList isActive={activeTab === 'list'} setDataDTO={setDataDTO} schema={collection?.data?.schema} datatype={collection?.data?.name} data={dataDTO?.data} openRecord={openRecord} changeDatatype={changeDatatype} dataViewProps={dataViewProps} />
-                <ItemDetail isActive={activeTab === 'detail'} setActiveTab={setActiveTab} schema={collection?.data?.schema} datatype={collection?.data?.name} data={activeRecord} dataViewProps={dataViewProps} />
-              </div>
-              <div className="flex items-center gap-4 justify-between absolute bottom-1 w-full px-5 bg-white py-2">
-                <button onClick={prevRecord} className="text-sm hover:bg-cyan-100 pl-2  pr-3 py-1 rounded-full flex items-center gap-2 border border-gray-200">
-                  <IconRenderer icon="ArrowLeft" className="w-5 h-5 rounded-full shadow bg-white p-1" /> <span>Previous</span>
-                </button>
+              )}
+            </div>
+            <StyledComponent
+              componentType="data-gallery-view"
+              part="content"
+            >
+              <ItemList isActive={activeTab === 'list'} setDataDTO={setDataDTO} schema={collection?.data?.schema} datatype={collection?.data?.name} data={dataDTO?.data} openRecord={openRecord} changeDatatype={changeDatatype} dataViewProps={dataViewProps} />
+              <ItemDetail isActive={activeTab === 'detail'} setActiveTab={setActiveTab} schema={collection?.data?.schema} datatype={collection?.data?.name} data={activeRecord} dataViewProps={dataViewProps} />
+            </StyledComponent>
+            <StyledComponent
+              componentType="data-gallery-view"
+              part="footer"
+            >
+              <StyledComponent
+                componentType="data-gallery-view"
+                part="button"
+                onClick={prevRecord}
+              >
+                <IconRenderer icon="ArrowLeft" className="w-5 h-5 rounded-full shadow bg-white p-1 dark:bg-gray-700" /> <span>Previous</span>
+              </StyledComponent>
 
-                <button onClick={nextRecord} className="text-sm hover:bg-cyan-100 pl-3  pr-2 py-1 rounded-full flex items-center gap-2 border border-gray-200">
-                  <span>Next</span>
-                  <IconRenderer icon="ArrowRight" className="w-5 h-5 rounded-full shadow bg-white p-1" />
-                </button>
-              </div>
-            </>)}
-      </div>
-    </FloatBox>
+              <StyledComponent
+                componentType="data-gallery-view"
+                part="button"
+                onClick={nextRecord}
+              >
+                <span>Next</span>
+                <IconRenderer icon="ArrowRight" className="w-5 h-5 rounded-full shadow bg-white p-1 dark:bg-gray-700" />
+              </StyledComponent>
+            </StyledComponent>
+          </>)}
+    </div>
   );
+
+
+  const popup = props.popup || dataViewProps?.datatype
+  if (popup) {
+    return (<ViewManager id='data-gallery-view' title='Data Gallery' placement={{ width: 1000, height: 600, x: 0, y: 0, ref: 'center' }} onClose={closeHandler}>
+      {table}
+    </ViewManager>)
+  }
+  return table;
+
+
 };
 
 const ItemList = ({ schema, datatype, data, openRecord, setDataDTO, isActive, changeDatatype, dataViewProps }) => {
-
   const onTableEvent = async (eventName, option, selected, ...others) => {
     if (dataViewProps.onTableEvent) {
       const rt = await dataViewProps.onTableEvent(eventName, option, selected, ...others);
@@ -154,9 +195,10 @@ const ItemList = ({ schema, datatype, data, openRecord, setDataDTO, isActive, ch
     return false;
   };
 
-  return <div className={classNames(isActive ? 'flex' : 'hidden', 'h-full')}>
+
+  return (<div className={classNames(isActive ? 'flex' : 'hidden', 'h-full')}>
     <CollectionTable datatype={datatype} schema={schema} data={data} filters={dataViewProps.filter} onTableEvent={onTableEvent} onRowEvent={onRowEvent} />
-  </div>
+  </div>);
 };
 
 const ItemDetail = ({ schema, datatype, data, isActive, setActiveTab, dataViewProps }) => {

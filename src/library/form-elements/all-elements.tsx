@@ -1,4 +1,7 @@
 import React from 'react';
+// Export styling components and utilities
+export { StyledComponent } from './styling';
+export { extractStylingFromSchema, getComponentPartStyling } from './styling/style-utils';
 import { ButtonElement } from './button-element';
 import { CodeElement } from './code-element';
 import { ColorElement } from './color-element';
@@ -28,6 +31,8 @@ import { DateRangeElement } from './date-range';
 import { DataViewElement } from './data-view-element';
 import { DataLookupCombo } from './data-lookup-combo';
 import { ShadowElement } from './shadow-element';
+import { CaptureElement } from './capture-element';
+import { SignatureElement } from './signature-element';
 
 export * from './color-element';
 export * from './code-element';
@@ -57,8 +62,11 @@ export * from './generated-element';
 export * from './social-links';
 export * from './legal-concent';
 export * from './data-lookup-combo';
+export * from './capture-element';
+export * from './signature-element';
 
-export const elementToNameMap = {
+// Use a more generic type to avoid TypeScript errors with prop interfaces
+export const elementToNameMap: Record<string, React.ComponentType<any>> = {
   dataview: DataViewElement,
   text: TextElement,
   textarea: TextElement,
@@ -90,5 +98,7 @@ export const elementToNameMap = {
   sociallinks: SocialLinksElement,
   legalconsent: LegalConsentElement,
   lookup: DataLookupCombo,
+  capture: CaptureElement,
+  signature: SignatureElement,
   default: ({ name }) => <div>Unknown element {name}</div>,
 };

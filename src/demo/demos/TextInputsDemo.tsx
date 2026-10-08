@@ -29,12 +29,10 @@ const schema = {
             minLength: 5,
             maxLength: 10
         },
-        email: {
+        textArea: {
             type: 'string',
-            title: 'Email Field',
-            description: 'Email input with validation',
             format: 'email',
-            'x-control': 'email'
+            'x-control-variant': 'textarea',
         },
         textarea: {
             type: 'string',
@@ -69,13 +67,11 @@ const schema = {
 
 const TextInputsDemo: React.FC = () => {
     return (
-        <div className="bg-white shadow-md rounded-lg p-6">
-            <CollectionForm
-                schema={schema}
-                id='text-inputs-demo'
-                data={{}}
-            />
-        </div>
+        <CollectionForm
+            schema={schema}
+            id='text-inputs-demo'
+            data={{}}
+        />
     );
 };
 

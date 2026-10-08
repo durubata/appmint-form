@@ -41,31 +41,29 @@ const schema = {
             title: 'Number Range',
             description: 'Range input for selecting a range of numbers',
             'x-control': 'numberrange',
-            properties: {
-                min: {
-                    type: 'number',
-                    title: 'Min',
-                    default: 20
-                },
-                max: {
-                    type: 'number',
-                    title: 'Max',
-                    default: 80
-                }
-            }
+            default: [30, 80]
+        },
+        sliderRange: {
+            type: 'array',
+            title: 'Number Range',
+            description: 'Range input for selecting a range of numbers',
+            'x-control': 'numberrange',
+            'x-control-variant': 'horizontal',
+            'x-show-input': false,
+            max: 200,
+            min: 30,
+            showInput: true,
         }
     }
 };
 
 const NumberInputsDemo: React.FC = () => {
     return (
-        <div className="bg-white shadow-md rounded-lg p-6">
-            <CollectionForm
-                schema={schema}
-                id='number-inputs-demo'
-                data={{}}
-            />
-        </div>
+        <CollectionForm
+            schema={schema}
+            id='number-inputs-demo'
+            data={{}}
+        />
     );
 };
 

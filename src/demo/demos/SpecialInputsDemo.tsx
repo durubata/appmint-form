@@ -82,19 +82,47 @@ const schema = {
                     default: 'https://linkedin.com/in/example'
                 }
             }
+        },
+        legalConsent: {
+            type: 'object',
+            title: 'Legal Consent',
+            description: 'Legal consent input',
+            'x-control': 'legalconsent',
+            properties: {
+                terms: {
+                    type: 'boolean',
+                    title: 'Terms & Conditions',
+                    default: false
+                },
+                privacy: {
+                    type: 'boolean',
+                    title: 'Privacy Policy',
+                    default: false
+                }
+            }
+        },
+        capture: {
+            type: 'string',
+            title: 'Capture',
+            description: 'Capture input',
+            'x-control': 'capture'
+        },
+        signature: {
+            type: 'string',
+            title: 'Signature',
+            description: 'Signature input',
+            'x-control': 'signature'
         }
     }
 };
 
 const SpecialInputsDemo: React.FC = () => {
     return (
-        <div className="bg-white shadow-md rounded-lg p-6">
-            <CollectionForm
-                schema={schema}
-                id='special-inputs-demo'
-                data={{}}
-            />
-        </div>
+        <CollectionForm
+            schema={schema}
+            id='special-inputs-demo'
+            data={{}}
+        />
     );
 };
 

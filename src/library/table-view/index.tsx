@@ -1,10 +1,12 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { generateFakeData } from './table-util';
 import { convertSchemaToColumns } from './generate.colums';
 import { TableGroup } from './table-group';
 import { classNames, getRandomString, toTitleCase } from '../utils';
 import { useReactTable, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, PaginationState, FilterFn, SortingFn, sortingFns } from '@tanstack/react-table';
-import { rankItem, compareItems } from '@tanstack/match-sorter-utils';
+import { compareItems } from '@tanstack/match-sorter-utils';
 import { TableFilter } from './table-filter';
 import { TablePagination } from './table-pagination';
 import { TablePresetFilter } from './table-preset-filter';
@@ -21,36 +23,8 @@ const GenerateSchema = {
     })
 };
 
-const requestQueueInstance = {
-    searchData: async (datatype, filter, options) => {
-        console.log(`Searching ${datatype} for ${filter}`);
-        return { data: [] };
-    },
-    findData: async (datatype, filters, options) => {
-        console.log(`Finding data in ${datatype}`);
-        return { data: [] };
-    },
-    deleteBulkData: async (datatype, ids) => {
-        console.log(`Deleting ${ids.length} items from ${datatype}`);
-        return { success: true };
-    }
-};
-
-const activeSession = {
-    getUser: () => ({
-        data: {
-            email: 'user@example.com'
-        }
-    })
-};
-
-const genericService = {
-    createBaseData: (datatype, id) => ({
-        datatype,
-        id: id || '',
-        data: {}
-    })
-};
+export type TableEvents = 'data-request' | 'data-loaded' | 'select' | 'export' | 'refresh' | 'delete' | 'add' | 'datatype';
+export type RowEvents = 'edit' | 'delete' | 'view' | 'clone' | 'select';
 
 export const CollectionTable = (props: {
     hash?;
@@ -67,8 +41,8 @@ export const CollectionTable = (props: {
     inlineEdit?;
     datatype?;
     isDemo?;
-    onRowEvent?: (event, rowId, row) => any;
-    onTableEvent?: (event, option, selected) => any;
+    onRowEvent?: (event: RowEvents, rowId, row) => any;
+    onTableEvent?: (event: TableEvents, option, selected) => any;
     isLoading?;
     cellRenderers?;
     itemRenderer?;
@@ -152,36 +126,16 @@ export const CollectionTable = (props: {
         }
     }, [datatype, props.filters, props.hash, currentPage]);
 
-    const loadData = async (page = 1, refresh = false) => {
-        if (!datatype) {
-            console.error('Datatype is required to load data');
-            return;
-        }
-
-        let response
-        if (globalFilter) {
-            response = requestQueueInstance.searchData(datatype, globalFilter, { refresh, page: page })
-        } else {
-            response = requestQueueInstance.findData(datatype, props.filters || {}, { refresh, page: page })
-        }
-
-        await response.then((data: any) => {
-            setData(data?.data);
-            // table.getState().pagination.pageSize
-            // table.setp
-            if (props.onTableEvent) {
-                props.onTableEvent('data-loaded', data?.data, [])
-            }
-        })
-            .catch(e => {
-                console.error(e);
-            });
-    };
-
     const onRowDataEvent = (eventType, id, row) => {
         if (eventType === 'delete') {
             setData(data.filter(item => item.sk !== id));
         }
+    };
+
+    const loadData = async (page = 1, refresh = false) => {
+        const data = await onTableEvent('data-request', { page, refresh });
+        setData(data);
+        onTableEvent('data-loaded', { page, refresh });
     };
 
     const onTableEvent = async (e, option) => {
@@ -194,27 +148,35 @@ export const CollectionTable = (props: {
         }
 
         if (props.onTableEvent) {
-            const selected = table.getSelectedRowModel().rows.map(row => row.original) || [];
+            const selected: any[] = table.getSelectedRowModel().rows.map(row => row.original) || [];
             selectedRows.forEach(row => {
                 const record = data[row];
-                selected.push(record);
+                if (record) {
+                    selected.push(record);
+                }
             });
             if (await props.onTableEvent(name, option, selected)) {
                 return;
             }
         }
 
-        if (name === 'select') {
+        if (name === 'data-request') {
+
+        } else if (name === 'data-loaded') {
+
+        } else if (name === 'select') {
 
         } else if (name === 'export') {
-            const selected = table.getSelectedRowModel().rows.map(row => row.original) || [];
+            const selected: any[] = table.getSelectedRowModel().rows.map(row => row.original) || [];
             selectedRows.forEach(row => {
                 const record = data[row];
-                selected.push(record);
+                if (record) {
+                    selected.push(record);
+                }
             });
 
             if (!Array.isArray(selected)) return;
-            const exportDTO = { length: selected.length, datatype, create_date: new Date().toISOString(), author: activeSession.getUser().data.email, data: selected };
+            const exportDTO = { length: selected.length, datatype, create_date: new Date().toISOString(), author: ' activeSession.getUser().data.email', data: selected };
             const blob = new Blob([JSON.stringify(exportDTO, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -228,21 +190,16 @@ export const CollectionTable = (props: {
             const tableSelRows = table.getSelectedRowModel().rows;
             console.log('tableSelRows', tableSelRows);
 
-            const ids = [];
+            const ids: string[] = [];
             selectedRows.forEach(row => {
                 const record = data[row];
                 if (record && record.sk) {
                     ids.push(record.sk);
                 }
             });
-            await requestQueueInstance.deleteBulkData(props.datatype, ids).catch(e => {
-                console.error(e);
-            });
             await loadData(1, true);
             setSelectedRows([]);
         } else if (name === 'add') {
-            const data = genericService.createBaseData(props.datatype, '');
-            // useSiteStore.getState().setStateItem({ dataFormProps: { data, datatype: props.datatype } });
         } else if (name === 'datatype') {
             setDatatype(option);
         }
@@ -251,10 +208,16 @@ export const CollectionTable = (props: {
     const selectRow = e => {
         const id = e.currentTarget.id;
         const index = selectedRows.indexOf(id);
+        let selected;
         if (index > -1) {
-            setSelectedRows(selectedRows.filter(row => row !== id));
+            selected = selectedRows.filter(row => row !== id);
         } else {
-            setSelectedRows([...selectedRows, id]);
+            selected = [...selectedRows, id];
+        }
+        setSelectedRows(selected);
+
+        if (props.onRowEvent) {
+            props.onRowEvent('select', id, selected);
         }
     };
 
@@ -266,52 +229,51 @@ export const CollectionTable = (props: {
 
     const title = typeof props.title === 'undefined' && props.datatype ? toTitleCase(props.datatype) : props.title;
     return (
-        <div className="h-full w-full overflow-hidden">
-            <div className="px-4 sm:px-6 lg:px-8 h-full w-full">
-                {canSearch && (
-                    <div className="sm:flex sm:items-center mt-6">
-                        <div className="sm:flex-auto">
-                            <h1 className="text-base font-semibold leading-6 text-gray-900">{title || ''}</h1>
-                            <p className="mt-2 text-sm text-gray-700">{props.description}</p>
-                        </div>
-                        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none flex items-center gap-0">
-                            <TableFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} datatype={datatype} onTableEvent={onTableEvent} />
-                            <TableButtons onTableEvent={onTableEvent} options={props.options} selectedRows={selectedRows} />
-                        </div>
+        <div className="h-full w-full overflow-hidden min-w-[600px] dark:bg-gray-900/80 bg-white/80 p-4 rounded-xl shadow-lg">
+            {canSearch && (
+                <div className="lg:flex items-center">
+                    {(title || props.description) && <div className="lg:flex gap-3">
+                        <h1 className="text-base font-semibold leading-6 text-gray-900 dark:text-white">{title || ''}</h1>
+                        <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">{props.description}</p>
                     </div>
-                )}
-                {(showGroup || props.filterPreset) && (
-                    <div className="lg:flex justify-between items-center gap-6">
-                        {props.filterPreset && <TablePresetFilter filterPreset={props.filterPreset} />}
-                        {showGroup && <TableGroup />}
-                    </div>
-                )}
-                <div
-                    className={classNames(
-                        canSearch && showGroup ? 'h-[calc(100%-300px)] ' : canSearch && !showGroup ? 'h-[calc(100%-150px)] ' : !canSearch && showGroup ? 'h-[calc(100%-150px)]' : 'h-[calc(100%-90px)]',
-                        'mt-8 flow-root w-full overflow-auto',
-                    )}
-                >
-                    <div className="-mx-4 -my-2  sm:-mx-6 lg:-mx-8">
-                        {cardView ? (
-                            <CollectionTableCardView
-                                table={table}
-                                selectRow={selectRow}
-                                selectedRows={selectedRows}
-                                slimRow={slimRow}
-                                onRowEvent={props.onRowEvent}
-                                options={props.options}
-                                itemRenderer={props.itemRenderer}
-                                onRowDataEvent={onRowDataEvent}
-                                datatype={props.datatype}
-                            />
-                        ) : (
-                            <CollectionTableView table={table} selectRow={selectRow} selectedRows={selectedRows} slimRow={slimRow} onRowEvent={props.onRowEvent} options={props.options} onRowDataEvent={onRowDataEvent} datatype={props.datatype} />
-                        )}
+                    }
+                    <div className="flex justify-between items-center gap-5 w-full">
+                        <TableFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} datatype={datatype} onTableEvent={onTableEvent} />
+                        <TableButtons onTableEvent={onTableEvent} options={props.options} selectedRows={selectedRows} />
                     </div>
                 </div>
-                {showPagination && <TablePagination table={table} />}
+            )}
+            {(showGroup || props.filterPreset) && (
+                <div className="lg:flex justify-between items-center gap-10 mt-4">
+                    {props.filterPreset && <TablePresetFilter filterPreset={props.filterPreset} />}
+                    {showGroup && <TableGroup />}
+                </div>
+            )}
+            <div
+                className={classNames(
+                    canSearch && showGroup ? 'h-[calc(100%-300px)] ' : canSearch && !showGroup ? 'h-[calc(100%-150px)] ' : !canSearch && showGroup ? 'h-[calc(100%-150px)]' : 'h-[calc(100%-90px)]',
+                    'mt-8 flow-root w-full overflow-auto',
+                )}
+            >
+                <div className="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
+                    {cardView ? (
+                        <CollectionTableCardView
+                            table={table}
+                            selectRow={selectRow}
+                            selectedRows={selectedRows}
+                            slimRow={slimRow}
+                            onRowEvent={props.onRowEvent}
+                            options={props.options}
+                            itemRenderer={props.itemRenderer}
+                            onRowDataEvent={onRowDataEvent}
+                            datatype={props.datatype}
+                        />
+                    ) : (
+                        <CollectionTableView table={table} selectRow={selectRow} selectedRows={selectedRows} slimRow={slimRow} onRowEvent={props.onRowEvent} options={props.options} onRowDataEvent={onRowDataEvent} datatype={props.datatype} />
+                    )}
+                </div>
             </div>
+            {showPagination && <TablePagination table={table} />}
         </div>
     );
 };

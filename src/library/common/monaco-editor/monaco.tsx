@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { IconRenderer } from '../icons/icon-renderer';
 
 // Define the props for the Monaco Code Editor component
 interface MonacoCodeEditorProps {
@@ -30,12 +31,13 @@ export const MonacoCodeEditor: React.FC<MonacoCodeEditorProps> = ({
     const [isExpanded, setIsExpanded] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [editorValue, setEditorValue] = useState(value);
+    const [theme, setTheme] = useState('vs-dark');
 
     // Function to load Monaco Editor from CDN
     const loadMonacoEditor = () => {
         if (window.monaco) {
             setIsLoaded(true);
-            return;
+            return () => { };
         }
 
         const script = document.createElement('script');
@@ -91,7 +93,7 @@ export const MonacoCodeEditor: React.FC<MonacoCodeEditorProps> = ({
                 monacoInstanceRef.current = window.monaco.editor.create(editorRef.current, {
                     value: editorValue,
                     language,
-                    theme: 'vs-dark',
+                    theme: theme,
                     automaticLayout: true,
                     minimap: {
                         enabled: true
@@ -177,6 +179,7 @@ export const MonacoCodeEditor: React.FC<MonacoCodeEditorProps> = ({
                 }}>
                     {expandable && (
                         <button
+                            title={isExpanded ? 'Minimize' : 'Maximize'}
                             onClick={toggleExpand}
                             style={{
                                 background: 'none',
@@ -186,10 +189,11 @@ export const MonacoCodeEditor: React.FC<MonacoCodeEditorProps> = ({
                                 marginRight: '8px',
                             }}
                         >
-                            {isExpanded ? 'Collapse' : 'Expand'}
+                            <IconRenderer icon={isExpanded ? 'Minimize' : 'Maximize'} />
                         </button>
                     )}
                     <button
+                        title="Save"
                         onClick={handleSave}
                         style={{
                             background: 'none',
@@ -198,7 +202,7 @@ export const MonacoCodeEditor: React.FC<MonacoCodeEditorProps> = ({
                             cursor: 'pointer',
                         }}
                     >
-                        Save
+                        <IconRenderer icon='Save' />
                     </button>
                 </div>
             )}

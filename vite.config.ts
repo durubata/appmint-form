@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
+import tailwindcss from '@tailwindcss/vite';
+import { readFileSync } from 'fs';
 
 export default defineConfig({
     plugins: [
@@ -12,6 +14,7 @@ export default defineConfig({
             exclude: ['_old', 'node_modules', 'dist', 'src/demo', 'src/demo.tsx'],
         }),
         libInjectCss(),
+        tailwindcss(),
     ],
     build: {
         lib: {
@@ -25,8 +28,9 @@ export default defineConfig({
                 'react',
                 'react-dom',
                 'react/jsx-runtime',
+                // Read package.json using fs instead of require to maintain ESM compatibility
                 ...Object.keys(
-                    require('./package.json').dependencies || {}
+                    JSON.parse(readFileSync('./package.json', 'utf-8')).dependencies || {}
                 ),
             ],
             output: {

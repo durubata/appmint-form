@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { DateTimePicker } from './date-time-picker';
+import { twMerge } from 'tailwind-merge';
+import { StyledComponent } from './styling';
+import { extractStylingFromSchema, getComponentPartStyling } from './styling/style-utils';
 
-export const DateElement = (props: { change; focus; blur; mode; value; schema; path; name; data; reloadValue }) => {
+export const DateElement = (props: { readOnly?; change; dataPath, focus; blur; mode; value; schema; path; name; data, className, theme?, ui?}) => {
   const [dateTime, setDateTime] = useState<any>();
   let variant = props.schema['format'] || props.schema['x-control-variant'] || 'date';
   variant = (variant === 'datetime' || variant === 'date-time') ? 'date-time' : variant;
@@ -46,24 +48,63 @@ export const DateElement = (props: { change; focus; blur; mode; value; schema; p
     props.focus(e.target.value);
   };
 
-  const { min, max, disabled, readOnly, prefix, suffix, placeholder } = props.schema;
+  const { min, max, placeholder } = props.schema;
 
+  // Extract styling from schema
+  const customStyling = extractStylingFromSchema(props.schema);
+
+  // Get date styling
   return (
-    <>
-      {prefix && <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">{prefix}</span>}
-      <DateTimePicker
+    <StyledComponent
+      componentType="date"
+      part="container"
+      schema={props.schema}
+      theme={props.theme}
+      className="flex items-center"
+    >
+      {props.schema.prefix && (
+        <StyledComponent
+          componentType="date"
+          part="prefix"
+          schema={props.schema}
+          theme={props.theme}
+        >
+          {props.schema.prefix}
+        </StyledComponent>
+      )}
+      <StyledComponent
+        componentType="text"
+        part="input"
+        schema={props.schema}
+        theme={props.theme}
+        as="input"
         onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        value={props.value}
+        disabled={props.schema.disabled}
+        readOnly={props.readOnly || props.schema.readOnly}
+        type={variant}
+        name={props.name}
+        id={props.path}
+        className={props.className}
         startDate={dateTime}
-        disabled={disabled}
-        readOnly={readOnly}
         min={min}
         max={max}
         mode={variant}
         isRange={false}
-        className={'w-full flex-1 border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-5'}
         placeholder={placeholder}
       />
-      {suffix && <span className="flex select-none items-center pr-3 text-gray-500 sm:text-sm">{suffix}</span>}
-    </>
+      {props.schema.suffix && (
+        <StyledComponent
+          componentType="date"
+          part="suffix"
+          schema={props.schema}
+          theme={props.theme}
+        >
+          {props.schema.suffix}
+        </StyledComponent>
+      )}
+    </StyledComponent>
   );
 };

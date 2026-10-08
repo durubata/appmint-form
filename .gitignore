@@ -7,6 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+lib_businessmade
+lib_websitemint
+
 # Dependencies
 node_modules
 .yarn/*
@@ -67,3 +70,5 @@ coverage
 .temp
 .tmp
 .turbo
+
+icon-scraper.js

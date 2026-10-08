@@ -1,6 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+@plugin "tailwindcss-aspect-ratio";
+@plugin "tailwindcss-debug-screens";
+@plugin "tailwindcss-filters";
+@plugin "tailwindcss-gradients";
+@plugin "tailwindcss-logical";
+@plugin "tailwindcss-multi-column";
+@plugin "tailwindcss-rtl";
+@plugin "tailwindcss-scroll-snap";
+@plugin "tailwindcss-typography";
+@plugin "tailwindcss-variables";
+@plugin "tailwindcss-forms";
+
+@custom-variant dark (&:is(.dark *));
 
 body {
   margin: 0;

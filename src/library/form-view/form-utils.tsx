@@ -1,7 +1,8 @@
-import { isJsonString, getCountryRegions, getCountryDropDownOptions, isNotEmpty, toSentenceCase, toTitleCase, themeSettingsList } from '../utils';
+import { isJsonString, isNotEmpty, toSentenceCase, toTitleCase, themeSettingsList } from '../utils';
 import * as objectPath from 'object-path';
 import { validateValue } from './form-validator';
 import { } from '../context/store';
+import { getCountryDropDownOptions, getCountryRegions } from '../common/countries';
 
 // Stubs for missing dependencies
 export const CollectionHelper = {
@@ -179,10 +180,10 @@ export const getWatchedPaths = (schema, parentPath, arrayIndex?) => {
   if (!schema) return;
   let watchedPaths = schema?.watchedPaths || [];
   if (schema?.title?.startsWith('{{') && schema?.title?.endsWith('}}')) {
-    watchedPaths.push(schema.title.slice(2, -2));
+    watchedPaths.push(schema.title?.slice(2, -2));
   }
   if (typeof schema?.default === 'string' && schema?.default?.startsWith('{{') && schema?.default?.endsWith('}}')) {
-    watchedPaths.push(schema.title.slice(2, -2));
+    watchedPaths.push(schema.title?.slice(2, -2));
   }
   if (schema?.rules) {
     schema.rules.forEach(rule => {

@@ -1,29 +1,29 @@
 import { LoadingIndicator } from '../common/loading-indicator';
 import { formLayouts } from '../context/store';
 import { getElementTheme } from '../context/store';
-import { useFormStore } from '../context/store';
+import { useFormStore } from '../context/form-store-context';
 import { FormElementRender } from '../form-elements';
 import { ElementWrapperLayout } from '../form-elements/element-wrapper-layout';
-import { ElementCommonView } from '../form-elements/element-common-view';
 import { classNames } from '../utils';
 import { deepCopy } from '../utils';
 import { isEmpty } from '../utils';
 import { isNotEmpty } from '../utils';
 import { FormRenderArray } from './form-render-array';
-import { runFormRules } from './form-rules';
 import React, { useEffect, useState } from 'react';
 import { runElementRules } from './form-rules';
 import { getWatchedPaths } from './form-utils';
 import { getTemplateValue } from './form-validator';
 import { useShallow } from 'zustand/shallow';
+import { StyledComponent } from '../form-elements/styling';
 
 export const FormRender = (props: { storeId; path; dataPath; name; className; arrayIndex?; parentDataPath?, layoutPath?, arrayControl?}) => {
   const { name, path, dataPath, className, arrayIndex, layoutPath } = props;
-  const { dataPathTimestamp, theme } = useFormStore(useShallow(state => ({
+  const store = useFormStore();
+  const { dataPathTimestamp, theme } = store(useShallow(state => ({
     dataPathTimestamp: state.timestamp[dataPath],
     theme: state.theme
   })));
-  const { getItemValue, setStateItem, applyRuleResult, getSchemaItem } = useFormStore.getState();
+  const { getItemValue, setStateItem, applyRuleResult, getSchemaItem } = store.getState();
   const [ruleActions, setRuleActions] = useState<any>({});
 
 
@@ -31,7 +31,7 @@ export const FormRender = (props: { storeId; path; dataPath; name; className; ar
     let schema = getSchemaItem(path);
     let watchedPaths = getWatchedPaths(schema, props.parentDataPath, props.arrayIndex);
     if (isNotEmpty(watchedPaths)) {
-      useFormStore.getState().updateWatchedPath(props.dataPath, watchedPaths);
+      store.getState().updateWatchedPath(props.dataPath, watchedPaths);
     }
     if (schema?.rules) {
       const arrayData = typeof arrayIndex === 'number' ? getItemValue(`${props.parentDataPath}.${arrayIndex}`) : null;
@@ -112,14 +112,28 @@ export const FormRender = (props: { storeId; path; dataPath; name; className; ar
 
   if (['string', 'number', 'boolean'].includes(properties.type) || properties['x-control']) {
     return (
-      <ElementCommonView key="fieldName" path={path} name={null} ui={schema['x-ui']} theme={theme} className={classNames(className, 'flex gap-3  mx-auto')}>
+      <StyledComponent
+        componentType="form"
+        part="container"
+        schema={schema}
+        theme={theme}
+        className={classNames(className, 'flex gap-3 mx-auto')}
+      >
         <FormElementRender key={path} mode="view" name={props.name} path={path} dataPath={dataPath} parentDataPath={dataPath} arrayIndex={arrayIndex} storeId={props.storeId} />
-      </ElementCommonView>
+      </StyledComponent>
     );
   }
 
   const render = (
-    <ElementCommonView id={dataPath} theme={theme} path={path} name={path ? null : 'cb-form-root'} ui={schema['x-ui']} className={classNames('cb-form-root')}>
+    <StyledComponent
+      componentType="form"
+      part="root"
+      schema={schema}
+      theme={theme}
+      id={dataPath}
+      data-ui-name={path ? null : 'cb-form-root'}
+      className="cb-form-root"
+    >
       {layoutComponent}
       {Object.keys(properties).map(fieldName => {
         const field = properties[fieldName];
@@ -137,17 +151,25 @@ export const FormRender = (props: { storeId; path; dataPath; name; className; ar
           if (fieldIndex !== 0) return null;
           const groupPath = childPath + '.' + field.group;
           return (
-            <ElementCommonView key={groupPath} path={groupPath} theme={theme} name={'control-group'} ui={schema['x-ui']} className={'flex items-center'}>
+            <StyledComponent
+              componentType="form"
+              part="group"
+              schema={schema}
+              theme={theme}
+              data-ui-name="control-group"
+              className="flex items-center"
+              key={groupPath}
+            >
               {groupFields.map(({ key, field }) => {
                 return renderElements(key, field);
               })}
-            </ElementCommonView>
+            </StyledComponent>
           );
         } else {
           return renderElements(fieldName, field);
         }
       })}
-    </ElementCommonView>
+    </StyledComponent>
   );
 
   if (path === '') return render;

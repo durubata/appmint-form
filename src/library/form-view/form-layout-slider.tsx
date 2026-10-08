@@ -3,11 +3,11 @@ import { classNames } from '../utils';
 import { isNotEmpty } from '../utils';
 import { useFormStore } from '../context/store';
 import { validateFormValue } from './form-validator';
-import { ElementCommonView } from '../form-elements/element-common-view';
 import React, { useEffect } from 'react';
 import FormLayoutSliderAnimation from './form-layout-slider-animation';
 import { shallow, useShallow } from 'zustand/shallow';
 import { IconRenderer } from '../common/icons/icon-renderer';
+import { StyledComponent } from '../form-elements/styling';
 
 export const FormLayoutSlider = ({ storeId, layoutPath, path, dataPath, schema }) => {
   const { getSchemaItem, getError, getItemValue, updateError, timestamp } = useFormStore(useShallow(state => ({
@@ -127,27 +127,56 @@ export const FormLayoutSlider = ({ storeId, layoutPath, path, dataPath, schema }
     <div className=" w-full">
       {error && <div className="text-xs w-full text-center text-red-400">{error}</div>}
       {/* {getView(slideIndex)} */}
-      <ElementCommonView path={layoutPath} name={null} ui={layout['x-ui']} className={''}>
+      <StyledComponent
+        componentType="slider"
+        part="container"
+        schema={layout}
+      >
         <FormLayoutSliderAnimation direction="horizontal" items={layout?.items} getView={getView} slideIndex={slideIndex} />
-      </ElementCommonView>
+      </StyledComponent>
       <div className="text-xs flex flex-wrap gap-2 w-full mt-2 px-2">
-        <button title="Slide" onClick={e => makeActiveSlide(e, -1)} className={classNames(slideIndex < 0 && 'bg-yellow-200', ' h-5 w-5 flex items-center justify-center  border-cyan-400 border rounded p-0 hover:bg-cyan-300')}>
-          <IconRenderer icon="GrPlay" />
-        </button>
-        <button title="Previous" onClick={skipPrev} className={classNames(' h-5 w-5 flex items-center justify-center  border-cyan-400 border rounded p-0 hover:bg-cyan-300')}>
-          <IconRenderer icon="PiSkipBack" />
-        </button>
-        <button title="Next" onClick={skipNext} className={classNames(' h-5 w-5 flex items-center justify-center  border-cyan-400 border rounded p-0 hover:bg-cyan-300')}>
-          <IconRenderer icon="PiSkipForward" />
-        </button>
-        {layout?.items?.map((_, idx) => (
-          <button
-            title={'Slide ' + 1}
-            onClick={e => makeActiveSlide(e, idx)}
-            className={classNames(slideIndex === idx && 'bg-yellow-200', ' h-5 w-5 flex items-center justify-center border-cyan-400 border rounded p-0 text-[11px] hover:bg-cyan-300')}
-          >
-            {idx + 1}
+        <StyledComponent
+          componentType="slider"
+          part={slideIndex < 0 ? "buttonActive" : "button"}
+          schema={layout}
+        >
+          <button title="Slide" onClick={e => makeActiveSlide(e, -1)}>
+            <IconRenderer icon="Play" />
           </button>
+        </StyledComponent>
+        <StyledComponent
+          componentType="slider"
+          part="button"
+          schema={layout}
+        >
+          <button title="Previous" onClick={skipPrev}>
+            <IconRenderer icon="SkipBack" />
+          </button>
+        </StyledComponent>
+        <StyledComponent
+          componentType="slider"
+          part="button"
+          schema={layout}
+        >
+          <button title="Next" onClick={skipNext}>
+            <IconRenderer icon="SkipForward" />
+          </button>
+        </StyledComponent>
+        {layout?.items?.map((_, idx) => (
+          <StyledComponent
+            key={idx}
+            componentType="slider"
+            part={slideIndex === idx ? "buttonActive" : "button"}
+            schema={layout}
+          >
+            <button
+              title={'Slide ' + (idx + 1)}
+              onClick={e => makeActiveSlide(e, idx)}
+              className="text-[11px]"
+            >
+              {idx + 1}
+            </button>
+          </StyledComponent>
         ))}
       </div>
     </div>

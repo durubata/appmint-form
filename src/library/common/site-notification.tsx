@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Transition } from '@headlessui/react'
+import { Transition } from './select-components'
 import { IconRenderer } from './icons/icon-renderer';
 
 export function SiteNotification() {
@@ -19,10 +19,10 @@ export function SiteNotification() {
 
     let icon;
     let color;
-    if (type === 'success') { icon = <IconRenderer icon={'BsCheckCircle'} className="h-6 w-6  text-green-400" />; color = 'text-green-400'; }
-    if (type === 'error') { icon = <IconRenderer icon={'VscError'} className="h-6 w-6  text-red-400" />; color = 'text-red-400'; }
-    if (type === 'warning') { icon = <IconRenderer icon={'AiOutlineWarning'} className="h-6 w-6  text-yellow-400" />; color = 'text-yellow-400'; }
-    if (type === 'info') { icon = <IconRenderer icon={'BsInfoCircle'} className="h-6 w-6  text-blue-400" />; color = 'text-blue-400'; }
+    if (type === 'success') { icon = <IconRenderer icon={"CheckCircle"} className="h-6 w-6  text-green-400" />; color = 'text-green-400'; }
+    if (type === 'error') { icon = <IconRenderer icon={"AlertCircle"} className="h-6 w-6  text-red-400" />; color = 'text-red-400'; }
+    if (type === 'warning') { icon = <IconRenderer icon={"AlertTriangle"} className="h-6 w-6  text-yellow-400" />; color = 'text-yellow-400'; }
+    if (type === 'info') { icon = <IconRenderer icon={"InfoCircle"} className="h-6 w-6  text-blue-400" />; color = 'text-blue-400'; }
 
     return (
         <>

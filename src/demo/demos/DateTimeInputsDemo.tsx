@@ -29,7 +29,7 @@ const schema = {
             default: '12:30:00'
         },
         dateRange: {
-            type: 'object',
+            type: 'array',
             title: 'Date Range',
             description: 'Date range selection input',
             'x-control': 'daterange',
@@ -60,13 +60,11 @@ const schema = {
 
 const DateTimeInputsDemo: React.FC = () => {
     return (
-        <div className="bg-white shadow-md rounded-lg p-6">
-            <CollectionForm
-                schema={schema}
-                id='date-time-inputs-demo'
-                data={{}}
-            />
-        </div>
+        <CollectionForm
+            schema={schema}
+            id='date-time-inputs-demo'
+            data={{}}
+        />
     );
 };
 
